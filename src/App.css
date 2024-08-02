@@ -1,0 +1,56 @@
+body {
+  font-family: Tahoma, sans-serif !important;
+}
+
+.loginImgLogo {
+  height: 140px;
+  width: auto;
+}
+.signupPageIcon {
+  height: 80px;
+  width: auto;
+}
+
+.loginsubHeadingImgLogo {
+  height: 27px;
+  width: auto;
+  margin-left: 28px;
+}
+
+.rentCoRed {
+  background-color: #ffa857;
+}
+
+.rentCoRedText {
+  background-color: #ffa857;
+}
+
+.yellowBg {
+  background-color: #ffe500 !important;
+}
+
+.yellowColor {
+  color: #ffe500;
+}
+
+.marginTop30 {
+  margin-top: 30%;
+}
+
+/* .passStrength {
+  height: 5px;
+  background-color: #ffa857;
+} */
+
+@media (min-width: 576px) and (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  .loginImgLogo {
+    height: 100px;
+  }
+}
+
+.overflow-y-auto {
+  scrollbar-width: none;
+}
