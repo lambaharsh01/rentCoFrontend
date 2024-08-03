@@ -1,0 +1,20 @@
+.headerMainNotSmallScreen {
+  height: 80px;
+  width: 100%;
+  position: absolute;
+}
+.headerMainSmallScreen {
+  height: 60px;
+  width: 100%;
+  position: absolute;
+}
+
+.placeholderHeaderSmallScreen {
+  height: 60px;
+  width: 100%;
+}
+
+.placeholderHeaderNotSmallScreen {
+  height: 80px;
+  width: 100%;
+}

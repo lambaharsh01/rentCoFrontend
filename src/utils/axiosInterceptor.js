@@ -29,7 +29,8 @@ export default async function axiosInterceptor({ method, url, query, data }) {
 
     let apiMethod = method.toLowerCase().trim();
 
-    let apiUrl = "http://localhost:4000";
+    // let apiUrl = "http://localhost:4000";
+    let apiUrl = "http://192.168.0.135:4000";
 
     apiUrl += url.trim() + convertQueryString(query);
 
@@ -76,7 +77,6 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     }
 
     return response.data;
-
   } catch (error) {
     console.log(error);
 
@@ -112,6 +112,9 @@ export default async function axiosInterceptor({ method, url, query, data }) {
       case 408:
         statusMessage = "Request Timeout";
         break;
+      case 409:
+        statusMessage = "Conflict";
+        break;
       case 413:
         statusMessage = "Payload Too Large";
         break;
@@ -124,6 +127,11 @@ export default async function axiosInterceptor({ method, url, query, data }) {
       default:
         statusMessage = "Network Error"; //"Internal Server Error";
         break;
+    }
+
+    if (errorCode === 401) {
+      alert("Session expired please login again");
+      localStorage.removeItem("token");
     }
 
     let errorMessage =
