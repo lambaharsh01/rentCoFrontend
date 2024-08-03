@@ -1,6 +1,41 @@
 body {
-  font-family: Tahoma, sans-serif !important;
+  font-family: Tahoma, sans-serif;
 }
+
+/* rentCoFont */
+
+.rentCoFontBold {
+  font-family: "dynamoMnBold";
+}
+
+.rentCoFont {
+  font-family: "dynamoCondensed";
+}
+
+.rentCoRedFont {
+  color: #ffa857;
+}
+
+.outlined-text-thick {
+  -webkit-text-stroke-width: 3.4px;
+  -webkit-text-stroke-color: black;
+}
+
+.outlined-text-medium-thick {
+  -webkit-text-stroke-width: 2.8px;
+  -webkit-text-stroke-color: black;
+}
+
+.outlined-text-medium-thin {
+  -webkit-text-stroke-width: 2.2px;
+  -webkit-text-stroke-color: black;
+}
+.outlined-text-thin {
+  -webkit-text-stroke-width: 1.6px;
+  -webkit-text-stroke-color: black;
+}
+
+/* rentCoFont */
 
 .loginImgLogo {
   height: 140px;
@@ -36,11 +71,6 @@ body {
 .marginTop30 {
   margin-top: 30%;
 }
-
-/* .passStrength {
-  height: 5px;
-  background-color: #ffa857;
-} */
 
 @media (min-width: 576px) and (max-width: 768px) {
 }

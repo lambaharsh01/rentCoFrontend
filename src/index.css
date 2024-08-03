@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "dynamoMnBold";
+  src: url("./fonts/dynamoMnBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "dynamoCondensed";
+  src: url("./fonts/dynamoCondensed.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

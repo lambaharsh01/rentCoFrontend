@@ -43,3 +43,16 @@ export const initialUserSchema = yup.object().shape({
     .max(2010, "birth year should be less then 2010"),
   gender: yup.string().required("Please Select a gender"),
 });
+
+export const loginSchema = yup.object().shape({
+  userEmail: yup
+    .string()
+    .required("Please enter your email")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email")
+    .email("Please enter a valid email Id"),
+  password: yup
+    .string()
+    .required("Please enter your email")
+    .min(5, "Wrong password")
+    .max(30, "Wrong password"),
+});

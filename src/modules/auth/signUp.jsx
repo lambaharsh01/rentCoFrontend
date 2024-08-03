@@ -7,8 +7,6 @@ import axiosInterceptor from "../../utils/axiosInterceptor";
 export default function SignUp() {
   const navigate = useNavigate();
 
-  const rentCoIcon = "/rentCoIconNegative.png";
-
   const scrollableDivRef = useRef(null);
   function scrollDivToTop() {
     if (scrollableDivRef.current) {
@@ -211,11 +209,10 @@ export default function SignUp() {
       />
       <div className="w-100">
         <div className="rentCoRed col-lg-8 col-12 offset-0 offset-lg-2 h-1/6 flex items-end">
-          <img
-            src={rentCoIcon}
-            alt="rentCoNegative"
-            className="signupPageIcon"
-          />
+          <h1 className="rentCoFont mainFont text-7xl ps-2">
+            <span className="text-white me-1">Sign</span>
+            <span className="outlined-text-medium-thin rentCoRedFont">Up</span>
+          </h1>
         </div>
         <div
           className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-3xl flex-row overflow-y-auto"
@@ -223,7 +220,7 @@ export default function SignUp() {
         >
           {screen === 0 && (
             <div className="w-75 m-auto py-md-4 pt-4 pb-3">
-              <h2 className="mb-4">Sign Up</h2>
+              <h2 className="mb-4">User Details</h2>
               <input
                 type="text"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
@@ -339,7 +336,7 @@ export default function SignUp() {
               <h2 className="mb-4">Create Password</h2>
 
               <input
-                type="text"
+                type="password"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Password"
                 value={password}
@@ -347,7 +344,7 @@ export default function SignUp() {
               />
 
               <input
-                type="text"
+                type="password"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Confirm Password"
                 value={confirmPassword}
