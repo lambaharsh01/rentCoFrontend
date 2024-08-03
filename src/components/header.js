@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./header.css";
@@ -10,29 +10,40 @@ export default function Header({ active }) {
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  const setModuleCall = useCallback(() => {
+    switch (active) {
+      case "d":
+        setRentCoModule("Da.");
+        break;
+      case "g":
+        setRentCoModule("Gr.");
+        break;
+      case "a":
+        setRentCoModule("An.");
+        break;
+      default:
+        setRentCoModule("Co.");
+        break;
+    }
+  }, [active]);
+
+  const ifAuthenticated = useCallback(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/signIn");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    ifAuthenticated();
+    setModuleCall();
+  }, [ifAuthenticated, setModuleCall]);
+
   useEffect(() => {
     const updateScreenWidth = () => {
       setIsSmallScreen(window.innerWidth <= 576);
     };
     window.addEventListener("resize", updateScreenWidth);
     updateScreenWidth();
-
-    const setModuleCall = () => {
-      // setRentCoModule
-      switch (active) {
-        case "d":
-          setRentCoModule("Da.");
-          break;
-        case "g":
-          setRentCoModule("Gr.");
-          break;
-        case "a":
-          setRentCoModule("An.");
-          break;
-      }
-    };
-    setModuleCall();
-
     return () => window.removeEventListener("resize", updateScreenWidth);
   }, []);
 

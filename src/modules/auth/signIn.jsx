@@ -21,8 +21,7 @@ export default function SignIn() {
         })
           .then((res) => {
             if (!res.data.token) throw new Error("Something went wrong");
-
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("authToken", res.data.token);
             toast.success(`Welcome back ${res.data.userName}!`);
             setTimeout(() => {
               navigate("/dashboard");

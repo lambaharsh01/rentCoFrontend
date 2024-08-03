@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import { toast, ToastContainer } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
 export default function CreateGroup() {
+  const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [groupDiscription, setGroupDiscription] = useState("");
 
@@ -12,11 +14,16 @@ export default function CreateGroup() {
       toast.error("Enter at least 4 characters in the group name.");
 
     axiosInterceptor({
-      url: "",
+      url: "/api/group/createGroup",
       method: "post",
-      data: {},
+      data: { groupName, groupDiscription },
     })
-      .then((res) => {})
+      .then((res) => {
+        toast.success(res.message);
+        setTimeout(() => {
+          navigate("/groupIndex");
+        }, 2000);
+      })
       .catch((error) => toast.error(error.message));
   };
 

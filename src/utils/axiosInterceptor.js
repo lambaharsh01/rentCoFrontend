@@ -40,9 +40,8 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     // Request Interceptor (optional)
     axiosInstance.interceptors.request.use(
       (req) => {
-        // const token = localStorage.getItem("authToken");
-        // if (token) config.headers["Authorization"] = `Bearer ${token}`;
-
+        const token = localStorage.getItem("authToken");
+        if (token) req.headers["Authorization"] = `Bearer ${token}`;
         return req;
       },
       (error) => Promise.reject(error)
@@ -131,7 +130,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
 
     if (errorCode === 401) {
       alert("Session expired please login again");
-      localStorage.removeItem("token");
+      localStorage.removeItem("authToken");
     }
 
     let errorMessage =
