@@ -75,9 +75,7 @@ export default function SignUp() {
       })
       .catch((err) => {
         toast.error(err.message);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        return navigate("/");
       });
   }
 
@@ -100,9 +98,7 @@ export default function SignUp() {
       })
       .catch((err) => {
         toast.error(err.message);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        return navigate("/");
       });
   };
 
@@ -188,15 +184,11 @@ export default function SignUp() {
       .then((res) => {
         toast.success(`Authentication Successfull `);
         toast.success(`User ${userEmail} created`);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        return navigate("/");
       })
       .catch((err) => {
         toast.error(err.message);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        return navigate("/");
       });
   };
 

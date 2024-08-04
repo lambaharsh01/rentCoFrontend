@@ -9,10 +9,11 @@ import SignUp from "./modules/auth/signUp.jsx";
 
 import Dashboard from "./modules/dashboard/dashboard.jsx";
 
-import GroupsIndex from "./modules/groups/groupsIndex.js";
-import CreateGroup from "./modules/groups/createGroup.js";
+import GroupsIndex from "./modules/groups/groupsIndex.jsx";
+import CreateGroup from "./modules/groups/createGroup.jsx";
+import GroupInfo from "./modules/groups/groupInfo.jsx";
 
-import AnalyticsIndex from "./modules/analytics/analyticsIndex.js";
+import AnalyticsIndex from "./modules/analytics/analyticsIndex.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
 
           <Route path="/groupIndex" element={<GroupsIndex />} />
           <Route path="/createGroup" element={<CreateGroup />} />
+          <Route path="/groupInfo/:groupId" element={<GroupInfo />} />
 
           <Route path="/analyticsIndex" element={<AnalyticsIndex />} />
         </Routes>

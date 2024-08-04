@@ -23,9 +23,7 @@ export default function SignIn() {
             if (!res.data.token) throw new Error("Something went wrong");
             localStorage.setItem("authToken", res.data.token);
             toast.success(`Welcome back ${res.data.userName}!`);
-            setTimeout(() => {
-              navigate("/dashboard");
-            }, 2000);
+            return navigate("/dashboard");
           })
           .catch((err) => {
             toast.error(err.message);

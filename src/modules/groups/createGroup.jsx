@@ -12,6 +12,8 @@ export default function CreateGroup() {
   const validateGroup = () => {
     if (groupName.length < 4)
       return toast.error("Enter at least 4 characters in the group name.");
+    if (groupDiscription.length < 6)
+      return toast.error("Enter a small discription of the group (i.e. what it is for)");
 
     axiosInterceptor({
       url: "/api/group/createGroup",
@@ -20,9 +22,7 @@ export default function CreateGroup() {
     })
       .then((res) => {
         toast.success(res.message);
-        setTimeout(() => {
-          navigate("/groupIndex");
-        }, 2000);
+        return navigate("/groupIndex");
       })
       .catch((error) => toast.error(error.message));
   };

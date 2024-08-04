@@ -11,6 +11,9 @@ import Skeleton from "react-loading-skeleton";
 import isSmallScreen from "../../utils/isSmallScreen";
 
 export default function GroupsIndex() {
+
+    const navigate = useNavigate();
+
   const [groups, setGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,7 +29,6 @@ export default function GroupsIndex() {
       .catch((error) => toast.error(error.message));
   }, []);
 
-  const navigate = useNavigate();
   return (
     <div>
       <Header active="g" />
@@ -51,13 +53,14 @@ export default function GroupsIndex() {
             </div>
           ) : (
             <div>
-              {groups.map((element, index) => (
+              { groups.length ?  groups.map((element, index) => (
                 <div
+                  key={`Group${index}`}
+                  onClick={()=>navigate(`/groupInfo/${element._id}`)}
                   style={{ height: 70 }}
                   className={`mb-3 flex justify-around items-center bg-slate-100 ${
                     isSmallScreen() ? "text-sm" : "text-lg"
                   }`}
-                  onClick={() => {}}
                 >
                   <span className="text-center">
                     <span className="rentCoRedFont font-medium">
@@ -81,7 +84,9 @@ export default function GroupsIndex() {
                     <span className="font-medium">{element.createdAt}</span>
                   </span>
                 </div>
-              ))}
+              )) : (
+                    <div>No Groups Found</div>
+              )}
             </div>
           )}
         </div>
