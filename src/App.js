@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import axios from "axios";
+
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import IndexPage from "./modules/auth/indexPage.jsx";
@@ -16,6 +17,11 @@ import AnalyticsIndex from "./modules/analytics/analyticsIndex.js";
 function App() {
   return (
     <div>
+      <ToastContainer
+        autoClose={2000}
+        hideProgressBar={true}
+        newestOnTop={true}
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<IndexPage />} />

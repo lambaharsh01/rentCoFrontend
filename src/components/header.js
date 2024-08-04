@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import isSmallScreen from "../utils/isSmallScreen";
 
 import "./header.css";
 
@@ -8,19 +9,17 @@ export default function Header({ active }) {
   // active suppose to be on of (d,g,a) to show on of the classes active
   const [rentCoModule, setRentCoModule] = useState("Co.");
 
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
   const setModuleCall = useCallback(() => {
     switch (active) {
-      case "d":
-        setRentCoModule("Da.");
-        break;
-      case "g":
-        setRentCoModule("Gr.");
-        break;
-      case "a":
-        setRentCoModule("An.");
-        break;
+      // case "d":
+      //   setRentCoModule("Da.");
+      //   break;
+      // case "g":
+      //   setRentCoModule("Gr.");
+      //   break;
+      // case "a":
+      //   setRentCoModule("An.");
+      //   break;
       default:
         setRentCoModule("Co.");
         break;
@@ -38,26 +37,17 @@ export default function Header({ active }) {
     setModuleCall();
   }, [ifAuthenticated, setModuleCall]);
 
-  useEffect(() => {
-    const updateScreenWidth = () => {
-      setIsSmallScreen(window.innerWidth <= 576);
-    };
-    window.addEventListener("resize", updateScreenWidth);
-    updateScreenWidth();
-    return () => window.removeEventListener("resize", updateScreenWidth);
-  }, []);
-
   return (
     <div>
       <div
         className={`fixed top-0 ${
-          isSmallScreen ? "headerMainSmallScreen" : "headerMainNotSmallScreen"
+          isSmallScreen() ? "headerMainSmallScreen" : "headerMainNotSmallScreen"
         } flex pb-1 bg-white`}
       >
         <div className="w-2/5 h-full flex items-end">
           <div
             className={`rentCoFont mainFont ${
-              isSmallScreen ? "text-4xl ms-2" : "text-6xl ms-3"
+              isSmallScreen() ? "text-4xl ms-2" : "text-6xl ms-3"
             }`}
             onClick={() => {
               navigate("/dashboard");
@@ -71,14 +61,16 @@ export default function Header({ active }) {
         </div>
         <div
           className={`w-3/5 h-full flex justify-end items-end font-medium ${
-            isSmallScreen ? "text-xs" : "text-base"
+            isSmallScreen() ? "text-xs" : "text-base"
           }`}
         >
           <span
             onClick={() => {
               navigate("/dashboard");
             }}
-            className={`me-2 me-md-4 pb-1 ${active === "d" ? "font-bold" : ""}`}
+            className={`me-2 me-md-4 pb-1 ${
+              active === "d" ? "font-bold rentCoRedFont" : ""
+            }`}
           >
             DASHBOARD
           </span>
@@ -86,7 +78,9 @@ export default function Header({ active }) {
             onClick={() => {
               navigate("/groupIndex");
             }}
-            className={`me-2 me-md-4 pb-1 ${active === "g" ? "font-bold" : ""}`}
+            className={`me-2 me-md-4 pb-1 ${
+              active === "g" ? "font-bold rentCoRedFont" : ""
+            }`}
           >
             GROUPS
           </span>
@@ -94,7 +88,9 @@ export default function Header({ active }) {
             onClick={() => {
               navigate("/analyticsIndex");
             }}
-            className={`me-2 me-md-4 pb-1 ${active === "a" ? "font-bold" : ""}`}
+            className={`me-2 me-md-4 pb-1 ${
+              active === "a" ? "font-bold rentCoRedFont" : ""
+            }`}
           >
             ANALYTICS
           </span>
@@ -104,7 +100,7 @@ export default function Header({ active }) {
       <div
         className={`
           ${
-            isSmallScreen
+            isSmallScreen()
               ? "placeholderHeaderSmallScreen"
               : "placeholderHeaderNotSmallScreen"
           }

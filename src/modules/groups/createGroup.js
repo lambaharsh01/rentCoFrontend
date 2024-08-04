@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
 export default function CreateGroup() {
@@ -11,7 +11,7 @@ export default function CreateGroup() {
 
   const validateGroup = () => {
     if (groupName.length < 4)
-      toast.error("Enter at least 4 characters in the group name.");
+      return toast.error("Enter at least 4 characters in the group name.");
 
     axiosInterceptor({
       url: "/api/group/createGroup",
@@ -28,14 +28,8 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="min-h-screen p-2">
+    <div className="min-h-screen">
       <Header active="g" />
-
-      <ToastContainer
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={true}
-      />
 
       <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
         <h1 className="rentCoFont mainFont text-4xl ps-2">
@@ -43,7 +37,7 @@ export default function CreateGroup() {
         </h1>
       </div>
 
-      <div className="col-md-10 offset-md-1 bg-white ">
+      <div className="col-md-10 offset-md-1 bg-white p-2">
         <input
           type="text"
           className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"

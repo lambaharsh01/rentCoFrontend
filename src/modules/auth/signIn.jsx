@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { loginSchema } from "../../utils/authSchemas.js";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
@@ -44,11 +44,7 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center w-full h-screen rentCoRed">
-      <ToastContainer
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={true}
-      />
+ 
       <div className="w-100">
         <div className="rentCoRed col-lg-8 col-12 offset-0 offset-lg-2 h-1/6 flex items-end">
           <h1 className="rentCoFont mainFont text-7xl ps-2">
@@ -80,7 +76,7 @@ export default function SignIn() {
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >
-                Verify OTP
+                Sign In
               </button>
             </div>
           </div>

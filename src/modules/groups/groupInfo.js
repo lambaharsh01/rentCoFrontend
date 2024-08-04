@@ -1,7 +1,7 @@
 import Header from "../../components/header";
-import { FaCirclePlus } from "react-icons/fa6";
+import { MdGroupAdd } from "react-icons/md";
 
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ export default function GroupsIndex() {
             <h1 className="rentCoFont mainFont text-4xl ps-2">
               <span className="outlined-text-thin text-white">Groups</span>
             </h1>
-            <FaCirclePlus
+            <MdGroupAdd
               className="text-3xl me-2"
               onClick={() => navigate("/createGroup")}
             />
