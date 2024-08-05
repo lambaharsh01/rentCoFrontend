@@ -65,9 +65,20 @@ const ImageCropper = ({
       );
 
       // Convert the canvas content to a data URL (JPEG format)
-      const dataURL = canvasEle.toDataURL("image/jpeg");
-      onCropComplete(dataURL);
+      const compression = 0.5;
+      const dataURL = canvasEle.toDataURL("image/jpeg", compression);
+
+      const payloadSizeBytes = dataURL.length;
+      const payloadSizeMB = (payloadSizeBytes / (1024 * 1024)).toFixed(2);
+
       setShowModal(false);
+
+      if (payloadSizeMB > 1)
+        return toast.error(
+          "Image exceed the threshold of 1mb please select a lighter image"
+        );
+
+      onCropComplete(dataURL);
     };
   };
 
