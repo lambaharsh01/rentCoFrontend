@@ -1,0 +1,30 @@
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.upload-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* MODAL */
+
+.moda_height_for_the_crop {
+  min-height: 500px;
+}
+
+.moda_height_for_delete_confirmation {
+  min-height: 150px;
+}
+
+.modal_cutBtn {
+  color: rgb(54, 54, 54);
+  float: right;
+}
+
+.blurModalBackground {
+  background-color: #e8e8e8;
+}

@@ -30,8 +30,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     let apiMethod = method.toLowerCase().trim();
 
     // let apiUrl = "http://localhost:4000";
-    // let apiUrl = "http://192.168.0.135:4000";
-    let apiUrl = "http://192.168.253.20:4000";
+    let apiUrl = "http://192.168.0.135:4000";
 
     apiUrl += url.trim() + convertQueryString(query);
 
@@ -78,8 +77,6 @@ export default async function axiosInterceptor({ method, url, query, data }) {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-
     let statusMessage;
 
     let errorCode = error?.response?.status ?? 405;

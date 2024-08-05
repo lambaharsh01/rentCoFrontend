@@ -57,7 +57,6 @@ export default function SignUp() {
           toast.error(err.errors?.[0]);
         } else {
           toast.error("Validation failed some unknown error");
-          console.log("Validation errors:", err.errors);
         }
       });
   };
@@ -194,7 +193,6 @@ export default function SignUp() {
 
   return (
     <div className="flex justify-center w-full h-screen rentCoRed">
-
       <div className="w-100">
         <div className="rentCoRed col-lg-8 col-12 offset-0 offset-lg-2 h-1/6 flex items-end">
           <h1 className="rentCoFont mainFont text-7xl ps-2">

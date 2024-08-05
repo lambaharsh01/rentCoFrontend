@@ -19,32 +19,35 @@ export default function GroupsIndex() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [groupName, setGroupName] = useState("");
+  const [groupCreatedAt, setGroupCreatedAt] = useState("");
   const [groupDiscription, setGroupDiscription] = useState("");
-  const [totalMembers, setTotalMembers] = useState(0);
-  const [memberList, setMemberList] = useState([]);
+  const [totalTenants, setTotalTenants] = useState(0);
+  // const [tenantList, setTenantList] = useState([]);
 
   const getBaseGroupInfo = useCallback(() => {
     axiosInterceptor({
       url: "/api/group/getGroupInfo",
       method: "get",
-      query:{groupId}
+      query: { groupId },
     })
       .then((res) => {
         setIsLoading(false);
-        setGroupName('Dukan')
-        setGroupDiscription('setGroupDiscription setGroupDiscription setGroupDiscription setGroupDiscription setGroupDiscription setGroupDiscription setGroupDiscription setGroupDiscription');
-        setTotalMembers(5)
+        setGroupName(res?.data?.groupInfo?.groupName ?? "");
 
-        // setMemberList
+        setGroupDiscription(res?.data?.groupInfo?.groupDiscription ?? "");
+        setTotalTenants(res?.data?.groupInfo?.tenantCount ?? "");
+        setGroupCreatedAt(res?.data?.groupInfo?.createdAt ?? "");
+
+        // setTenantList
       })
       .catch((error) => {
-        toast.error(error.message) 
-        navigate('/groupIndex');
+        toast.error(error.message);
+        navigate("/groupIndex");
       });
-  },[groupId, navigate])
+  }, [groupId, navigate]);
 
   useEffect(() => {
-    getBaseGroupInfo()
+    getBaseGroupInfo();
   }, [getBaseGroupInfo]);
 
   return (
@@ -54,14 +57,18 @@ export default function GroupsIndex() {
       <div className="container-fluid">
         <div className="row px-4 pt-4">
           <div className="col-12 flex justify-between mb-3 items-center">
-            <h1 className="rentCoFont text-3xl ps-2"> 
-              { isLoading ? (
-                <span><Skeleton width={70}/></span>
-              ) : groupName}
+            <h1 className="rentCoFont text-3xl ps-2">
+              {isLoading ? (
+                <span>
+                  <Skeleton width={70} />
+                </span>
+              ) : (
+                groupName
+              )}
             </h1>
             <MdGroupAdd
               className="text-3xl me-2"
-              onClick={() => navigate("/createGroup")}
+              onClick={() => navigate(`/addTenant/${groupId}`)}
             />
           </div>
 
@@ -72,13 +79,26 @@ export default function GroupsIndex() {
               </h1>
             </div>
           ) : (
-              <div className="w-100">
-                  <details>
-                  <summary className="font-medium list-none">Click for Group Details</summary>
-                  <p className="text-sm ps-4">
-                    <span className="font-medium">Discription</span>: <span className="font-light text-xs">{groupDiscription}</span>
-                  </p>
-                  </details>
+            <div className="w-100">
+              <details>
+                <summary className="font-medium list-none text-blue-600 ps-2">
+                  Group Details
+                </summary>
+                <span className="text-sm ps-4">
+                  <span className="font-medium">Created At</span>:{" "}
+                  <span className="font-light text-xs">{groupCreatedAt}</span>
+                </span>
+                <br />
+                <span className="text-sm ps-4">
+                  <span className="font-medium">Total Tenants</span>:{" "}
+                  <span className="font-light text-xs">{totalTenants}</span>
+                </span>
+                <br />
+                <span className="text-sm ps-4">
+                  <span className="font-medium">Discription</span>:{" "}
+                  <span className="font-light text-xs">{groupDiscription}</span>
+                </span>
+              </details>
             </div>
           )}
         </div>
