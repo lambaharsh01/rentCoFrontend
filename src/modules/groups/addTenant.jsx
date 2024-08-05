@@ -7,7 +7,12 @@ import { tenantSchema } from "../../utils/authSchemas";
 
 import ImageCropper from "../../components/imageCropper";
 
+import Skeleton from "react-loading-skeleton";
+
 export default function AddTenant() {
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const params = useParams();
   const navigate = useNavigate();
 
@@ -46,7 +51,7 @@ export default function AddTenant() {
     tenantSchema
       .validate(tenentInfo, { abortEarly: false }) // abortEarly: false ensures all validation errors are returned
       .then((validTenant) => {
-        if (tenantPhoneNumber == tenantBackupPhoneNumber)
+        if (tenantPhoneNumber === tenantBackupPhoneNumber)
           return toast.error(
             "Phone number and backup phone number can not be the same"
           );
@@ -66,6 +71,9 @@ export default function AddTenant() {
         if (tenantPicture.length > 100)
           validTenant.tenantPicture = tenantPicture;
 
+
+        setIsLoading(true);
+
         axiosInterceptor({
           url: "/api/tenant/validTenant",
           method: "post",
@@ -74,12 +82,12 @@ export default function AddTenant() {
           .then((res) => {
             toast.success("Tenant creted successfully.");
             navigate(`/groupInfo/${groupId}`);
+            setIsLoading(false);
           })
           .catch((error) => {
             setDissabled(false);
-            console.log(error);
-            // toast.error("Images exceed the combined threshold of 5mbs");
-            // toast.error("Try again later or try with compressed pictures");
+            toast.error(error.message);
+            setIsLoading(false);
           });
       })
       .catch((err) => {
@@ -97,7 +105,14 @@ export default function AddTenant() {
     <div className="min-h-screen">
       <Header active="g" />
 
-      <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
+      {isLoading ? (
+        <div className="p-3">
+          <h1 className="mt-3">
+            <Skeleton count={2} height={70} className="mb-3" />
+          </h1>
+      </div>
+      ):(
+<><div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
         <h1 className="rentCoFont mainFont text-4xl ps-2">
           <span className="outlined-text-thin text-white">Add Tenant</span>
         </h1>
@@ -258,7 +273,8 @@ export default function AddTenant() {
         >
           Add Tenant
         </button>
-      </div>
+    </div>
+  </>)}
     </div>
   );
 }
