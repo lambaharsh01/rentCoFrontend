@@ -56,3 +56,59 @@ export const loginSchema = yup.object().shape({
     .min(5, "Wrong password")
     .max(30, "Wrong password"),
 });
+
+export const tenantSchema = yup.object().shape({
+  groupId: yup.string().required("Group ID not found, can not proceed ahead"),
+  tenantName: yup
+    .string()
+    .required("Please enter tenant's name")
+    .min(3, "Name is too short")
+    .max(30, "Name is too long"),
+
+  tenantEmail: yup
+    .string()
+    .test("emptyOrValidEmail", "Please enter a valid email", function (value) {
+      if (!value) return true;
+      return yup
+        .string()
+        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+        .isValidSync(value);
+    }),
+  tenantPhoneNumber: yup
+    .string()
+    .required("Please enter tenant's phone number")
+    .matches(/^[6-9]\d{9}$/, "Please enter a valid phone number"),
+  tenantBackupPhoneNumber: yup
+    .string()
+    .test(
+      "emptyOrValidBackupPhoneNumber",
+      "Please enter a valid backup phone number",
+      function (value) {
+        if (!value) return true;
+        return yup
+          .string()
+          .matches(/^[6-9]\d{9}$/)
+          .isValidSync(value);
+      }
+    ),
+  gender: yup.string().required("Please select a gender"),
+  tenancyType: yup.string().required("Please select tenancy type"),
+  rentAmount: yup
+    .number()
+    .transform((value, originalValue) => {
+      if (!originalValue) return 0;
+      return value;
+    })
+    .required("Please Enter rent amount")
+    .min(1, "Rent has to be more than 0"),
+  aadhaarNumber: yup
+    .string()
+    .test(
+      "emptyOrValidAadharNumber",
+      "Please enter a valid aadhaar number",
+      function (value) {
+        if (!value) return true;
+        return yup.string().min(12).max(12).isValidSync(value);
+      }
+    ),
+});
