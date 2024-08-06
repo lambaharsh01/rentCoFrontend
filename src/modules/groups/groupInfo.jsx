@@ -1,5 +1,6 @@
 import Header from "../../components/header";
 import { MdGroupAdd } from "react-icons/md";
+import { IoInformationCircleSharp } from "react-icons/io5";
 
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,9 +9,10 @@ import { useCallback, useEffect, useState } from "react";
 
 import Skeleton from "react-loading-skeleton";
 
-// import isSmallScreen from "../../utils/isSmallScreen";
+import isSmallScreen from "../../utils/isSmallScreen";
 
 export default function GroupsIndex() {
+  const smallScreen = isSmallScreen();
   const params = useParams();
   const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ export default function GroupsIndex() {
   const [groupCreatedAt, setGroupCreatedAt] = useState("");
   const [groupDiscription, setGroupDiscription] = useState("");
   const [totalTenants, setTotalTenants] = useState(0);
-  // const [tenantList, setTenantList] = useState([]);
+  const [tenantList, setTenantList] = useState([]);
 
   const getBaseGroupInfo = useCallback(() => {
     axiosInterceptor({
@@ -38,7 +40,7 @@ export default function GroupsIndex() {
         setTotalTenants(res?.data?.groupInfo?.tenantCount ?? "");
         setGroupCreatedAt(res?.data?.groupInfo?.createdAt ?? "");
 
-        // setTenantList
+        setTenantList(res?.data?.groupInfo?.tenants ?? []);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -55,7 +57,7 @@ export default function GroupsIndex() {
       <Header active="g" />
 
       <div className="container-fluid">
-        <div className="row px-4 pt-4">
+        <div className="row px-2 pt-4">
           <div className="col-12 flex justify-between mb-3 items-center">
             <h1 className="rentCoFont text-3xl ps-2">
               {isLoading ? (
@@ -80,9 +82,9 @@ export default function GroupsIndex() {
             </div>
           ) : (
             <div className="w-100">
-              <details>
-                <summary className="font-medium list-none text-blue-600 ps-2">
-                  Group Details
+              <details className="border-2 rounded-md py-1 mb-4">
+                <summary className="list-none ps-2">
+                  <IoInformationCircleSharp className="text-lg" />
                 </summary>
                 <span className="text-sm ps-4">
                   <span className="font-medium">Created At</span>:{" "}
@@ -99,6 +101,23 @@ export default function GroupsIndex() {
                   <span className="font-light text-xs">{groupDiscription}</span>
                 </span>
               </details>
+              {tenantList.map((element, index) => (
+                <div
+                  className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${
+                    smallScreen ? "h-16" : "h-20"
+                  }`}
+                >
+                  <img
+                    src={element.tenantPicture}
+                    alt="tenantImages"
+                    className="rounded-full h-100 ms-1"
+                    loading="lazy"
+                  />
+                  <span>{element.tenantName}</span>
+                  <span>{element.tenantPhoneNumber}</span>
+                  <span>{element.rentAmount}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>
