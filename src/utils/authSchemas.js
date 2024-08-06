@@ -93,14 +93,10 @@ export const tenantSchema = yup.object().shape({
     ),
   gender: yup.string().required("Please select a gender"),
   tenancyType: yup.string().required("Please select tenancy type"),
-  rentAmount: yup
-    .number()
-    .transform((value, originalValue) => {
-      if (!originalValue) return 0;
-      return value;
-    })
-    .required("Please Enter rent amount")
-    .min(1, "Rent has to be more than 0"),
+  propertyName: yup
+    .string()
+    .min(3, "Property name should be at least 3 characters")
+    .max(30, "Property name should be at max 30 characters"),
   aadhaarNumber: yup
     .string()
     .test(
@@ -111,4 +107,12 @@ export const tenantSchema = yup.object().shape({
         return yup.string().min(12).max(12).isValidSync(value);
       }
     ),
+  rentAmount: yup
+    .number()
+    .transform((value, originalValue) => {
+      if (!originalValue) return 0;
+      return value;
+    })
+    .required("Please Enter rent amount")
+    .min(1, "Rent has to be more than 0"),
 });

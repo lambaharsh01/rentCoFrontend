@@ -23,6 +23,11 @@ function App() {
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        draggablePercent={20}
+        pauseOnHover
       />
       <BrowserRouter>
         <Routes>
