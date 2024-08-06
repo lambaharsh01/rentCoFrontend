@@ -1,6 +1,7 @@
 import Header from "../../components/header";
 import { MdGroupAdd } from "react-icons/md";
 import { IoInformationCircleSharp } from "react-icons/io5";
+import { MdDelete,MdEdit } from "react-icons/md";
 
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -52,6 +53,26 @@ export default function GroupsIndex() {
     getBaseGroupInfo();
   }, [getBaseGroupInfo]);
 
+  const deleteGroup = () => {
+    var confimDeleteGroup = window.confirm(`Are you sure you want to delete Group(${groupName})`);
+
+    if (!confimDeleteGroup) return;
+    
+    axiosInterceptor({
+      url: `/api/group/deleteGroup/${groupId}`,
+      method: "delete",
+    })
+      .then((res) => {
+         toast.success(`Group ${groupName} no longer exists`);
+        navigate("/groupIndex");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        navigate("/groupIndex");
+      });
+    
+  }
+
   return (
     <div>
       <Header active="g" />
@@ -82,10 +103,15 @@ export default function GroupsIndex() {
             </div>
           ) : (
             <div className="w-100">
-              <details className="border-2 rounded-md py-1 mb-4">
+              <details className="border-2 rounded-md py-1 mb-4 relative">
                 <summary className="list-none ps-2">
                   <IoInformationCircleSharp className="text-lg" />
-                </summary>
+                  </summary>
+                  
+                  <div className="absolute right-0 bottom-0 text-2xl pe-2 pb-2">
+                    <MdDelete className="mb-2 text-red-600" onClick={deleteGroup}/>
+                    <MdEdit className="text-blue-950"/>
+                  </div>
                 <span className="text-sm ps-4">
                   <span className="font-medium">Created At</span>:{" "}
                   <span className="font-light text-xs">{groupCreatedAt}</span>
