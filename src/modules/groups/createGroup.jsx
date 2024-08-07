@@ -1,7 +1,14 @@
+//react
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+//components
 import Header from "../../components/header";
+
+//ui
 import { toast } from "react-toastify";
+
+//function
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
 export default function CreateGroup() {
@@ -13,7 +20,9 @@ export default function CreateGroup() {
     if (groupName.length < 4)
       return toast.error("Enter at least 4 characters in the group name.");
     if (groupDiscription.length < 6)
-      return toast.error("Enter a small discription of the group (i.e. what it is for)");
+      return toast.error(
+        "Enter a small discription of the group (i.e. what it is for)"
+      );
 
     axiosInterceptor({
       url: "/api/group/createGroup",

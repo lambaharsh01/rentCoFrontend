@@ -1,16 +1,24 @@
-import Header from "../../components/header";
-import { MdGroupAdd } from "react-icons/md";
-import { IoInformationCircleSharp } from "react-icons/io5";
-import { MdDelete,MdEdit } from "react-icons/md";
-
-import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import axiosInterceptor from "../../utils/axiosInterceptor";
+//react
 import { useCallback, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
+//components
+import Header from "../../components/header";
 import Skeleton from "react-loading-skeleton";
 
+//icons
+import { MdGroupAdd } from "react-icons/md";
+import { IoInformationCircleSharp } from "react-icons/io5";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdDelete, MdEdit } from "react-icons/md";
+
+//ui
+import { toast } from "react-toastify";
+import { Dropdown } from "react-bootstrap";
+
+//functions
 import isSmallScreen from "../../utils/isSmallScreen";
+import axiosInterceptor from "../../utils/axiosInterceptor";
 
 export default function GroupsIndex() {
   const smallScreen = isSmallScreen();
@@ -18,6 +26,8 @@ export default function GroupsIndex() {
   const navigate = useNavigate();
 
   const { groupId } = params;
+
+  const [updationCount, setUpdationCount] = useState(1);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,27 +61,28 @@ export default function GroupsIndex() {
 
   useEffect(() => {
     getBaseGroupInfo();
-  }, [getBaseGroupInfo]);
+  }, [getBaseGroupInfo, updationCount]);
 
-  const deleteGroup = () => {
-    var confimDeleteGroup = window.confirm(`Are you sure you want to delete Group(${groupName})`);
+  const deleteUser = (tenantId, tenantName) => {
+    var confimDeleteGroup = window.confirm(
+      `Are you sure you want to remove ${tenantName} from the group.`
+    );
 
     if (!confimDeleteGroup) return;
-    
+
     axiosInterceptor({
-      url: `/api/group/deleteGroup/${groupId}`,
+      url: `/api/group/softDeleteTenant/${tenantId}`,
       method: "delete",
     })
       .then((res) => {
-         toast.success(`Group ${groupName} no longer exists`);
-        navigate("/groupIndex");
+        toast.success(`Group ${tenantName} no longer exists`);
+        setUpdationCount((prevCount) => prevCount + 1);
       })
       .catch((error) => {
         toast.error(error.message);
         navigate("/groupIndex");
       });
-    
-  }
+  };
 
   return (
     <div>
@@ -103,15 +114,11 @@ export default function GroupsIndex() {
             </div>
           ) : (
             <div className="w-100">
-              <details className="border-2 rounded-md py-1 mb-4 relative">
+              <details className="border-2 rounded-md py-1 mb-4">
                 <summary className="list-none ps-2">
                   <IoInformationCircleSharp className="text-lg" />
-                  </summary>
-                  
-                  <div className="absolute right-0 bottom-0 text-2xl pe-2 pb-2">
-                    <MdDelete className="mb-2 text-red-600" onClick={deleteGroup}/>
-                    <MdEdit className="text-blue-950"/>
-                  </div>
+                </summary>
+
                 <span className="text-sm ps-4">
                   <span className="font-medium">Created At</span>:{" "}
                   <span className="font-light text-xs">{groupCreatedAt}</span>
@@ -142,6 +149,43 @@ export default function GroupsIndex() {
                   <span>{element.tenantName}</span>
                   <span>{element.tenantPhoneNumber}</span>
                   <span>{element.rentAmount}</span>
+                  <span className="text-center">
+                    <Dropdown>
+                      <Dropdown.Toggle variant="none">
+                        <BsThreeDotsVertical className="text-2xl" />
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu style={{ minWidth: 80 }}>
+                        <div className="w-100 flex justify-center">
+                          <div>
+                            <div
+                              className="flex justify-between"
+                              onClick={() =>
+                                deleteUser(element._id, element.groupName)
+                              }
+                            >
+                              <span className="font-light text-xs pt-1">
+                                Delete
+                              </span>
+                              <MdDelete className="mb-1 text-red-500 text-xl" />
+                            </div>
+
+                            <div
+                              className="flex justify-between"
+                              onClick={() =>
+                                navigate(`/editGroup/${element._id}`)
+                              }
+                            >
+                              <span className="font-light text-xs pt-1">
+                                Edit
+                              </span>
+                              <MdEdit className="mt-1 text-blue-500 text-xl" />
+                            </div>
+                          </div>
+                        </div>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </span>
                 </div>
               ))}
             </div>

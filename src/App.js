@@ -10,9 +10,11 @@ import SignUp from "./modules/auth/signUp.jsx";
 import Dashboard from "./modules/dashboard/dashboard.jsx";
 
 import GroupsIndex from "./modules/groups/groupsIndex.jsx";
-import CreateGroup from "./modules/groups/createGroup.jsx";
 import GroupInfo from "./modules/groups/groupInfo.jsx";
-import AddTenant from "./modules/groups/addTenant.jsx";
+import CreateGroup from "./modules/groups/createGroup.jsx";
+import EditGroup from "./modules/groups/editGroup.jsx";
+
+import AddTenant from "./modules/tenants/addTenant.jsx";
 
 import AnalyticsIndex from "./modules/analytics/analyticsIndex.jsx";
 
@@ -40,6 +42,8 @@ function App() {
           <Route path="/groupIndex" element={<GroupsIndex />} />
           <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/groupInfo/:groupId" element={<GroupInfo />} />
+          <Route path="/editGroup/:groupId" element={<EditGroup />} />
+
           <Route path="/addTenant/:groupId" element={<AddTenant />} />
 
           <Route path="/analyticsIndex" element={<AnalyticsIndex />} />
