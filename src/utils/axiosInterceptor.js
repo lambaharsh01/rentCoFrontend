@@ -30,7 +30,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     let apiMethod = method.toLowerCase().trim();
 
     // let apiUrl = "http://localhost:4000";
-    let apiUrl = "http://192.168.201.20:4000";
+    let apiUrl = "http://192.168.119.92:4000";
 
     apiUrl += url.trim() + convertQueryString(query);
 
@@ -129,6 +129,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     if (errorCode === 401) {
       alert("Session expired please login again");
       localStorage.removeItem("authToken");
+      window.location.reload();
     }
 
     let errorMessage =

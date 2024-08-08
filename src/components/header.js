@@ -28,7 +28,7 @@ export default function Header({ active }) {
 
   const ifAuthenticated = useCallback(() => {
     if (!localStorage.getItem("authToken")) {
-      navigate("/signIn");
+      navigate("/signIn", { replace: true });
     }
   }, [navigate]);
 
@@ -50,7 +50,7 @@ export default function Header({ active }) {
               isSmallScreen() ? "text-4xl ms-2" : "text-6xl ms-3"
             }`}
             onClick={() => {
-              navigate("/dashboard");
+              navigate("/dashboard", { replace: true });
             }}
           >
             <span className="rentCoRedFont me-1 mb-0">Rent</span>
@@ -66,7 +66,7 @@ export default function Header({ active }) {
         >
           <span
             onClick={() => {
-              navigate("/dashboard");
+              navigate("/dashboard", { replace: true });
             }}
             className={`me-2 me-md-4 pb-1 ${
               active === "d" ? "font-bold rentCoRedFont" : ""

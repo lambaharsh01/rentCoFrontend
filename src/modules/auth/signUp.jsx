@@ -74,7 +74,7 @@ export default function SignUp() {
       })
       .catch((err) => {
         toast.error(err.message);
-        return navigate("/");
+        return navigate("/", { replace: true });
       });
   }
 
@@ -97,7 +97,7 @@ export default function SignUp() {
       })
       .catch((err) => {
         toast.error(err.message);
-        return navigate("/");
+        return navigate("/", { replace: true });
       });
   };
 
@@ -183,11 +183,11 @@ export default function SignUp() {
       .then((res) => {
         toast.success(`Authentication Successfull `);
         toast.success(`User ${userEmail} created`);
-        return navigate("/");
+        return navigate("/", { replace: true });
       })
       .catch((err) => {
         toast.error(err.message);
-        return navigate("/");
+        return navigate("/", { replace: true });
       });
   };
 
