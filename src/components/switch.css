@@ -1,0 +1,29 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px; /* increased width to accommodate padding */
+  height: 24px; /* increased height to accommodate padding */
+  background-color: #ccc;
+  border-radius: 12px; /* increased radius to match new height */
+  cursor: pointer;
+  padding: 2px; /* added padding to create gap */
+}
+
+.switch.active {
+  background-color: #4caf50;
+}
+
+.switch-handle {
+  position: absolute;
+  top: 2px; /* adjusted top to match padding */
+  left: 4px; /* adjusted left to match padding */
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.switch.active .switch-handle {
+  transform: translateX(22px); /* adjusted translateX to match new width */
+}
