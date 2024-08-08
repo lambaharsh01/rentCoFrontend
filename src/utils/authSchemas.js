@@ -58,7 +58,7 @@ export const loginSchema = yup.object().shape({
 });
 
 export const tenantSchema = yup.object().shape({
-  groupId: yup.string().required("Group ID not found, can not proceed ahead"),
+  // groupId: yup.string().required("Group ID not found, can not proceed ahead"),
   tenantName: yup
     .string()
     .required("Please enter tenant's name")

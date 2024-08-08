@@ -50,7 +50,6 @@ export default function GroupsIndex() {
         setGroupDiscription(res?.data?.groupInfo?.groupDiscription ?? "");
         setTotalTenants(res?.data?.groupInfo?.tenantCount ?? "");
         setGroupCreatedAt(res?.data?.groupInfo?.createdAt ?? "");
-
         setTenantList(res?.data?.groupInfo?.tenants ?? []);
       })
       .catch((error) => {
@@ -71,7 +70,7 @@ export default function GroupsIndex() {
     if (!confimDeleteGroup) return;
 
     axiosInterceptor({
-      url: `/api/group/softDeleteTenant/${tenantId}`,
+      url: `/api/tenant/deleteTenant/${tenantId}`,
       method: "delete",
     })
       .then((res) => {
@@ -136,6 +135,7 @@ export default function GroupsIndex() {
               </details>
               {tenantList.map((element, index) => (
                 <div
+                  key={`Tenant${index}`}
                   className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${
                     smallScreen ? "h-16" : "h-20"
                   }`}
@@ -161,7 +161,7 @@ export default function GroupsIndex() {
                             <div
                               className="flex justify-between"
                               onClick={() =>
-                                deleteUser(element._id, element.groupName)
+                                deleteUser(element._id, element.tenantName)
                               }
                             >
                               <span className="font-light text-xs pt-1">
@@ -173,7 +173,7 @@ export default function GroupsIndex() {
                             <div
                               className="flex justify-between"
                               onClick={() =>
-                                navigate(`/editGroup/${element._id}`)
+                                navigate(`/editTenant/${element._id}`)
                               }
                             >
                               <span className="font-light text-xs pt-1">

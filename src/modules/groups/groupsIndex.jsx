@@ -47,7 +47,7 @@ export default function GroupsIndex() {
     if (!confimDeleteGroup) return;
 
     axiosInterceptor({
-      url: `/api/group/softDeleteGroup/${groupId}`,
+      url: `/api/group/deleteGroup/${groupId}`,
       method: "delete",
     })
       .then((res) => {

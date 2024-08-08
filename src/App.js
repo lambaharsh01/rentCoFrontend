@@ -15,6 +15,7 @@ import CreateGroup from "./modules/groups/createGroup.jsx";
 import EditGroup from "./modules/groups/editGroup.jsx";
 
 import AddTenant from "./modules/tenants/addTenant.jsx";
+import EditTenant from "./modules/tenants/editTenant.jsx";
 
 import AnalyticsIndex from "./modules/analytics/analyticsIndex.jsx";
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/editGroup/:groupId" element={<EditGroup />} />
 
           <Route path="/addTenant/:groupId" element={<AddTenant />} />
+          <Route path="/editTenant/:tenantId" element={<EditTenant />} />
 
           <Route path="/analyticsIndex" element={<AnalyticsIndex />} />
         </Routes>

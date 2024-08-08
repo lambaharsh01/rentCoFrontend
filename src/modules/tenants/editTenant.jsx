@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import { toast } from "react-toastify";
@@ -9,13 +9,15 @@ import ImageCropper from "../../components/imageCropper";
 
 import Skeleton from "react-loading-skeleton";
 
-export default function AddTenant() {
-  const [isLoading, setIsLoading] = useState(false);
+export default function EditTenant() {
+  const [isLoading, setIsLoading] = useState(true);
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const { groupId } = params;
+  const { tenantId } = params;
+
+  const [groupId, setGroupId] = useState("");
 
   const [tenantName, setTenantName] = useState("");
   const [tenantEmail, setTenantEmail] = useState("");
@@ -35,9 +37,52 @@ export default function AddTenant() {
 
   const [dissabled, setDissabled] = useState(false);
 
-  const validateGroup = () => {
+  const [aadharPictureFrontChanged, setAadharPictureFrontChanged] =
+    useState(false);
+  const [aadhaarPictureBackChanged, setAadhaarPictureBackChanged] =
+    useState(false);
+  const [tenantPictureChanged, settenantPictureChanged] = useState(false);
+
+  const tenantInfoInitialise = useCallback(() => {
+    alert(tenantId);
+    axiosInterceptor({
+      url: "/api/tenant/getTenantInfo",
+      method: "get",
+      query: { tenantId },
+    })
+      .then((res) => {
+        let tenantInfo = res.data.tenantInfo ?? {};
+        setTenantName(tenantInfo.tenantName ?? "");
+        setTenantEmail(tenantInfo.tenantEmail ?? "");
+        setTenantPhoneNumber(tenantInfo.tenantPhoneNumber ?? "");
+        setTenantBackupPhoneNumber(tenantInfo.tenantBackupPhoneNumber ?? "");
+        setGender(tenantInfo.gender ?? "");
+        setTenancyType(tenantInfo.tenancyType ?? "");
+        setRentAmount(tenantInfo.rentAmount ?? "");
+        setPropertyName(tenantInfo.propertyName ?? "");
+        setPropertyAddress(tenantInfo.propertyAddress ?? "");
+        setAadhaarNumber(tenantInfo.aadhaarNumber ?? "");
+        setAadhaarPictureFront(
+          tenantInfo.aadhaarPictureFront ?? "/plainBg.jpeg"
+        );
+        setAadhaarPictureBack(tenantInfo.aadhaarPictureBack ?? "/plainBg.jpeg");
+        setTenantPicture(tenantInfo.tenantPicture ?? "/dummyUserImage.png");
+        setGroupId(tenantInfo.aadhaarPictureBack);
+
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        setIsLoading(false);
+      });
+  }, [tenantId]);
+
+  useEffect(() => {
+    tenantInfoInitialise();
+  }, [tenantInfoInitialise]);
+
+  const validateTenant = () => {
     const tenentInfo = {
-      groupId,
       tenantName,
       tenantEmail,
       tenantPhoneNumber,
@@ -66,23 +111,23 @@ export default function AddTenant() {
             "You've only added one side of aadhaar card's photo make sure you upload both"
           );
 
-        if (aadhaarPictureFront.length > 100)
+        if (aadharPictureFrontChanged)
           validTenant.aadhaarPictureFront = aadhaarPictureFront;
-        if (aadhaarPictureBack.length > 100)
+        if (aadhaarPictureBackChanged)
           validTenant.aadhaarPictureBack = aadhaarPictureBack;
-        if (tenantPicture.length > 100)
-          validTenant.tenantPicture = tenantPicture;
+        if (tenantPictureChanged) validTenant.tenantPicture = tenantPicture;
 
-        setIsLoading(true);
         setDissabled(true);
+        setIsLoading(true);
 
         axiosInterceptor({
-          url: "/api/tenant/addTenant",
-          method: "post",
+          url: "/api/tenant/editTenant",
+          method: "put",
           data: validTenant,
+          query: { tenantId },
         })
           .then((res) => {
-            toast.success("Tenant creted successfully.");
+            toast.success("Tenant edited successfully.");
             navigate(`/groupInfo/${groupId}`);
             setIsLoading(false);
           })
@@ -116,7 +161,7 @@ export default function AddTenant() {
         <>
           <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
             <h1 className="rentCoFont mainFont text-4xl ps-2">
-              <span className="outlined-text-thin text-white">Add Tenant</span>
+              <span className="outlined-text-thin text-white">Edit Tenant</span>
             </h1>
           </div>
 
@@ -241,9 +286,10 @@ export default function AddTenant() {
                 <br />
                 <ImageCropper
                   ratio={3 / 2}
-                  onCropComplete={(base64Uri) =>
-                    setAadhaarPictureFront(base64Uri)
-                  }
+                  onCropComplete={(base64Uri) => {
+                    setAadhaarPictureFront(base64Uri);
+                    setAadharPictureFrontChanged(true);
+                  }}
                   height={100}
                   width={150}
                   value={aadhaarPictureFront}
@@ -261,9 +307,10 @@ export default function AddTenant() {
                 <br />
                 <ImageCropper
                   ratio={3 / 2}
-                  onCropComplete={(base64Uri) =>
-                    setAadhaarPictureBack(base64Uri)
-                  }
+                  onCropComplete={(base64Uri) => {
+                    setAadhaarPictureBack(base64Uri);
+                    setAadhaarPictureBackChanged(true);
+                  }}
                   height={100}
                   width={150}
                   value={aadhaarPictureBack}
@@ -281,7 +328,10 @@ export default function AddTenant() {
                 <br />
                 <ImageCropper
                   ratio={1 / 1}
-                  onCropComplete={(base64Uri) => setTenantPicture(base64Uri)}
+                  onCropComplete={(base64Uri) => {
+                    setTenantPicture(base64Uri);
+                    settenantPictureChanged(true);
+                  }}
                   height={150}
                   width={150}
                   value={tenantPicture}
@@ -293,9 +343,9 @@ export default function AddTenant() {
             <button
               className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
               disabled={dissabled}
-              onClick={validateGroup}
+              onClick={validateTenant}
             >
-              Add Tenant
+              Edit Tenant
             </button>
           </div>
         </>
