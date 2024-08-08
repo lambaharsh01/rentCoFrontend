@@ -54,7 +54,7 @@ export default function GroupsIndex() {
       })
       .catch((error) => {
         toast.error(error.message);
-        navigate("/groupIndex");
+        navigate("/groupIndex", { replace: true });
       });
   }, [groupId, navigate]);
 
@@ -74,12 +74,12 @@ export default function GroupsIndex() {
       method: "delete",
     })
       .then((res) => {
-        toast.success(`Group ${tenantName} no longer exists`);
+        toast.success(res.message);
         setUpdationCount((prevCount) => prevCount + 1);
       })
       .catch((error) => {
         toast.error(error.message);
-        navigate("/groupIndex");
+        navigate("/groupIndex", { replace: true });
       });
   };
 
@@ -137,7 +137,7 @@ export default function GroupsIndex() {
                 <div
                   key={`Tenant${index}`}
                   className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${
-                    smallScreen ? "h-16" : "h-20"
+                    smallScreen ? "h-16 text-xs" : "h-20"
                   }`}
                 >
                   <img

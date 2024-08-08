@@ -44,7 +44,6 @@ export default function EditTenant() {
   const [tenantPictureChanged, settenantPictureChanged] = useState(false);
 
   const tenantInfoInitialise = useCallback(() => {
-    alert(tenantId);
     axiosInterceptor({
       url: "/api/tenant/getTenantInfo",
       method: "get",
@@ -67,7 +66,7 @@ export default function EditTenant() {
         );
         setAadhaarPictureBack(tenantInfo.aadhaarPictureBack ?? "/plainBg.jpeg");
         setTenantPicture(tenantInfo.tenantPicture ?? "/dummyUserImage.png");
-        setGroupId(tenantInfo.aadhaarPictureBack);
+        setGroupId(tenantInfo.groupId);
 
         setIsLoading(false);
       })
@@ -117,6 +116,12 @@ export default function EditTenant() {
           validTenant.aadhaarPictureBack = aadhaarPictureBack;
         if (tenantPictureChanged) validTenant.tenantPicture = tenantPicture;
 
+        const editConfirmation = window.confirm(
+          "Confim infomation edit for " + tenantName
+        );
+
+        if (!editConfirmation) return;
+
         setDissabled(true);
         setIsLoading(true);
 
@@ -127,8 +132,8 @@ export default function EditTenant() {
           query: { tenantId },
         })
           .then((res) => {
-            toast.success("Tenant edited successfully.");
-            navigate(`/groupInfo/${groupId}`);
+            toast.success(res.message);
+            navigate(`/groupInfo/${groupId}`, { replace: true });
             setIsLoading(false);
           })
           .catch((error) => {
@@ -209,6 +214,7 @@ export default function EditTenant() {
                 <input
                   type="radio"
                   name="gender"
+                  checked={gender === "Male"}
                   onClick={() => setGender("Male")}
                 />
                 &nbsp; Male
@@ -217,6 +223,7 @@ export default function EditTenant() {
                 <input
                   type="radio"
                   name="gender"
+                  checked={gender === "Female"}
                   onClick={() => setGender("Female")}
                 />
                 &nbsp; Female
@@ -225,6 +232,7 @@ export default function EditTenant() {
                 <input
                   type="radio"
                   name="gender"
+                  checked={gender === "Other"}
                   onClick={() => setGender("Other")}
                 />
                 &nbsp; Other

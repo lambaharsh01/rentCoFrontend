@@ -90,7 +90,7 @@ export default function GroupsIndex() {
                     key={`Group${index}`}
                     style={{ height: 70 }}
                     className={`mb-3 flex justify-around items-center bg-slate-100 ${
-                      isSmallScreen() ? "text-sm" : "text-lg"
+                      isSmallScreen() ? "text-xs" : "text-lg"
                     }`}
                   >
                     <span

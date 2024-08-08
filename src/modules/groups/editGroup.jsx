@@ -62,11 +62,11 @@ export default function EditGroup() {
     })
       .then((res) => {
         toast.success(res.message);
-        return navigate("/groupIndex");
+        return navigate("/groupIndex", { replace: true });
       })
       .catch((error) => {
         toast.error(error.message);
-        return navigate("/groupIndex");
+        return navigate("/groupIndex", { replace: true });
       });
   };
 

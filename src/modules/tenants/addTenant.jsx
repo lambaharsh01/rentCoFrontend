@@ -83,7 +83,7 @@ export default function AddTenant() {
         })
           .then((res) => {
             toast.success("Tenant creted successfully.");
-            navigate(`/groupInfo/${groupId}`);
+            navigate(`/groupInfo/${groupId}`, { replace: true });
             setIsLoading(false);
           })
           .catch((error) => {

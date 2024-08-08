@@ -23,7 +23,7 @@ export default function SignIn() {
             if (!res.data.token) throw new Error("Something went wrong");
             localStorage.setItem("authToken", res.data.token);
             toast.success(`Welcome back ${res.data.userName}!`);
-            return navigate("/dashboard");
+            return navigate("/dashboard", { replace: true });
           })
           .catch((err) => {
             toast.error(err.message);
@@ -42,7 +42,6 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center w-full h-screen rentCoRed">
- 
       <div className="w-100">
         <div className="rentCoRed col-lg-8 col-12 offset-0 offset-lg-2 h-1/6 flex items-end">
           <h1 className="rentCoFont mainFont text-7xl ps-2">

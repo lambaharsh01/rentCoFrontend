@@ -31,7 +31,7 @@ export default function CreateGroup() {
     })
       .then((res) => {
         toast.success(res.message);
-        return navigate("/groupIndex");
+        return navigate("/groupIndex", { replace: true });
       })
       .catch((error) => toast.error(error.message));
   };
