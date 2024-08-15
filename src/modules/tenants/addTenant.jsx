@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 import { tenantSchema } from "../../utils/authSchemas";
 
+
 import ImageCropper from "../../components/imageCropper";
+
+import Switch from "../../components/switch";
 
 import Skeleton from "react-loading-skeleton";
 
@@ -35,6 +38,9 @@ export default function AddTenant() {
 
   const [dissabled, setDissabled] = useState(false);
 
+  const [electricityBillApplicable, setElectricityBillApplicable] = useState(true);
+  const [electricityAmount, setElectricityAmount] = useState("");
+
   const validateGroup = () => {
     const tenentInfo = {
       groupId,
@@ -51,12 +57,23 @@ export default function AddTenant() {
     };
 
     tenantSchema
-      .validate(tenentInfo, { abortEarly: false }) // abortEarly: false ensures all validation errors are returned
+      .validate(tenentInfo, { abortEarly: false })
       .then((validTenant) => {
         if (tenantPhoneNumber === tenantBackupPhoneNumber)
           return toast.error(
             "Phone number and backup phone number can not be the same"
           );
+        
+        if (electricityBillApplicable && !electricityAmount) return toast.error("Please enter electricity amount per unit");
+
+        if (electricityBillApplicable && Number(electricityAmount) <= 0) return toast.error("Electricity amount per unit shuld be more than 0.");
+
+        if (!electricityBillApplicable) setElectricityAmount(0); // if not applicable it goes 0
+
+        setElectricityAmount(prevAmount=>Number(prevAmount)); // explisit number conversion
+        
+        validTenant.electricityBillApplicable = electricityBillApplicable;
+        validTenant.electricityAmount = electricityAmount;
 
         let aadharPictures = 0;
         if (aadhaarPictureFront.length > 100) aadharPictures += 1;
@@ -206,7 +223,27 @@ export default function AddTenant() {
               placeholder="Enter Rent(Per Month)"
               value={rentAmount}
               onChange={(e) => setRentAmount(e.currentTarget.value)}
-            />
+              />
+              
+              <div className="mb-4 flex justify-between w-100 text-slate-500 px-2"
+                style={{ fontSize: 15 }}>
+                
+                <span>Electricity Bill Applicable</span>   
+                <Switch checked={electricityBillApplicable} onChange={(e)=>setElectricityBillApplicable(e)}/>
+              
+              </div>
+
+              {electricityBillApplicable && (
+              <input
+              type="number"
+              className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+              placeholder="Enter Electricity Amount(Per Unit)"
+              value={electricityAmount}
+              onChange={(e) => setElectricityAmount(e.currentTarget.value)}
+              />
+              )}
+
+
 
             <input
               type="text"
