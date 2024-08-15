@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 import { tenantSchema } from "../../utils/authSchemas";
 
+import Switch from "../../components/switch";
+
 import ImageCropper from "../../components/imageCropper";
 
 import Skeleton from "react-loading-skeleton";
@@ -43,6 +45,10 @@ export default function EditTenant() {
     useState(false);
   const [tenantPictureChanged, settenantPictureChanged] = useState(false);
 
+  
+  const [electricityBillApplicable, setElectricityBillApplicable] = useState(false);
+  let [electricityAmount, setElectricityAmount] = useState("");
+
   const tenantInfoInitialise = useCallback(() => {
     axiosInterceptor({
       url: "/api/tenant/getTenantInfo",
@@ -67,6 +73,9 @@ export default function EditTenant() {
         setAadhaarPictureBack(tenantInfo.aadhaarPictureBack ?? "/plainBg.jpeg");
         setTenantPicture(tenantInfo.tenantPicture ?? "/dummyUserImage.png");
         setGroupId(tenantInfo.groupId);
+
+        setElectricityBillApplicable(tenantInfo.electricityBillApplicable ?? false);
+        setElectricityAmount(tenantInfo.electricityAmount ?? "")
 
         setIsLoading(false);
       })
@@ -101,6 +110,17 @@ export default function EditTenant() {
           return toast.error(
             "Phone number and backup phone number can not be the same"
           );
+        
+        if (electricityBillApplicable && !electricityAmount) return toast.error("Please enter electricity amount per unit");
+
+        if (electricityBillApplicable && Number(electricityAmount) < 0) return toast.error("Electricity amount per unit can not be 0.");
+
+        if (!electricityBillApplicable) electricityAmount = 0; // if not applocable it goes 0
+
+        electricityAmount = Number(electricityAmount); // explisit number conversion
+        
+        validTenant.electricityBillApplicable = electricityBillApplicable;
+        validTenant.electricityAmount = electricityAmount;
 
         let aadharPictures = 0;
         if (aadhaarPictureFront.length > 100) aadharPictures += 1;
@@ -143,6 +163,7 @@ export default function EditTenant() {
           });
       })
       .catch((err) => {
+        console.log(err)
         if (err.errors?.[0] ?? null) {
           toast.error(err.errors?.[0]);
         } else {
@@ -259,7 +280,25 @@ export default function EditTenant() {
               placeholder="Enter Rent(Per Month)"
               value={rentAmount}
               onChange={(e) => setRentAmount(e.currentTarget.value)}
-            />
+              />
+              
+               <div className="mb-4 flex justify-between w-100 text-slate-500 px-2"
+                style={{ fontSize: 15 }}>
+                
+                <span>Electricity Bill Applicable</span>   
+                <Switch checked={electricityBillApplicable} onChange={(e)=>setElectricityBillApplicable(e)}/>
+              
+              </div>
+
+              {electricityBillApplicable && (
+              <input
+              type="number"
+              className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+              placeholder="Enter Electricity Amount(Per Unit)"
+              value={electricityAmount}
+              onChange={(e) => setElectricityAmount(e.currentTarget.value)}
+              />
+              )}
 
             <input
               type="text"
