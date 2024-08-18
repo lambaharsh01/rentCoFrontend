@@ -9,6 +9,8 @@ import SignUp from "./modules/auth/signUp.jsx";
 
 import Dashboard from "./modules/dashboard/dashboard.jsx";
 
+import AddVisit from "./modules/visits/addVisit.jsx";
+
 import GroupsIndex from "./modules/groups/groupsIndex.jsx";
 import GroupInfo from "./modules/groups/groupInfo.jsx";
 import CreateGroup from "./modules/groups/createGroup.jsx";
@@ -39,6 +41,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/addVisit" element={<AddVisit />} />
 
           <Route path="/groupIndex" element={<GroupsIndex />} />
           <Route path="/createGroup" element={<CreateGroup />} />

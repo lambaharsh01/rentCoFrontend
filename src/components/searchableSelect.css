@@ -1,0 +1,29 @@
+.searchable-select {
+  position: relative;
+}
+
+.searchable-select .options-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  z-index: 1;
+  border-radius: 25px;
+}
+
+.searchable-select .options-list li {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+}
+
+.searchable-select .options-list li:last-child {
+  border-bottom: none;
+}
+
+.searchable-select .options-list li:hover {
+  background-color: #f0f0f0;
+}

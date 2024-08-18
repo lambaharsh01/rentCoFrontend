@@ -34,6 +34,10 @@ body {
   -webkit-text-stroke-width: 1.6px;
   -webkit-text-stroke-color: black;
 }
+.outlined-text-extra-thin {
+  -webkit-text-stroke-width: 0.8px;
+  -webkit-text-stroke-color: black;
+}
 
 /* rentCoFont */
 

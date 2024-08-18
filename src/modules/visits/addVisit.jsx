@@ -1,0 +1,395 @@
+//react
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Header from "../../components/header";
+
+import SearchableSelect from "../../components/searchableSelect";
+
+import { toast } from "react-toastify";
+import axiosInterceptor from "../../utils/axiosInterceptor";
+
+import Switch from "../../components/switch";
+import DatePickerComponent from "../../components/datePicker";
+import { IoContractOutline } from "react-icons/io5";
+
+import moment from "moment";
+
+export default function AddVisit() {
+
+  const navigate = useNavigate();
+
+  const [selectedTenant, setSelectedTenant] = useState(false);
+  const [tenantDetails, setTenantDetails] = useState([]);
+  const [visitDate, setVisitDate]= useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }))
+
+  const [groupId, setGroupId] = useState("");
+  const [tenantId, setTenantId] = useState("");
+  const [tenantName, setTenantName] = useState("");
+  const [tenantPhoneNumber, setTenantPhoneNumber] = useState("");
+  const [propertyName, setPropertyName] = useState("");
+  const [rentAmount, setRentAmount] = useState(0);
+  const [electricityAmountPerUnit, setElectricityAmountPerUnit] = useState(0);
+
+  const [previousReading, setPreviousReading] = useState("");
+  const [currentReading, setCurrentReading] = useState("");
+
+  const [totalUnits, setTotalUnits] = useState(0);
+  const [electricityBill, setElectricityBill] = useState(0);
+
+  const [previouslyPending, setPreviouslyPending] = useState(true);
+  const [previouslyPendingAmount, setPreviouslyPendingAmount] = useState("");
+
+  const [damages, setDamages] = useState(false);
+  const [damagesExplained, setDamagesExplained] = useState("");
+
+  const [remark, setRemark] = useState("");
+  
+  const tenentDetailsOnMount = useCallback(() => { 
+    axiosInterceptor({
+      url: "/api/tenant/getAllTenants",
+      method: "get",
+    }).then(res => {
+
+      let labledArray = res?.data?.tenantDetails?.map(element => {
+        let label = element.tenantName + " | "  + element.propertyName;
+        return { ...element, label };
+      })
+      
+      setTenantDetails(labledArray ?? []);
+    }).catch(err => toast.error("Tenant details could not be fetched please try again later"));
+
+  }, []);
+
+  useEffect(() => {
+    tenentDetailsOnMount();
+  }, [tenentDetailsOnMount]);
+
+  const handleTenantSelection = (data) => {
+    setGroupId(data.groupId);
+    setTenantId(data.tenantId);
+    setTenantName(data.tenantName);
+    setPropertyName(data.propertyName)
+    setTenantPhoneNumber(data.tenantPhoneNumber)    
+    setRentAmount(data.rentAmount);
+    
+    setElectricityAmountPerUnit(data.electricityAmount ?? "N/A");
+
+    let electricityApplicability = data.electricityAmount ? "":"N/A" ;
+    setPreviousReading(electricityApplicability);
+    setCurrentReading(electricityApplicability);
+    setTotalUnits(electricityApplicability);
+    setElectricityBill(electricityApplicability);
+
+    setPreviouslyPending(true);
+    setPreviouslyPendingAmount("");
+    setDamages(false);
+    setDamagesExplained("");
+    setRemark("")
+    
+    setSelectedTenant(true);
+  }
+
+  const handlePreviousReadingInput = (e) => {
+    let previousReadingToNumber = Number(e.currentTarget.value);
+    if (previousReadingToNumber < 0) return toast.error('Reading can not be less than 0');
+    
+    if (currentReading && !isNaN(currentReading)) {
+      let totalReadingDifference = Number(currentReading) - previousReadingToNumber;
+      setTotalUnits(totalReadingDifference);
+      
+      let totalElectricityBill = Math.round(totalReadingDifference * Number(electricityAmountPerUnit));
+      setElectricityBill(totalElectricityBill)
+    }
+
+    setPreviousReading(previousReadingToNumber);
+    if (e.currentTarget.value === "") {
+      setPreviousReading("")
+    } 
+  }
+  
+  const handleCurrentReadingInput = (e) => {
+
+    let currentReadingToNumber = Number(e.currentTarget.value);
+    if (currentReadingToNumber < 0) return toast.error('Reading can not be less than 0');
+
+    if (previousReading && !isNaN(previousReading)) {
+      let totalReadingDifference = currentReadingToNumber - Number(previousReading);
+      setTotalUnits(totalReadingDifference);
+
+      let totalElectricityBill = Math.round(totalReadingDifference * Number(electricityAmountPerUnit));
+      setElectricityBill(totalElectricityBill)
+    }
+    setCurrentReading(currentReadingToNumber); 
+    
+    if (e.currentTarget.value === "") {
+      setCurrentReading("")
+    }    
+  }
+
+  const handlePreviousPendingAmountInput = (e) => {
+    if (e.currentTarget.value === "") {
+      setPreviouslyPendingAmount("");
+    }
+      
+    let previouslyPendingAmountToNumber = Number(e.currentTarget.value);
+    if (previouslyPendingAmountToNumber < 1) return toast.error('Pending Amount can not be less than 1');
+
+    setPreviouslyPendingAmount(previouslyPendingAmountToNumber)
+  }
+
+  const validateVisit = () => {
+
+    if (!groupId) return toast.error("Group id not found.");
+    if (!tenantId) return toast.error("Tenant id not found.");
+    if (!tenantName) return toast.error("Tenant's name not found.");
+    if (!tenantPhoneNumber) return toast.error("Tenant's phone pumber not found.");
+
+    if (!rentAmount) return toast.error("Rent Amount not found.");
+    if (!propertyName) return toast.error("Property name not found.");
+
+    if (electricityAmountPerUnit) {
+      if (previousReading === "") return toast.error("Enter previous meter reading");
+      
+      if (previousReading < 0) return toast.error("Previous reading can not be less than 0.");
+
+      if (currentReading === "") return toast.error("Enter current meter reading");
+      if (currentReading < 0) return toast.error("Current reading can not be less than 0.");
+
+      if (totalUnits==="") return toast.error("total units consumed could not be obtained");
+      if (totalUnits < 0) return toast.error("total units consumed could not be less than 0");
+    }
+    
+    if (previouslyPending) {
+      if (!previouslyPendingAmount || Number(previouslyPendingAmount) < 0) return toast.error("Invalid previously pending amount");
+    }
+
+    if (damages) {
+      if (damagesExplained.length < 10) return toast.error("Please make sure the damage is explained in more than 10 characters");
+    }
+
+
+    let electricityBillAmount = electricityAmountPerUnit ? Number(electricityBill) : 0;
+    
+    let currentMonthTotalRent = Number(rentAmount) + electricityBillAmount;
+
+    let totalRent = currentMonthTotalRent + Number(previouslyPendingAmount);
+
+    let confirmationText = `Please Confirm Your Visit Data.
+    `;
+
+    if (electricityAmountPerUnit) {
+      confirmationText += `
+Total Units Consumed: ${totalUnits}
+Total Electric Bill: ${electricityBill}`;
+    } else {
+      confirmationText +=`
+Total Units Consumed: N/A
+Total Electric Bill: N/A`;
+    }
+
+    if (previouslyPending)
+      confirmationText += `
+Previously Pending Amount: ${previouslyPendingAmount}`;
+    
+    confirmationText += `
+Current Month's Total Rent: ${currentMonthTotalRent}
+Total Rent(Current + Previous): ${totalRent}`;
+    
+
+    let confirmation = window.confirm(confirmationText);
+
+    
+    if (confirmation) {
+
+      let bodyParameters = { groupId, tenantId, tenantName, tenantPhoneNumber, propertyName, rentAmount, electricityAmountPerUnit, previousReading, currentReading, totalUnits, electricityBill, previouslyPending, previouslyPendingAmount, damages, damagesExplained, remark, currentMonthTotalRent, totalRent };
+
+      axiosInterceptor({
+        url: "/api/visit/addVisit",
+        method: "post",
+        data:bodyParameters,
+      }).then(res => {
+        alert("success")
+      }).catch(error => {
+        alert('undss')
+      })
+      
+    }
+
+
+
+  }
+
+  return (
+    <div className="min-h-screen">
+      <Header active="d" />
+
+      <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
+        <h1 className="rentCoFont mainFont text-4xl ps-2">
+          <span className="outlined-text-thin text-white">Add Visit</span>
+        </h1>
+      </div>
+
+      <div className="col-md-10 offset-md-1 bg-white p-2">
+
+      <SearchableSelect
+        options={tenantDetails}
+        onChange={handleTenantSelection}
+        inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+        inputPlaceHolder="Select Tenant"
+        />
+
+
+        {!selectedTenant && (
+          <div className="w-100 p-2 text-center mt-3">
+          <h1 className="rentCoFont mainFont text-2xl">
+            <span className="outlined-text-extra-thin text-white">Visit Date</span>
+          </h1>
+            <DatePickerComponent initialValue={visitDate} onChange={(date) =>setVisitDate(date)} inputClass="px-3 py-2 rounded-full bg-slate-100 text-center" />
+           </div>
+        )}
+
+
+        
+        {selectedTenant && (
+          <div className="p-2 w-100">
+
+            <div className="mb-4">
+              <span className="font-bold text-3xl">Tenant Name</span>
+              <br />
+              <span className="font-medium text-2xl text-slate-500 ps-1">{tenantName}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Property</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Tenant Contact</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Rent Amount</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{rentAmount}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Electic Unit Amount</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{electricityAmountPerUnit}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Previous Meter Reading</span>
+              {previousReading === "N/A" ? (
+                <span className="font-medium text-xl text-slate-500 ps-1">
+                  <br />
+                  {previousReading}</span>
+              ) : (
+                <input
+                  type="number"
+                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                  placeholder="Previous Meter Readings"
+                  value={previousReading}
+                  onChange={handlePreviousReadingInput}
+                />
+              )}
+            </div>
+  
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Current Meter Reading</span>
+              {currentReading === "N/A" ? (
+                <span className="font-medium text-xl text-slate-500 ps-1">
+                  <br />
+                  {currentReading}</span>
+              ) : (
+                <input
+                  type="number"
+                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                  placeholder="Current Meter Reading"
+                  value={currentReading}
+                  onChange={handleCurrentReadingInput}
+                />
+              )}
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Total Units Consumed</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{totalUnits}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Total Electricity Bill</span>
+              <br />
+              <span className="font-medium text-xl text-slate-500 ps-1">{electricityBill}</span>
+            </div>
+
+            <div className="mb-4">
+              <span className="font-bold text-2xl">Pending Balance ?</span>
+              <br />
+              <span className=""><Switch onChange={(boolian) => setPreviouslyPending(boolian)} checked={previouslyPending} /></span>
+            </div>
+
+            {previouslyPending && (
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Pending Amount</span>
+                <input
+                  type="number"
+                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                  placeholder="Enter Previously Pending Amount"
+                  value={previouslyPendingAmount}
+                  onChange={handlePreviousPendingAmountInput}
+                />
+              </div>
+            )}
+          
+            <div className="mb-4 pt-2">
+              <span className="font-bold text-2xl">Noticed Any Damages ?</span>
+              <br />
+              <span className=""><Switch onChange={(boolian) => setDamages(boolian)} checked={damages} /></span>
+            </div>
+
+            {damages && (
+              <div className="mb-4 pt-2">
+                <span className="font-bold text-2xl">Explaination of the Damage</span>
+                <textarea
+                  className="px-3 py-2 mt-1  rounded-full w-100 bg-slate-100"
+                  placeholder="Explain the Damage"
+                  value={damagesExplained}
+                  onChange={(e) => setDamagesExplained(e.currentTarget.value)}
+                  rows={2}
+                ></textarea>
+              </div>
+            )}
+          
+            <div className="mb-4 ">
+              <span className="font-bold text-2xl">Remarks</span>
+              <textarea
+                className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                placeholder="Enter Remarks (optional)"
+                value={remark}
+                onChange={(e) => setRemark(e.currentTarget.value)}
+                rows={2}
+              ></textarea>
+            </div>
+        
+        <button
+          className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+          onClick={validateVisit}>
+          Add Visit
+        </button> 
+            
+            </div>
+        )}
+
+
+      </div>
+    </div>
+  );
+}
