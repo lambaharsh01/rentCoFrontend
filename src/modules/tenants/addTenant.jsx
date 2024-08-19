@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 import { tenantSchema } from "../../utils/authSchemas";
 
+import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
+
 
 import ImageCropper from "../../components/imageCropper";
 
@@ -100,8 +102,8 @@ export default function AddTenant() {
         })
           .then((res) => {
             toast.success("Tenant creted successfully.");
+            getTenantDetails(true);
             navigate(`/groupInfo/${groupId}`, { replace: true });
-            setIsLoading(false);
           })
           .catch((error) => {
             setDissabled(false);

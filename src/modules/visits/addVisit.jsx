@@ -1,5 +1,5 @@
 //react
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../../components/header";
@@ -11,9 +11,8 @@ import axiosInterceptor from "../../utils/axiosInterceptor";
 
 import Switch from "../../components/switch";
 import DatePickerComponent from "../../components/datePicker";
-import { IoContractOutline } from "react-icons/io5";
 
-import moment from "moment";
+import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
 
 export default function AddVisit() {
 
@@ -21,7 +20,13 @@ export default function AddVisit() {
 
   const [selectedTenant, setSelectedTenant] = useState(false);
   const [tenantDetails, setTenantDetails] = useState([]);
-  const [visitDate, setVisitDate]= useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }))
+  const [visitDate, setVisitDate] = useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }));
+
+  useEffect(() => { 
+    setTenantDetails(getTenantDetails() ?? [])
+  }, []);
+
+  const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
 
   const [groupId, setGroupId] = useState("");
   const [tenantId, setTenantId] = useState("");
@@ -44,26 +49,6 @@ export default function AddVisit() {
   const [damagesExplained, setDamagesExplained] = useState("");
 
   const [remark, setRemark] = useState("");
-  
-  const tenentDetailsOnMount = useCallback(() => { 
-    axiosInterceptor({
-      url: "/api/tenant/getAllTenants",
-      method: "get",
-    }).then(res => {
-
-      let labledArray = res?.data?.tenantDetails?.map(element => {
-        let label = element.tenantName + " | "  + element.propertyName;
-        return { ...element, label };
-      })
-      
-      setTenantDetails(labledArray ?? []);
-    }).catch(err => toast.error("Tenant details could not be fetched please try again later"));
-
-  }, []);
-
-  useEffect(() => {
-    tenentDetailsOnMount();
-  }, [tenentDetailsOnMount]);
 
   const handleTenantSelection = (data) => {
     setGroupId(data.groupId);
@@ -202,16 +187,48 @@ Total Rent(Current + Previous): ${totalRent}`;
     
     if (confirmation) {
 
-      let bodyParameters = { groupId, tenantId, tenantName, tenantPhoneNumber, propertyName, rentAmount, electricityAmountPerUnit, previousReading, currentReading, totalUnits, electricityBill, previouslyPending, previouslyPendingAmount, damages, damagesExplained, remark, currentMonthTotalRent, totalRent };
+      setCreateButtonDisabled(true);
+
+      let bodyParameters = { groupId, tenantId, tenantName, tenantPhoneNumber, propertyName, rentAmount, electricityAmountPerUnit, previousReading, currentReading, totalUnits, electricityBill:electricityBillAmount, previouslyPending, previouslyPendingAmount, damages, damagesExplained, remark, currentMonthTotalRent, totalRent, visitDate };
 
       axiosInterceptor({
         url: "/api/visit/addVisit",
         method: "post",
         data:bodyParameters,
       }).then(res => {
-        alert("success")
+
+        if (res.success) {
+          toast.success(res.message);
+          return navigate("/dashboard", { replace: true });
+        } else {
+
+          let confirmReplace = window.confirm(res.message);
+          if (confirmReplace) {
+
+            bodyParameters.confirmation = true;
+
+            axiosInterceptor({
+              url: "/api/visit/addVisit",
+              method: "post",
+              data: bodyParameters,
+            }).then(res => {
+              toast.success(res.message);
+              return navigate("/dashboard", { replace: true });
+            }).catch(error => {
+                toast.error("Visit entry could not be created due to network issues please try again after some time.");
+                return navigate("/dashboard", { replace: true });
+            })
+
+          } else {
+            toast.info("Proccess Aborted");
+            return navigate("/dashboard", { replace: true });
+          }
+
+          
+        }
       }).catch(error => {
-        alert('undss')
+        toast.error("Visit entry could not be created due to network issues please try again after some time.");
+        return navigate("/dashboard", { replace: true });
       })
       
     }
@@ -222,7 +239,7 @@ Total Rent(Current + Previous): ${totalRent}`;
 
   return (
     <div className="min-h-screen">
-      <Header active="d" />
+      <Header active="d" key="Header"/>
 
       <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
         <h1 className="rentCoFont mainFont text-4xl ps-2">
@@ -232,7 +249,8 @@ Total Rent(Current + Previous): ${totalRent}`;
 
       <div className="col-md-10 offset-md-1 bg-white p-2">
 
-      <SearchableSelect
+        <SearchableSelect
+        key="SelectTenant"
         options={tenantDetails}
         onChange={handleTenantSelection}
         inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
@@ -245,19 +263,17 @@ Total Rent(Current + Previous): ${totalRent}`;
           <h1 className="rentCoFont mainFont text-2xl">
             <span className="outlined-text-extra-thin text-white">Visit Date</span>
           </h1>
-            <DatePickerComponent initialValue={visitDate} onChange={(date) =>setVisitDate(date)} inputClass="px-3 py-2 rounded-full bg-slate-100 text-center" />
+            <DatePickerComponent key="DatePicker" initialValue={visitDate} onChange={(date) =>setVisitDate(date)} inputClass="px-3 py-2 rounded-full bg-slate-100 text-center" />
            </div>
         )}
 
-
-        
         {selectedTenant && (
           <div className="p-2 w-100">
 
             <div className="mb-4">
-              <span className="font-bold text-3xl">Tenant Name</span>
+              <span className="font-bold text-2xl">Tenant Name</span>
               <br />
-              <span className="font-medium text-2xl text-slate-500 ps-1">{tenantName}</span>
+              <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
             </div>
 
             <div className="mb-4">
@@ -359,7 +375,7 @@ Total Rent(Current + Previous): ${totalRent}`;
               <div className="mb-4 pt-2">
                 <span className="font-bold text-2xl">Explaination of the Damage</span>
                 <textarea
-                  className="px-3 py-2 mt-1  rounded-full w-100 bg-slate-100"
+                  className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
                   placeholder="Explain the Damage"
                   value={damagesExplained}
                   onChange={(e) => setDamagesExplained(e.currentTarget.value)}
@@ -371,7 +387,7 @@ Total Rent(Current + Previous): ${totalRent}`;
             <div className="mb-4 ">
               <span className="font-bold text-2xl">Remarks</span>
               <textarea
-                className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
                 placeholder="Enter Remarks (optional)"
                 value={remark}
                 onChange={(e) => setRemark(e.currentTarget.value)}
@@ -381,7 +397,8 @@ Total Rent(Current + Previous): ${totalRent}`;
         
         <button
           className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
-          onClick={validateVisit}>
+            onClick={validateVisit}
+            disabled={createButtonDisabled}>
           Add Visit
         </button> 
             

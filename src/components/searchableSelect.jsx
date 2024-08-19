@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./searchableSelect.css"
 
-const SearchableSelect = ({ options, onChange, inputClass = "", inputStyle = {}, inputPlaceHolder = "Select", lableKey="label" }) => {
-    
+const SearchableSelect = ({ options, onChange, inputClass = "", inputStyle = {}, inputPlaceHolder = "Select", labelKey="label", inputDisabled=false }) => {
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [focused, setFocused] = useState(false);
@@ -21,7 +21,7 @@ const SearchableSelect = ({ options, onChange, inputClass = "", inputStyle = {},
 
 const handleSelect = (option) => {
     onChange(option);
-    setSearchTerm(option[lableKey]);
+    setSearchTerm(option[labelKey]);
 };
 
 
@@ -38,12 +38,13 @@ const handleSelect = (option) => {
         onFocus={()=>setFocused(true)}
         onBlur={() => { setTimeout(() => { setFocused(false) }, 100) }}
         placeholder={inputPlaceHolder}
+        disabled={inputDisabled}
       />
       {focused && (
         <ul className="options-list">
           {filteredOptions.map((option, index) => (
             <li key={`Searchable${index}`} onClick={() => handleSelect(option)}>
-              {option[lableKey]}
+              {option[labelKey]}
             </li>
           ))}
         </ul>

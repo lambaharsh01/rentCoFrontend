@@ -55,7 +55,6 @@ export default function CreateGroup() {
           onChange={(e) => setGroupName(e.currentTarget.value)}
         />
         <textarea
-          type="email"
           className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
           placeholder="Enter Group Discription (Optional)"
           value={groupDiscription}
