@@ -8,6 +8,7 @@ import { tenantSchema } from "../../utils/authSchemas";
 import Switch from "../../components/switch";
 
 import ImageCropper from "../../components/imageCropper";
+import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
 
 import Skeleton from "react-loading-skeleton";
 
@@ -153,6 +154,7 @@ export default function EditTenant() {
         })
           .then((res) => {
             toast.success(res.message);
+            getTenantDetails(true);
             navigate(`/groupInfo/${groupId}`, { replace: true });
             setIsLoading(false);
           })

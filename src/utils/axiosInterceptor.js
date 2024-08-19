@@ -13,6 +13,7 @@ const convertQueryString = (object) => {
   let queryParameters = [];
 
   for (let key in object) {
+    if (!object[key]) continue;
     if (typeof object[key] !== "string") continue;
     queryParameters.push(`${key}=${object[key]}`);
   }
@@ -30,7 +31,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     let apiMethod = method.toLowerCase().trim();
 
     // let apiUrl = "http://localhost:4000";
-    let apiUrl = "http://192.168.152.20:4000";
+    let apiUrl = "http://192.168.186.20:4000";
 
     apiUrl += url.trim() + convertQueryString(query);
 
@@ -129,7 +130,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     if (errorCode === 401) {
       alert("Session expired please login again");
       localStorage.removeItem("authToken");
-      window.location.reload();
+      window.location.href = "/";
     }
 
     let errorMessage =

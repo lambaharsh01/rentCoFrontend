@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { loginSchema } from "../../utils/authSchemas.js";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
+import { getTenantDetails } from "../../utils/redux/reduxInterceptors.js";
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -20,10 +22,17 @@ export default function SignIn() {
           data: validUser,
         })
           .then((res) => {
+
             if (!res.data.token) throw new Error("Something went wrong");
+
             localStorage.setItem("authToken", res.data.token);
+
             toast.success(`Welcome back ${res.data.userName}!`);
+
+            getTenantDetails(true);
+
             return navigate("/dashboard", { replace: true });
+
           })
           .catch((err) => {
             toast.error(err.message);

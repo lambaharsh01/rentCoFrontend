@@ -11,6 +11,8 @@ import Dashboard from "./modules/dashboard/dashboard.jsx";
 
 import AddVisit from "./modules/visits/addVisit.jsx";
 
+import AddTransaction from "./modules/transactions/addTransactions.jsx";
+
 import GroupsIndex from "./modules/groups/groupsIndex.jsx";
 import GroupInfo from "./modules/groups/groupInfo.jsx";
 import CreateGroup from "./modules/groups/createGroup.jsx";
@@ -42,6 +44,7 @@ function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/addVisit" element={<AddVisit />} />
+          <Route path="/addTransaction" element={<AddTransaction />} />
 
           <Route path="/groupIndex" element={<GroupsIndex />} />
           <Route path="/createGroup" element={<CreateGroup />} />

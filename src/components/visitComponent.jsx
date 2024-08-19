@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { FcInspection } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
-export default function VisitDashboard() {
+export default function VisitComponent() {
 
     const navigate=useNavigate()
     
@@ -14,10 +14,6 @@ export default function VisitDashboard() {
 
     const [visitSection, setVisitSection] = useState("");
 
-    // const [pendingDataFetched, setPendingDataFetched] = useState(false);
-    // const [pendingDataArray, setPendingDataArray] = useState([]);
-
-    
     const fetchPending = ({ fromDate, toDate }) => {
 
         axiosInterceptor({
@@ -46,9 +42,21 @@ export default function VisitDashboard() {
 
     return <div className="w-100 p-2">
 
-        <div className="w-100 border-1 rounded-t-3xl">
 
-            <div className="rentCoRed rounded-t-3xl text-center py-1 font-bold">
+        <div className="w-100 mb-2 pb-1 flex justify-end">
+            <button
+                className="border-1 rounded-md me-1 flex p-1 font-medium shadow-sm"
+                style={{ fontSize: 15 }}
+                onClick={()=>navigate('/addVisit')}>
+                <span className="me-1">Add Visit</span>
+                <span className="mt-1"><FcInspection /></span>
+            </button>
+        </div>
+
+
+        <div className="w-100 border-1 rounded-t-md">
+
+            <div className="rentCoRed rounded-t-md text-center py-1 font-bold">
                 Monthly Property Visits
             </div>
 
@@ -65,13 +73,6 @@ export default function VisitDashboard() {
                         onClick={() => fetchCompleted()}
                     > Completed</span>
 
-                    <button
-                        className="flex p-1 font-medium"
-                        style={{ fontSize: 15 }}
-                    onClick={()=>navigate('/addVisit')}>
-                        <span className="me-1">Add Visit</span>
-                        <span className="mt-1"><FcInspection /></span>
-                    </button>
 
                 </div>
 
