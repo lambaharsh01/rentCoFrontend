@@ -10,8 +10,10 @@ import SignUp from "./modules/auth/signUp.jsx";
 import Dashboard from "./modules/dashboard/dashboard.jsx";
 
 import AddVisit from "./modules/visits/addVisit.jsx";
+import ViewVisit from "./modules/visits/viewVisit.jsx";
 
 import AddTransaction from "./modules/transactions/addTransactions.jsx";
+import ViewTransaction from "./modules/transactions/viewTransaction.jsx";
 
 import GroupsIndex from "./modules/groups/groupsIndex.jsx";
 import GroupInfo from "./modules/groups/groupInfo.jsx";
@@ -20,6 +22,7 @@ import EditGroup from "./modules/groups/editGroup.jsx";
 
 import AddTenant from "./modules/tenants/addTenant.jsx";
 import EditTenant from "./modules/tenants/editTenant.jsx";
+import ViewTenant from "./modules/tenants/viewTenant.jsx";
 
 import AnalyticsIndex from "./modules/analytics/analyticsIndex.jsx";
 
@@ -44,7 +47,12 @@ function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/addVisit" element={<AddVisit />} />
+          <Route path="/viewVisit/:visitId" element={<ViewVisit />} />
           <Route path="/addTransaction" element={<AddTransaction />} />
+          <Route
+            path="/viewTransaction/:transactionId"
+            element={<ViewTransaction />}
+          />
 
           <Route path="/groupIndex" element={<GroupsIndex />} />
           <Route path="/createGroup" element={<CreateGroup />} />
@@ -53,6 +61,7 @@ function App() {
 
           <Route path="/addTenant/:groupId" element={<AddTenant />} />
           <Route path="/editTenant/:tenantId" element={<EditTenant />} />
+          <Route path="/viewTenant/:tenantId" element={<ViewTenant />} />
 
           <Route path="/analyticsIndex" element={<AnalyticsIndex />} />
         </Routes>

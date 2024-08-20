@@ -80,6 +80,11 @@ body {
   display: none !important;
 }
 
+.scrolMaxHeight300 {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
 @media (min-width: 576px) and (max-width: 768px) {
 }
 
