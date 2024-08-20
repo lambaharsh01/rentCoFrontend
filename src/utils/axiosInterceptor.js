@@ -31,7 +31,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
     let apiMethod = method.toLowerCase().trim();
 
     // let apiUrl = "http://localhost:4000";
-    let apiUrl = "http://192.168.186.20:4000";
+    let apiUrl = "http://192.168.170.249:4000";
 
     apiUrl += url.trim() + convertQueryString(query);
 

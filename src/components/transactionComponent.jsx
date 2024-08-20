@@ -4,9 +4,11 @@ import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 import SearchableSelect from "./searchableSelect";
 
 import { GiReceiveMoney } from "react-icons/gi";
+import { FiChevronsDown } from "react-icons/fi";
+
 import { useNavigate } from "react-router-dom";
 
-import { MdCall, MdOutlineWhatsapp } from "react-icons/md";
+import Skeleton from "react-loading-skeleton";
 import isSmallScreen from "../utils/isSmallScreen";
 
 
@@ -31,6 +33,10 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
 
     const [tenantOptions, setTenantOptions] = useState([]);
 
+    const [searched, setSearched] = useState(false);
+
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => { 
         let optionsObject = getTenantDetails() ?? [];
         let tenants = optionsObject.map((element) => {
@@ -51,6 +57,7 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
     }
 
     function fetchData(object) {
+        setLoading(true);
 
         axiosInterceptor({
             url: "/api/transaction/getTransactions",
@@ -58,10 +65,18 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
             query: object
         }).then(res => {
             setTransactions(res?.data?.filteredTransactions ?? []);
+            setSearched(true);
+            setLoading(false);
         }).catch(err => {
             toast.error(err.message)
+            setSearched(true);
+            setLoading(false);
         })
         
+    }
+
+    const navigateTransaction = (transactionId) => {
+    navigate("/viewTransaction/"+transactionId)
     }
 
 
@@ -78,7 +93,7 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
             </button>
         </div>)}
         
-        <div className="w-100 border-1 rounded-t-md">
+        <div className="w-100 border-1 rounded-md">
 
             <div className="rentCoRed rounded-t-md text-center py-1 font-bold">
                 Monthly Transactions(Collected Rent)
@@ -122,7 +137,6 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
                                     inputPlaceHolder={tenantName}
                                     onChange={handleTenanSelection}
                                 />
-
                         </div>
                                                         
                         <div className="w-2/5 pt-4">
@@ -130,33 +144,48 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
                         </div>
                         </div>
                     </div>
-
                 </div>
+                
+                <div className="border-y-2 mt-2 text-center">
+                    {searched ? (
+                    <span className="font-medium">Transactions</span>
+                    ): (
+                    <div className="px-2 py-1 flex justify-center" onClick={searchTenants}>
+                    <span className="me-2 font-semibold text-sm">Click Here/Search To Fetch Visit List</span>
+                    <FiChevronsDown className="text-xl" />
+                    </div>                    )}
+                    </div>
 
-                <div className="w-100">
+                <div className="w-100 scrolMaxHeight300 px-1 pt-2">
 
-                    {transactions.map((element, index) => (
+
+                    {searched && !transactions.length && (
+                        <div className="w-100 text-center">
+                            <span className="text-sm font-light text-center">No Transactions Found</span>
+                        </div>
+                    )}
+
+
+                    {loading ? (
+                    <span>
+                        <Skeleton count={3} height={60} className="mb-3" />
+                    </span>
+                    ) : transactions.map((element, index) => (
                         <div
-                        key={`Tenant${index}`}
-                        className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${smallScreen ? "h-16 text-sm" : "h-20"
+                        key={`Transaction${index}`}
+                        className={`font-medium w-100 bg-slate-100 mb-3 py-1 px-3 rounded-md flex justify-around items-center ${smallScreen ? "h-14 text-sm" : "h-20"
                         }`}>
 
-                        <span style={{width:"20%"}}>{element.tenantName}</span>
-                        <span style={{width:"20%"}}>{element.propertyName}</span>
-                        <span style={{width:"20%"}} className="text-green-500">+ {element.recivedAmount}</span>
-
-                        <a style={{width:"14%"}} href={`https://wa.me/${element.tenantPhoneNumber}?text=Hi`}>
-                            <MdOutlineWhatsapp className="text-2xl text-green-500"/>
-                        </a>
-                        
+                        <span onClick={()=>navigateTransaction(element._id)} style={{width:"35%"}}>{element.tenantName}</span>
+                        <span onClick={()=>navigateTransaction(element._id)} style={{ width: "20%" }} className="text-green-500">+ ₹{element.recivedAmount}</span>
+                        <span onClick={()=>navigateTransaction(element._id)} style={{width:"20%"}}>{element.propertyName}</span>    
+                        <span onClick={()=>navigateTransaction(element._id)} style={{ width: "20%" }}>{element.transactionDate}</span>    
                     </div>
                     ))}
+  
 
                 </div>
            
-
-                <div></div>
-
             </div>
 
         </div>
