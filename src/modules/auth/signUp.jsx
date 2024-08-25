@@ -228,6 +228,8 @@ export default function SignUp() {
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Email"
                 autocapitalize="off"
+                autocomplete="off"
+                autofill="off"
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.currentTarget.value)}
               />

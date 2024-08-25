@@ -64,6 +64,9 @@ export default function SignIn() {
             <div>
               <input
                 type="email"
+                autocomplete="off"
+                autofill="off"
+                autocapitalize="off"
                 className="px-8 py-3 mb-4 mt-5 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Email"
                 value={userEmail}
@@ -71,6 +74,8 @@ export default function SignIn() {
               />
               <input
                 type="password"
+                autocomplete="off"
+                autofill="off"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Password"
                 value={password}
