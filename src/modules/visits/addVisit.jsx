@@ -14,6 +14,12 @@ import DatePickerComponent from "../../components/datePicker";
 
 import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
 
+import { IoCalendar, IoInformationCircleSharp } from "react-icons/io5";
+import { TbZoomMoney } from "react-icons/tb";
+
+import TransactionComponent from "../../components/transactionComponent";
+import VisitComponent from "../../components/visitComponent";
+
 export default function AddVisit() {
 
   const navigate = useNavigate();
@@ -27,6 +33,7 @@ export default function AddVisit() {
   }, []);
 
   const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
+  const [updateComponent, setUpdateComponent] = useState(1);
 
   const [groupId, setGroupId] = useState("");
   const [tenantId, setTenantId] = useState("");
@@ -73,6 +80,7 @@ export default function AddVisit() {
     setRemark("")
     
     setSelectedTenant(true);
+    setUpdateComponent(prevCount => prevCount + 1);
   }
 
   const handlePreviousReadingInput = (e) => {
@@ -268,7 +276,39 @@ Total Rent(Current + Previous): ${totalRent}`;
         )}
 
         {selectedTenant && (
-          <div className="p-2 w-100">
+          <div className="w-100">
+              <details className="border-2 rounded-md py-1 mb-4">
+                <summary className="list-none ps-2">
+                 <span className="text-sm flex"><TbZoomMoney className="text-xl me-2" /> Search For Past Transactions</span>
+              </summary>
+
+              <div className="px-2 mt-2">
+              <span className="text-xs flex">
+                  <IoInformationCircleSharp className="text-3xl me-2" />
+                  <span className="my-2">All the transactions are shown below. Clicking the transaction in this searched list and coming back will make your saved fields on this page empty again.</span>
+                </span>
+                </div>
+
+              <TransactionComponent key={updateComponent} showButton={false} specificTenant={true} nameLabel={tenantName} id={tenantId} />
+            </details>
+            
+              <details className="border-2 rounded-md py-1 mb-4">
+                <summary className="list-none ps-2">
+                 <span className="text-sm flex"><IoCalendar className="text-xl me-2" /> Search For Past Visits</span>
+              </summary>
+              
+              <div className="px-2 mt-2">
+              <span className="text-xs flex">
+                  <IoInformationCircleSharp className="text-3xl me-2" />
+                  <span className="my-2">Total Rent is shown below. Clicking the vist in this searched list and coming back will make your saved fields on this page empty again.</span>
+              </span>
+              </div>
+
+              <VisitComponent key={updateComponent} showButton={false} specificTenant={true} nameLabel={tenantName} id={tenantId} />
+              </details>
+            <div className="p-2 w-100">
+            
+
 
             <div className="mb-4">
               <span className="font-bold text-2xl">Tenant Name</span>
@@ -403,6 +443,7 @@ Total Rent(Current + Previous): ${totalRent}`;
         </button> 
             
             </div>
+          </div>
         )}
 
 

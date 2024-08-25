@@ -1,8 +1,20 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInterceptor from "../../utils/axiosInterceptor";
+import { toast } from "react-toastify";
 
 export default function IndexPage() {
-  // const rentCoIcon = "/rentCoIcon3.png";
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axiosInterceptor({
+      url: '/api/authentication/handshake',
+      method:'get'
+    }).then((res) => {
+    }).catch((err) => {
+      toast.error("Server connection could not be eastablished");
+    });
+  })
 
   return (
     <div className="flex justify-center w-full h-screen">

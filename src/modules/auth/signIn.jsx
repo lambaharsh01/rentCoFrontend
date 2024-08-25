@@ -12,7 +12,10 @@ export default function SignIn() {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [dissabled, setDissabled] = useState(false);
+
   const authenticateUser = () => {
+    setDissabled(true);
     loginSchema
       .validate({ userEmail, password }, { abortEarly: false })
       .then((validUser) => {
@@ -24,20 +27,17 @@ export default function SignIn() {
           .then((res) => {
 
             if (!res.data.token) throw new Error("Something went wrong");
-
             localStorage.setItem("authToken", res.data.token);
-
             toast.success(`Welcome back ${res.data.userName}!`);
 
             getTenantDetails(true);
-
             return navigate("/dashboard", { replace: true });
-
           })
           .catch((err) => {
             toast.error(err.message);
             setUserEmail("");
             setPassword("");
+            setDissabled(true);
           });
       })
       .catch((err) => {
@@ -79,6 +79,7 @@ export default function SignIn() {
             </div>
             <div className="mb-14">
               <button
+                disabled={dissabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >

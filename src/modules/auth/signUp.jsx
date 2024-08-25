@@ -18,6 +18,7 @@ export default function SignUp() {
   }
 
   const [screen, setScreen] = useState(0);
+  const [dissabled, setDissabled] = useState(false);
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -62,6 +63,8 @@ export default function SignUp() {
   };
 
   function sendVerificationCode(validatedObject) {
+    setDissabled(true);
+
     axiosInterceptor({
       method: "post",
       url: "/api/authentication/sendVerificationCode",
@@ -70,10 +73,12 @@ export default function SignUp() {
       .then((res) => {
         setScreen((prevCount) => prevCount + 1);
         scrollDivToTop();
+        setDissabled(false);
         return toast.success(`OTP has been sent to ${userEmail}`);
       })
       .catch((err) => {
         toast.error(err.message);
+        setDissabled(false);
         return navigate("/", { replace: true });
       });
   }
@@ -84,6 +89,8 @@ export default function SignUp() {
     if (!otp.length) return toast.error(`Please enter OTP`);
     if (otp.length < 6) return toast.error(`Incorrect OTP`);
 
+    setDissabled(true);
+
     axiosInterceptor({
       method: "post",
       url: "/api/authentication/verifyUserEmail",
@@ -93,10 +100,12 @@ export default function SignUp() {
         if (!res.success) return toast.error(res.message);
         setScreen((prevCount) => prevCount + 1);
         setOtp(res.data.otp);
+        setDissabled(false);
         return toast.success(`OTP verification successfull`);
       })
       .catch((err) => {
         toast.error(err.message);
+        setDissabled(false);
         return navigate("/", { replace: true });
       });
   };
@@ -218,11 +227,12 @@ export default function SignUp() {
                 type="text"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Email"
+                autocapitalize="off"
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.currentTarget.value)}
               />
               <input
-                type="text"
+                type="number"
                 className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
                 placeholder="Enter Phone No."
                 value={phoneNumber}
@@ -288,6 +298,7 @@ export default function SignUp() {
                 </span>
               </div>
               <button
+                disabled={dissabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={validateUserInfo}
               >
@@ -309,6 +320,7 @@ export default function SignUp() {
               />
 
               <button
+                disabled={dissabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={verifyOtp}
               >
@@ -358,6 +370,7 @@ export default function SignUp() {
               </div>
 
               <button
+                disabled={dissabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={createUser}
               >

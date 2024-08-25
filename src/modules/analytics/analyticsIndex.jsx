@@ -4,7 +4,11 @@ export default function AnalyticsIndex() {
   return (
     <div>
       <Header active="a" />
-      <h1>Analytics</h1>
+
+      <div className="flex justify-center mt-12">
+      <h2>Coming Soon<span class="dotdotdot"><span>.</span><span>.</span><span>.</span></span></h2>
+      </div>
+      
     </div>
   );
 }

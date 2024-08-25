@@ -7,7 +7,7 @@ export default function Dashboard() {
   return (
     <div>
       <Header active="d" />
-      <br/>
+      <br />
       <TransactionComponent />
       <br/>
       <VisitComponent />

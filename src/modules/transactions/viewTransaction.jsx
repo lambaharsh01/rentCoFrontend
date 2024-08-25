@@ -88,61 +88,48 @@ export default function ViewTransaction() {
             <Skeleton count={6} height={60} className="mb-3" />
           </div>
         ) : (
-          <div className="p-2 w-100">
+            <div className="p-2 w-100">
+              
+              <table className="w-100 font-medium border-y-2">
+                <tr>
+                    <td className="w-2/5 py-2">Tenant Name</td>
+                    <td className="w-3/5 border-b-2 py-2">{tenantName}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Property</td>
+                    <td className="w-3/5 border-b-2 py-2">{propertyName}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Tenant Contact</td>
+                    <td className="w-3/5 border-b-2 py-2">{tenantPhoneNumber}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Paymet Method</td>
+                    <td className="w-3/5 border-b-2 py-2">{paymentMethod}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Paymet Type</td>
+                    <td className="w-3/5 border-b-2 py-2">{paymentType}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Recived Amount</td>
+                    <td className="w-3/5 border-b-2 py-2">{recivedAmount}</td>
+                </tr>
+                 <tr>
+                    <td className="w-2/5 py-2">Remarks</td>
+                    <td className="w-3/5 border-b-2 py-2">{remark}</td>
+                </tr>
+                 <tr>
+                    <td className="w-2/5 py-2">Transaction Date</td>
+                    <td className="w-3/5 border-b-2 py-2">{transactionDate}</td>
+                </tr>
+                 <tr>
+                    <td className="w-2/5 py-2">Transaction Creation Date</td>
+                    <td className="w-3/5 border-b-2 py-2">{createdAt}</td>
+                </tr>
+                </table>
 
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Name</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
-            </div>
 
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Property</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Contact</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Payemt Method</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{paymentMethod}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Payemt Type</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{paymentType}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Recived Amount</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{recivedAmount}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Remarks</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{remark}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Transaction Date</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{transactionDate}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Transaction Creation Date</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{createdAt}</span>
-            </div>
 
           </div>
         )}

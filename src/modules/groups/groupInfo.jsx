@@ -7,7 +7,7 @@ import Header from "../../components/header";
 import Skeleton from "react-loading-skeleton";
 
 //icons
-import { MdGroupAdd } from "react-icons/md";
+import { MdGroupAdd, MdCall } from "react-icons/md";
 import { IoInformationCircleSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -83,6 +83,11 @@ export default function GroupsIndex() {
       });
   };
 
+
+  const navigateView = (tenantId) => {
+    navigate("/viewTenant/" + tenantId);
+  }
+
   return (
     <div>
       <Header active="g" />
@@ -113,23 +118,23 @@ export default function GroupsIndex() {
             </div>
           ) : (
             <div className="w-100">
-              <details className="border-2 rounded-md py-1 mb-4">
-                <summary className="list-none ps-2">
-                  <IoInformationCircleSharp className="text-lg" />
+              <details className="border-2 rounded-md py-1 mb-4 px-2">
+                <summary className="list-none">
+                  <IoInformationCircleSharp className="text-xl" />
                 </summary>
 
-                <span className="text-sm ps-4">
-                  <span className="font-medium">Created At</span>:{" "}
+                <span className="text-sm">
+                  <span className="font-medium">Created At</span>: 
                   <span className="font-light text-xs">{groupCreatedAt}</span>
                 </span>
                 <br />
-                <span className="text-sm ps-4">
-                  <span className="font-medium">Total Tenants</span>:{" "}
+                <span className="text-sm">
+                  <span className="font-medium">Total Tenants</span>: 
                   <span className="font-light text-xs">{totalTenants}</span>
                 </span>
                 <br />
-                <span className="text-sm ps-4">
-                  <span className="font-medium">Discription</span>:{" "}
+                <span className="text-sm">
+                  <span className="font-medium">Discription</span>: 
                   <span className="font-light text-xs">{groupDiscription}</span>
                 </span>
               </details>
@@ -145,10 +150,12 @@ export default function GroupsIndex() {
                     alt="tenantImages"
                     className="rounded-full h-100 ms-1"
                     loading="lazy"
+                    onClick={()=>navigateView(element._id)}
                   />
-                  <span>{element.tenantName}</span>
-                  <span>{element.tenantPhoneNumber}</span>
-                  <span>{element.rentAmount}</span>
+                  <span style={{width:"36%"}} onClick={() => navigateView(element._id)}>{element.tenantName}</span>
+                  <a style={{width:"14%"}} href={`tel:${element.tenantPhoneNumber}`}>
+                      <MdCall className="text-2xl"/>
+                  </a>
                   <span className="text-center">
                     <Dropdown>
                       <Dropdown.Toggle variant="none">

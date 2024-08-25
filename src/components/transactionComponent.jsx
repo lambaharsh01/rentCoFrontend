@@ -95,9 +95,11 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
         
         <div className="w-100 border-1 rounded-md">
 
-            <div className="rentCoRed rounded-t-md text-center py-1 font-bold">
-                Monthly Transactions(Collected Rent)
-            </div>
+            {showButton && (
+                <div className="rentCoRed rounded-t-md text-center py-1 font-bold">
+                    Monthly Transactions(Collected Rent)
+                </div>
+            )}
 
             <div className="w-100 p-2">
 
@@ -150,7 +152,7 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
                     {searched ? (
                     <span className="font-medium">Transactions</span>
                     ): (
-                    <div className="px-2 py-1 flex justify-center" onClick={searchTenants}>
+                    <div className="px-2 py-1 flex justify-center bg-slate-200" onClick={searchTenants}>
                     <span className="me-2 font-semibold text-sm">Click Here/Search To Fetch Visit List</span>
                     <FiChevronsDown className="text-xl" />
                     </div>                    )}
