@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axiosInterceptor from "../utils/axiosInterceptor";
 import { toast } from "react-toastify";
 
@@ -50,7 +50,7 @@ export default function AllTenantsComponent() {
 
                 <div className="px-2">
                    <div 
-                   className="border-y-2 mt-2 text-center flex justify-center py-1 mb-3"
+                   className="border-y-2 mt-2 text-center flex justify-center py-1 mb-3 bg-slate-200"
                     onClick={fetchTenantList}>
                     <span className="me-2 font-semibold text-sm">Click Here To Fetch Tenant List</span>
                     <FiChevronsDown className="text-xl" />
@@ -75,7 +75,6 @@ export default function AllTenantsComponent() {
                         key={`Tenant${index}`}
                         className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${smallScreen ? "h-16 text-xs" : "h-20"
                         }`}
-                        onClick={()=>navigate("/viewTenant/"+element.tenantId)}
                     >
                         <span style={{width:"24%"}} onClick={()=>navigateTenant(element.tenantId)}>
                         <img

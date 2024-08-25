@@ -112,114 +112,78 @@ export default function ViewVisit() {
             <Skeleton count={6} height={60} className="mb-3" />
         </div>
         ): (
-          <div className="p-2 w-100">
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Name</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Property</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Contact</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
-          </div>
-
-          
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Rent Amount</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{rentAmont}</span>
-            </div>
-          
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Electricity Amount(Per Unit)</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{electricityAmountPerUnit}</span>
-            </div>
-          
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Pervious Meter Reading</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{previousReading}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Current Meter Reading</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{currentReading}</span>
-          </div>
-        
-          <div className="mb-3">
-            <span className="font-bold text-2xl">Total Electrical Units Consumed</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{totalUnits}</span>
-          </div>
-          
-        
-          <div className="mb-3">
-            <span className="font-bold text-2xl">Total Electricity Bill</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{electricityBill}</span>
-          </div>
-
-          {
-    previouslyPending && (
-      <div className="mb-3">
-        <span className="font-bold text-2xl">Previously Pending Amount</span>
-        <br />
-        <span className="font-medium text-xl text-slate-500 ps-1">{previouslyPendingAmount}</span>
-      </div>
-    )
-  }
-
-  {
-    damages && (
-      <div className="mb-3">
-        <span className="font-bold text-2xl">Damages</span>
-        <br />
-        <span className="font-medium text-xl text-slate-500 ps-1">{damagesExplained}</span>
-      </div>
-    )
-  }
-
-          <div className="mb-3">
-            <span className="font-bold text-2xl">Remarks</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{remark}</span>
-          </div>
-
-          <div className="mb-3">
-            <span className="font-bold text-2xl">Current Month's Total Rent</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{currentMonthTotalRent}</span>
-          </div>
-
-          <div className="mb-3">
-            <span className="font-bold text-2xl">Total Rent {previouslyPending && (<span>Current + Previous</span>)}</span>
-            <br />
-            <span className="font-medium text-xl text-slate-500 ps-1">{totalRent}</span>
-          </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Visit Date</span>
-              <br />
-           <span className="font-medium text-xl text-slate-500 ps-1">{visitDate}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Visit Creation Date</span>
-              <br />
-           <span className="font-medium text-xl text-slate-500 ps-1">{createdAt}</span>
-            </div>
-
+            <div className="p-2 w-100">
+              
+              <table className="w-100 font-medium border-y-2">
+                <tr>
+                    <td className="w-2/5 py-2">Tenant Name</td>
+                    <td className="w-3/5 border-b-2 py-2">{tenantName}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Property</td>
+                    <td className="w-3/5 border-b-2 py-2">{propertyName}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Tenant Contact</td>
+                    <td className="w-3/5 border-b-2 py-2">{tenantPhoneNumber}</td>
+                </tr>
+                <tr>
+                    <td className="w-2/5 py-2">Rent Amount</td>
+                    <td className="w-3/5 border-b-2 py-2">{rentAmont}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Electricity Amount<br />(Per Unit)</td>
+                    <td className="w-3/5 border-b-2 py-2">{electricityAmountPerUnit}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Pervious Meter Reading</td>
+                    <td className="w-3/5 border-b-2 py-2">{previousReading}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Pervious Meter Reading</td>
+                    <td className="w-3/5 border-b-2 py-2">{previousReading}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Current Meter Reading</td>
+                    <td className="w-3/5 border-b-2 py-2">{currentReading}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Total Electric Units</td>
+                    <td className="w-3/5 border-b-2 py-2">{totalUnits}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Total Electricity Bill</td>
+                    <td className="w-3/5 border-b-2 py-2">{electricityBill}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Previously Pending Amount</td>
+                    <td className="w-3/5 border-b-2 py-2">{previouslyPending ? previouslyPendingAmount : 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Damages</td>
+                    <td className="w-3/5 border-b-2 py-2">{damages ? damagesExplained : 'N/A'}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Remarks</td>
+                    <td className="w-3/5 border-b-2 py-2">{remark}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Current Month's Total</td>
+                    <td className="w-3/5 border-b-2 py-2">{currentMonthTotalRent}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Total Rent <br /> (Previous + Current)</td>
+                    <td className="w-3/5 border-b-2 py-2">{totalRent}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Visit Date</td>
+                    <td className="w-3/5 border-b-2 py-2">{visitDate}</td>
+                </tr>
+                <tr>
+                  <td className="w-2/5 py-2">Visit Creation Date</td>
+                    <td className="w-3/5 border-b-2 py-2">{createdAt}</td>
+                </tr>
+              </table>
           </div >
         )}
 
