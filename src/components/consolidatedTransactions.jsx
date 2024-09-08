@@ -14,7 +14,7 @@ import { getTenantDetails } from "../utils/redux/reduxInterceptors";
 import axiosInterceptor from "../utils/axiosInterceptor";
 import { toast } from "react-toastify";
 
-let monthBoundary= getCurrentMonthBoundaries();
+// let monthBoundary= getCurrentMonthBoundaries();
 
 export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id="", fromDate="", toDate=""}) {
 
