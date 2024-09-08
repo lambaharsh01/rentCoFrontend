@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
+//import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 import SearchableSelect from "./searchableSelect";
 
 import Skeleton from "react-loading-skeleton";
@@ -14,9 +14,9 @@ import { getTenantDetails } from "../utils/redux/reduxInterceptors";
 import axiosInterceptor from "../utils/axiosInterceptor";
 import { toast } from "react-toastify";
 
-let monthBoundary= getCurrentMonthBoundaries();
+//let monthBoundary= getCurrentMonthBoundaries();
 
-export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id="", fromDate=monthBoundary.fromDate, toDate=monthBoundary.toDate}) {
+export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id="", fromDate="", toDate=""}) {
 
     const [consolidatedReport, setConsolidatedReport] = useState([]);
     
