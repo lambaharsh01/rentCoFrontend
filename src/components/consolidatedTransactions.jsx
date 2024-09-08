@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 let monthBoundary= getCurrentMonthBoundaries();
 
-export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id="", fromDate=monthBoundary.fromDate, toDate=monthBoundary.toDate}) {
+export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id="", fromDate="", toDate=""}) {
 
     const [consolidatedReport, setConsolidatedReport] = useState([]);
     
