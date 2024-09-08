@@ -8,6 +8,7 @@ import SearchableSelect from "../../components/searchableSelect";
 
 import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
+import formatDate from "../../utils/formatDate";
 
 import Switch from "../../components/switch";
 
@@ -56,6 +57,7 @@ export default function AddVisit() {
 
   const [remark, setRemark] = useState("");
 
+  const [lastVisitDate, setLastVisitDate] = useState("");
   const [lastVisitTotal, setLastVisitTotal]= useState("");
   const [lastVisitReading, setLastVisitReading] = useState("");
   const [fetchedPreviousVisitDetails, setFetchedPreviousVisitDetails] = useState(false);
@@ -68,7 +70,8 @@ export default function AddVisit() {
             method: "get",
             query: {tenantId}
     }).then(res => {
-          
+
+          setLastVisitDate(formatDate(res?.data?.lastVisit?.visitDate, 'dd-mm-yyyy'));
           setLastVisitTotal(res?.data?.lastVisit?.totalRent);
           setLastVisitReading(res?.data?.lastVisit?.currentReading);
           setFetchedPreviousVisitDetails(true);
@@ -317,6 +320,8 @@ Total Rent(Current + Previous): ${totalRent}`;
               </summary>
               
             <div className="ps-9 mt-2">
+              <span className="text-sm font-medium">Last Month's Visit Date: <b>{lastVisitDate}</b></span>
+              <br />
               <span className="text-sm font-medium">Last month's total: <b>{lastVisitTotal}</b></span>
               <br />
               <span className="text-sm font-medium">Last month's meter reading: <b>{lastVisitReading}</b></span>
