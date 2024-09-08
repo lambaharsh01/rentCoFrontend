@@ -392,9 +392,6 @@ Total Rent(Current + Previous): ${totalRent}`;
                   value={previousReading}
                   onChange={handlePreviousReadingInput}
                 />
-                    <div className="w-100 flex justify-end">
-                      <button className="">Fetch last reading</button>
-                    </div>
               </>
               )}
             </div>
