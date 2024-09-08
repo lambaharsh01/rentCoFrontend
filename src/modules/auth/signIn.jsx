@@ -26,7 +26,9 @@ export default function SignIn() {
         })
           .then((res) => {
 
-            if (!res.data.token) throw new Error("Something went wrong");
+            setDissabled(false);
+
+            if (!res.data.token)  toast.error("Something went wrong");
             localStorage.setItem("authToken", res.data.token);
             toast.success(`Welcome back ${res.data.userName}!`);
 
@@ -37,7 +39,7 @@ export default function SignIn() {
             toast.error(err.message);
             setUserEmail("");
             setPassword("");
-            setDissabled(true);
+            setDissabled(false);
           });
       })
       .catch((err) => {

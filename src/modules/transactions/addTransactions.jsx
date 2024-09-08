@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 //components
 import Header from "../../components/header";
 import SearchableSelect from "../../components/searchableSelect";
-import DatePickerComponent from "../../components/datePicker";
 
 //ui
 import { toast } from "react-toastify";
@@ -128,14 +127,14 @@ Recived Amount: ${recivedAmount}`);
         inputPlaceHolder="Select Tenant"
         />
 
-         {!selectedTenant && (
-          <div className="w-100 p-2 text-center mt-3">
-          <h1 className="rentCoFont mainFont text-2xl">
-            <span className="outlined-text-extra-thin text-white">Transaction Date</span>
-          </h1>
-            <DatePickerComponent key="DatePicker" initialValue={transactionDate} onChange={(date) =>setTransactionDate(date)} inputClass="px-3 py-2 rounded-full bg-slate-100 text-center" />
-           </div>
-        )}
+          <span className="font-bold ms-2">Transaction Date</span>
+  
+          <input
+            type="date"
+            className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+            value={transactionDate}
+            onChange={(e) => { setTransactionDate(e.currentTarget.value) }}
+            />
 
 
         
