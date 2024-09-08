@@ -128,3 +128,11 @@ body {
     opacity: 0;
   }
 }
+
+th,
+td {
+  min-width: max-content;
+  white-space: nowrap;
+  padding: 4px 6px;
+  border: 1px solid black !important;
+}

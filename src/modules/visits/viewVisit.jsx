@@ -140,10 +140,6 @@ export default function ViewVisit() {
                     <td className="w-3/5 border-b-2 py-2">{previousReading}</td>
                 </tr>
                 <tr>
-                  <td className="w-2/5 py-2">Pervious Meter Reading</td>
-                    <td className="w-3/5 border-b-2 py-2">{previousReading}</td>
-                </tr>
-                <tr>
                   <td className="w-2/5 py-2">Current Meter Reading</td>
                     <td className="w-3/5 border-b-2 py-2">{currentReading}</td>
                 </tr>

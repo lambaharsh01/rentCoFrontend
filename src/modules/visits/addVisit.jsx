@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import axiosInterceptor from "../../utils/axiosInterceptor";
 
 import Switch from "../../components/switch";
-import DatePickerComponent from "../../components/datePicker";
 
 import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
 
@@ -18,19 +17,19 @@ import { IoCalendar, IoInformationCircleSharp } from "react-icons/io5";
 import { TbZoomMoney } from "react-icons/tb";
 
 import TransactionComponent from "../../components/transactionComponent";
-import VisitComponent from "../../components/visitComponent";
 
 export default function AddVisit() {
 
   const navigate = useNavigate();
 
-  const [selectedTenant, setSelectedTenant] = useState(false);
   const [tenantDetails, setTenantDetails] = useState([]);
   const [visitDate, setVisitDate] = useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }));
 
   useEffect(() => { 
     setTenantDetails(getTenantDetails() ?? [])
   }, []);
+
+  const [selectedTenant, setSelectedTenant] = useState(false);
 
   const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
   const [updateComponent, setUpdateComponent] = useState(1);
@@ -57,6 +56,30 @@ export default function AddVisit() {
 
   const [remark, setRemark] = useState("");
 
+  const [lastVisitTotal, setLastVisitTotal]= useState("");
+  const [lastVisitReading, setLastVisitReading] = useState("");
+  const [fetchedPreviousVisitDetails, setFetchedPreviousVisitDetails] = useState(false);
+
+  const fetchLastVisitData=()=> {
+    if(fetchedPreviousVisitDetails) return;
+
+    axiosInterceptor({
+            url: "/api/visit/getLastVisitInfo",
+            method: "get",
+            query: {tenantId}
+    }).then(res => {
+          
+          setLastVisitTotal(res?.data?.lastVisit?.totalRent);
+          setLastVisitReading(res?.data?.lastVisit?.currentReading);
+          setFetchedPreviousVisitDetails(true);
+      
+        }).catch(err => {
+            toast.error(err.message);
+        })
+
+
+  }
+
   const handleTenantSelection = (data) => {
     setGroupId(data.groupId);
     setTenantId(data.tenantId);
@@ -80,6 +103,7 @@ export default function AddVisit() {
     setRemark("")
     
     setSelectedTenant(true);
+    setFetchedPreviousVisitDetails(false);
     setUpdateComponent(prevCount => prevCount + 1);
   }
 
@@ -256,30 +280,53 @@ Total Rent(Current + Previous): ${totalRent}`;
       </div>
 
       <div className="col-md-10 offset-md-1 bg-white p-2">
-
+        
+        <span className="font-bold ms-2">Select Tenant Name</span>
+  
         <SearchableSelect
         key="SelectTenant"
         options={tenantDetails}
         onChange={handleTenantSelection}
-        inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+        inputClass="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
         inputPlaceHolder="Select Tenant"
         />
 
 
-        {!selectedTenant && (
-          <div className="w-100 p-2 text-center mt-3">
-          <h1 className="rentCoFont mainFont text-2xl">
-            <span className="outlined-text-extra-thin text-white">Visit Date</span>
-          </h1>
-            <DatePickerComponent key="DatePicker" initialValue={visitDate} onChange={(date) =>setVisitDate(date)} inputClass="px-3 py-2 rounded-full bg-slate-100 text-center" />
-           </div>
-        )}
+        
+        <span className="font-bold ms-2">Visit Date</span>
+  
+        <input
+            type="date"
+            className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+            value={visitDate}
+            onChange={(e) => { setVisitDate(e.currentTarget.value) }}
+            />
+        
 
-        {selectedTenant && (
-          <div className="w-100">
-              <details className="border-2 rounded-md py-1 mb-4">
+          {selectedTenant && (<div className="w-100 mt-2">
+
+              <details className="border-2 rounded-md py-2 mb-4">
                 <summary className="list-none ps-2">
-                 <span className="text-sm flex"><TbZoomMoney className="text-xl me-2" /> Search For Past Transactions</span>
+              <span
+                className="text-base font-semibold flex"
+                onClick={fetchLastVisitData}
+              >
+                <IoCalendar className="text-xl me-2" /> 
+                Search For Past Visits
+              </span>
+              </summary>
+              
+            <div className="ps-9 mt-2">
+              <span className="text-sm font-medium">Last month's total: <b>{lastVisitTotal}</b></span>
+              <br />
+              <span className="text-sm font-medium">Last month's meter reading: <b>{lastVisitReading}</b></span>
+              </div>
+
+              </details>
+
+            <details className="border-2 rounded-md py-2 mb-4">
+                <summary className="list-none ps-2">
+                 <span className="text-base font-semibold flex"><TbZoomMoney className="text-xl me-2" /> Search For Past Transactions</span>
               </summary>
 
               <div className="px-2 mt-2">
@@ -292,20 +339,6 @@ Total Rent(Current + Previous): ${totalRent}`;
               <TransactionComponent key={updateComponent} showButton={false} specificTenant={true} nameLabel={tenantName} id={tenantId} />
             </details>
             
-              <details className="border-2 rounded-md py-1 mb-4">
-                <summary className="list-none ps-2">
-                 <span className="text-sm flex"><IoCalendar className="text-xl me-2" /> Search For Past Visits</span>
-              </summary>
-              
-              <div className="px-2 mt-2">
-              <span className="text-xs flex">
-                  <IoInformationCircleSharp className="text-3xl me-2" />
-                  <span className="my-2">Total Rent is shown below. Clicking the vist in this searched list and coming back will make your saved fields on this page empty again.</span>
-              </span>
-              </div>
-
-              <VisitComponent key={updateComponent} showButton={false} specificTenant={true} nameLabel={tenantName} id={tenantId} />
-              </details>
             <div className="p-2 w-100">
             
 
@@ -346,7 +379,7 @@ Total Rent(Current + Previous): ${totalRent}`;
                 <span className="font-medium text-xl text-slate-500 ps-1">
                   <br />
                   {previousReading}</span>
-              ) : (
+                ) : (<>
                 <input
                   type="number"
                   className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
@@ -354,6 +387,10 @@ Total Rent(Current + Previous): ${totalRent}`;
                   value={previousReading}
                   onChange={handlePreviousReadingInput}
                 />
+                    <div className="w-100 flex justify-end">
+                      <button className="">Fetch last reading</button>
+                    </div>
+              </>
               )}
             </div>
   
@@ -443,10 +480,8 @@ Total Rent(Current + Previous): ${totalRent}`;
         </button> 
             
             </div>
-          </div>
-        )}
-
-
+          </div>)}
+        
       </div>
     </div>
   );
