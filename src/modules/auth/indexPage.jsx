@@ -11,6 +11,7 @@ export default function IndexPage() {
       url: '/api/authentication/handshake',
       method:'get'
     }).then((res) => {
+      toast.success("Server connection successfull");
     }).catch((err) => {
       toast.error("Server connection could not be eastablished");
     });
