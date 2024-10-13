@@ -75,14 +75,29 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
     }
 
 
+    const totalOfConsolidationReport = (ary) => {
 
-    const exportPDF = () => {
-    const doc = new jsPDF();
-    
-    // Define the columns and rows for the table
-        const pdfHead = ["Total", "Date", "Monthly Rent", "Previously Pending", "Electricity Bill", "Total Units", "Cost per/unit", "Current Unit", "Previous Unit"];
+        const array=structuredClone(ary)
+
+        const lastIndex = array.length - 1 - [...array].reverse().findIndex(el => el?.src === "visit");
+
+        if (lastIndex === -1) return 0;
         
-        const pdfBody = consolidatedReport.map((element, index) => {
+        let newArray = array.splice(lastIndex);
+
+         return newArray.reduce((accumulator, currentItem) => accumulator + currentItem.value, 0)
+    }
+
+    const exportPDF = (ary) => {
+        const array= structuredClone(ary)
+        const doc = new jsPDF();
+
+        // Define the columns and rows for the table
+        const pdfHead = ["Total", "Date", "Monthly Rent", "Previously Pending", "Electricity Bill", "Total Units", "Cost per/unit", "Current Unit", "Previous Unit"];
+    
+        const pdfBody = array.map((element, index) => {
+            console.log(index, "element")
+            
             if (element.src !== "visit") return [
                 "+" + element.recivedAmount,
                 element.dateFormat,
@@ -103,7 +118,7 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
         });
 
         pdfBody.push([
-            "Total(" + (-consolidatedReport.reduce((accumulator, currentItem) => accumulator + currentItem.value, 0) ) + ")", "", "", "", "", "", "", "", ""
+            "Total(" + (-totalOfConsolidationReport(array) ) + ")", "", "", "", "", "", "", "", ""
         ])
         
     doc.autoTable({
@@ -190,24 +205,26 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                     <div  className={`w-100 text-end pt-2  ${ searched ? "d-block":"d-none"}`}>
                         <button
                             className="p-1 text-white rounded-sm bg-green-500 btn-sm"
-                            onClick={exportPDF}>
+                            onClick={()=>exportPDF(consolidatedReport)}>
                             <b>Download report</b>
                         </button>
                     </div>
 
                     <div className="table-responsive py-4">
-                        <table className={` ${ searched ? "d-block":"d-none"}`}>
-                            <tr className="bg-slate-200">
-                                <th>Total</th>
-                                <th>Date</th>
-                                <th>Monthly Rent</th>
-                                <th>Previously Pending</th>
-                                <th>Electricity Bill</th>
-                                <th>Total Units</th>
-                                <th>Cost per/unit</th>
-                                <th>Current Unit</th>
-                                <th>Previous Unit</th>
-                            </tr>
+                        <table className={` ${searched ? "d-block" : "d-none"}`}>
+                            <thead>
+                                <tr className="bg-slate-200">
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th>Monthly Rent</th>
+                                    <th>Previously Pending</th>
+                                    <th>Electricity Bill</th>
+                                    <th>Total Units</th>
+                                    <th>Cost per/unit</th>
+                                    <th>Current Unit</th>
+                                    <th>Previous Unit</th>
+                                </tr>
+                            </thead>
                            
                                 {searched && !consolidatedReport.length && (
                                     <tr className="text-center">
@@ -216,18 +233,20 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                                 )}
 
                     
-                    {loading ? (
-                    <tr>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                        <td><Skeleton count={3} height={30} className="mb-2" /></td>
-                    </tr>
+                            {loading ? (
+                                <tbody>
+                                <tr>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                    <td><Skeleton count={3} height={30} className="mb-2" /></td>
+                                </tr>
+                                </tbody>
                             ) : (<tbody>
                                     {consolidatedReport.map((element, index) => {
 
@@ -269,7 +288,7 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                                     <tr>
                                         <td colSpan={9} className="font-bold">
                                         Total
-                                          (-{consolidatedReport.reduce((accumulator, currentItem) => accumulator + currentItem.value, 0)})
+                                          (-{totalOfConsolidationReport(consolidatedReport)})
                                         </td>
                                     </tr>
                             </tbody>)
@@ -277,10 +296,6 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
   
                         </table>
                     </div>
-
-
-
-
 
                 </div>
            

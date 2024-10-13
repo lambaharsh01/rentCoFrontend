@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axiosInterceptor from "../utils/axiosInterceptor";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,10 @@ export default function AllTenantsComponent() {
 
     const [searched, setSearched] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        fetchTenantList()
+    }, [])
 
     const fetchTenantList = () => { 
         setLoading(true);

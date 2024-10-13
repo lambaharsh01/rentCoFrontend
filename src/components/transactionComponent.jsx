@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 
 import SearchableSelect from "./searchableSelect";
@@ -46,6 +46,15 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
         let newArray = [{tenantId:"", label:"None"}, ...tenants];
         setTenantOptions(newArray);
     }, []);
+
+       
+    const fetchBaseDataCallBack = useCallback(() => {
+        fetchData({ fromDate: searchFrom, toDate: searchTo, tenantId });
+    }, [searchFrom, searchTo, tenantId])
+
+    useEffect(() => {
+        fetchBaseDataCallBack()
+    }, [fetchBaseDataCallBack])
     
     const handleTenanSelection = (e) => {
         setTenantName(e.label);

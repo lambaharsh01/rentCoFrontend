@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../utils/authSchemas.js";
 import axiosInterceptor from "../../utils/axiosInterceptor";
-
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { getTenantDetails } from "../../utils/redux/reduxInterceptors.js";
 
 export default function SignIn() {
@@ -13,6 +13,12 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
   const [dissabled, setDissabled] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  // const [processingRequest]
+
+
 
   const authenticateUser = () => {
     setDissabled(true);
@@ -74,15 +80,28 @@ export default function SignIn() {
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.currentTarget.value)}
               />
-              <input
-                type="password"
-                autocomplete="off"
-                autofill="off"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.currentTarget.value)}
-              />
+
+              <div className="relative w-full">
+                <input
+                  type={ showPassword ? "text":"password"}
+                  autocomplete="off"
+                  autofill="off"
+                  className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100 pr-10" // Add padding-right for icon space
+                  placeholder="Enter Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
+                />
+                <span className="absolute right-4 pt-14 transform -translate-y-1/2">
+                    {!showPassword && (  
+                      <IoMdEye className="text-2xl text-gray-500" onClick={() => { setShowPassword(true) }} />
+                    )}
+                  
+                    {showPassword && (  
+                      <IoMdEyeOff className="text-2xl text-gray-500" onClick={() => { setShowPassword(false) }} />
+                    )}
+                </span>
+              </div>
+
             </div>
             <div className="mb-14">
               <button
@@ -90,7 +109,7 @@ export default function SignIn() {
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >
-                Sign In
+                { dissabled ? (<div class="spinner-border text-white"></div>) : (<span>Sign In</span>)} 
               </button>
             </div>
           </div>

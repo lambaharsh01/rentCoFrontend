@@ -14,10 +14,9 @@ import Switch from "../../components/switch";
 
 import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
 
-import { IoCalendar, IoInformationCircleSharp } from "react-icons/io5";
-import { TbZoomMoney } from "react-icons/tb";
+import { IoCalendar } from "react-icons/io5";
+import { MdCallMerge } from "react-icons/md";
 
-import TransactionComponent from "../../components/transactionComponent";
 
 export default function AddVisit() {
 
@@ -33,7 +32,6 @@ export default function AddVisit() {
   const [selectedTenant, setSelectedTenant] = useState(false);
 
   const [createButtonDisabled, setCreateButtonDisabled] = useState(false);
-  const [updateComponent, setUpdateComponent] = useState(1);
 
   const [groupId, setGroupId] = useState("");
   const [tenantId, setTenantId] = useState("");
@@ -60,6 +58,7 @@ export default function AddVisit() {
   const [lastVisitDate, setLastVisitDate] = useState("");
   const [lastVisitTotal, setLastVisitTotal]= useState("");
   const [lastVisitReading, setLastVisitReading] = useState("");
+  const [previouslyRecivedAmount, setPreviouslyRecivedAmount] = useState("");
   const [fetchedPreviousVisitDetails, setFetchedPreviousVisitDetails] = useState(false);
 
   const fetchLastVisitData=()=> {
@@ -74,6 +73,7 @@ export default function AddVisit() {
           setLastVisitDate(formatDate(res?.data?.lastVisit?.visitDate, 'dd-mm-yyyy'));
           setLastVisitTotal(res?.data?.lastVisit?.totalRent);
           setLastVisitReading(res?.data?.lastVisit?.currentReading);
+          setPreviouslyRecivedAmount(res?.data?.recivedAmount);
           setFetchedPreviousVisitDetails(true);
       
         }).catch(err => {
@@ -107,7 +107,6 @@ export default function AddVisit() {
     
     setSelectedTenant(true);
     setFetchedPreviousVisitDetails(false);
-    setUpdateComponent(prevCount => prevCount + 1);
   }
 
   const handlePreviousReadingInput = (e) => {
@@ -229,7 +228,7 @@ Total Rent(Current + Previous): ${totalRent}`;
       axiosInterceptor({
         url: "/api/visit/addVisit",
         method: "post",
-        data:bodyParameters,
+        data: bodyParameters,
       }).then(res => {
 
         if (res.success) {
@@ -264,13 +263,25 @@ Total Rent(Current + Previous): ${totalRent}`;
       }).catch(error => {
         toast.error("Visit entry could not be created due to network issues please try again after some time.");
         return navigate("/dashboard", { replace: true });
-      })
-      
+      }) 
+    }
+  }
+
+  const mergePreviousVisitData = () => {
+ 
+    const lastMonthPending = Number(lastVisitTotal) - Number(previouslyRecivedAmount)
+
+    setPreviousReading(lastVisitReading)
+
+    if (lastMonthPending > 0) {
+      setPreviouslyPendingAmount(lastMonthPending)
+    } else {
+      setPreviouslyPending(false)
     }
 
+    toast.success("Previous visit data merged")
+}
 
-
-  }
 
   return (
     <div className="min-h-screen">
@@ -325,25 +336,17 @@ Total Rent(Current + Previous): ${totalRent}`;
               <span className="text-sm font-medium">Last month's total: <b>{lastVisitTotal}</b></span>
               <br />
               <span className="text-sm font-medium">Last month's meter reading: <b>{lastVisitReading}</b></span>
+              <br />
+              <span className="text-sm font-medium">Recived amount from last visit: <b>{previouslyRecivedAmount}</b></span>
+
+              <div className="w-100 flex justify-end">
+                <MdCallMerge className="text-3xl me-2 text-green-800" onClick={mergePreviousVisitData}/>
+              </div>
+
               </div>
 
               </details>
 
-            <details className="border-2 rounded-md py-2 mb-4">
-                <summary className="list-none ps-2">
-                 <span className="text-base font-semibold flex"><TbZoomMoney className="text-xl me-2" /> Search For Past Transactions</span>
-              </summary>
-
-              <div className="px-2 mt-2">
-              <span className="text-xs flex">
-                  <IoInformationCircleSharp className="text-3xl me-2" />
-                  <span className="my-2">All the transactions are shown below. Clicking the transaction in this searched list and coming back will make your saved fields on this page empty again.</span>
-                </span>
-                </div>
-
-              <TransactionComponent key={updateComponent} showButton={false} specificTenant={true} nameLabel={tenantName} id={tenantId} />
-            </details>
-            
             <div className="p-2 w-100">
             
 
