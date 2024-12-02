@@ -30,7 +30,7 @@ export default async function axiosInterceptor({ method, url, query, data }) {
 
     let apiMethod = method.toLowerCase().trim();
 
-    let apiUrl = process.env.REACT_APP_BASE_URI;
+    let apiUrl = "https://rentco-backend.lambaharsh01.in/";
 
     apiUrl += url.trim() + convertQueryString(query);
 
