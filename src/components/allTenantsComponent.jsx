@@ -21,7 +21,7 @@ export default function AllTenantsComponent() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchTenantList()
+        // fetchTenantList()
     }, [])
 
     const fetchTenantList = () => { 

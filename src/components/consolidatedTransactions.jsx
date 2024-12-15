@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 // pdf download
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { IoIosDownload } from "react-icons/io";
 
 //import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 import SearchableSelect from "./searchableSelect";
@@ -174,7 +175,7 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                         <span className="text-sm font-light">Tenant</span>
                                 <br />
                                 <SearchableSelect
-                                    inputClass="w-100 p-0.5 rounded-sm bg-slate-100 border-1 mb-2"
+                                    inputClass="w-100 p-0.5 rounded-xs bg-slate-100 border-1 mb-2"
                                     options={tenantOptions}
                                     inputPlaceHolder={tenantName}
                                     onChange={handleTenanSelection}
@@ -183,7 +184,11 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                         </div>
                                                         
                         <div className="w-2/5 pt-4">
-                            <button className="p-0.5 text-white rounded-sm bg-green-500 btn-sm w-100 mb-2" onClick={searchTenants} disabled={loading}>Search</button>
+                                <button
+                                    className="p-0.5 text-white rounded-sm bg-black btn-sm w-100 mb-2"
+                                    onClick={searchTenants}
+                                    disabled={loading}
+                                >Search</button>
                         </div>
                         </div>
                     </div>
@@ -191,26 +196,24 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                 </div>
                 
                 <div className="border-y-2 mt-2 text-center">
-                    {searched ? (
-                    <span className="font-medium">Report</span>
-                    ): (
-                    <div className="px-2 py-1 flex justify-center bg-slate-200">
-                    <span className="me-2 font-semibold text-sm">Please Select Tenant And Search</span>
+                    <div className="px-2 py-2 flex justify-center bg-slate-200 relative">
+                        <span className="me-2 font-semibold text-sm">
+                            {searched ?
+                                (<span className="w-100 flex items-center">
+                                    Transaction Report
+                                    <IoIosDownload
+                                        className="text-3xl absolute right-1"
+                                        onClick={()=>exportPDF(consolidatedReport)}
+                                    />
+                                </span>) :
+                                (<span>Please Select Tenant And Search</span>)
+                            }
+                        </span>
                     </div>
-                    )}
-                    </div>
+                </div>
 
-                <div className="w-100 scrolMaxHeight300 px-1 pt-2">
-
-                    <div  className={`w-100 text-end pt-2  ${ searched ? "d-block":"d-none"}`}>
-                        <button
-                            className="p-1 text-white rounded-sm bg-green-500 btn-sm"
-                            onClick={()=>exportPDF(consolidatedReport)}>
-                            <b>Download report</b>
-                        </button>
-                    </div>
-
-                    <div className="table-responsive py-4">
+                <div className="w-100 scrolMaxHeight3000 px-1 ">
+                    <div className="table-responsive py-3">
                         <table className={` ${searched ? "d-block" : "d-none"}`}>
                             <thead>
                                 <tr className="bg-slate-200">

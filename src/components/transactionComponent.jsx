@@ -151,7 +151,7 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
                         </div>
                                                         
                         <div className="w-2/5 pt-4">
-                            <button className="p-0.5 text-white rounded-sm bg-green-500 btn-sm w-100 mb-2" onClick={searchTenants} disabled={loading}>Search</button>
+                            <button className="p-0.5 text-white rounded-sm bg-black btn-sm w-100 mb-2" onClick={searchTenants} disabled={loading}>Search</button>
                         </div>
                         </div>
                     </div>

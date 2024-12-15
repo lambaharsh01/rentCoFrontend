@@ -153,7 +153,7 @@ export default function VisitComponent({showButton=true, specificTenant=false, n
                         </div>
                                                         
                         <div className="w-2/5 pt-4">
-                            <button className="p-0.5 text-white rounded-sm bg-green-500 btn-sm w-100 mb-2" onClick={searchTenants}>Search</button>
+                            <button className="p-0.5 text-white rounded-sm bg-black btn-sm w-100 mb-2" onClick={searchTenants}>Search</button>
                         </div>
                         </div>
                     </div>

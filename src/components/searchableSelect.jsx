@@ -41,10 +41,17 @@ const handleSelect = (option) => {
         disabled={inputDisabled}
       />
       {focused && (
-        <ul className="options-list">
+        <ul className="options-list scrolMaxHeight150">
           {filteredOptions.map((option, index) => (
-            <li key={`Searchable${index}`} onClick={() => handleSelect(option)}>
-              {option[labelKey]}
+            <li 
+              className="text-xs"
+              key={`Searchable${index}`}
+              onClick={() => handleSelect(option)}>
+              {
+                (option?.[labelKey]?.length || 0) > 15 ?
+                option?.[labelKey].slice(0, 15) + '...' :
+                option?.[labelKey]
+              }
             </li>
           ))}
         </ul>
