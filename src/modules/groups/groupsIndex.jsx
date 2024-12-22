@@ -67,8 +67,8 @@ export default function GroupsIndex() {
       <div className="container-fluid">
         <div className="row px-4 pt-4">
           <div className="col-12 flex justify-between mb-3 items-center">
-            <h1 className="rentCoFont mainFont text-4xl ps-2">
-              <span className="outlined-text-thin text-white">Groups</span>
+            <h1 className="rentCoFont text-3xl ps-2">
+             Groups
             </h1>
             <FaCirclePlus
               className="text-3xl me-2"

@@ -288,8 +288,8 @@ Total Rent(Current + Previous): ${totalRent}`;
       <Header active="d" key="Header"/>
 
       <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-        <h1 className="rentCoFont mainFont text-4xl ps-2">
-          <span className="outlined-text-thin text-white">Add Visit</span>
+        <h1 className="rentCoFont text-3xl ps-2">
+             Add Visit
         </h1>
       </div>
 

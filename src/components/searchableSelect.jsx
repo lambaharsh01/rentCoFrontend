@@ -44,12 +44,13 @@ const handleSelect = (option) => {
         <ul className="options-list scrolMaxHeight150">
           {filteredOptions.map((option, index) => (
             <li 
-              className="text-xs"
+              // className="text-sm"
+              style={{fontSize:14}}
               key={`Searchable${index}`}
               onClick={() => handleSelect(option)}>
               {
-                (option?.[labelKey]?.length || 0) > 15 ?
-                option?.[labelKey].slice(0, 15) + '...' :
+                (option?.[labelKey]?.length || 0) > 13 ?
+                option?.[labelKey].slice(0, 13) + '...' :
                 option?.[labelKey]
               }
             </li>

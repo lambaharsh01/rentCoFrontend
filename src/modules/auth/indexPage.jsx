@@ -7,6 +7,14 @@ export default function IndexPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      navigate("/dashboard", { replace: true });
+      return
+    }
+
     axiosInterceptor({
       url: '/api/authentication/handshake',
       method:'get'

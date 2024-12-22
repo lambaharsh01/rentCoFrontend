@@ -5,6 +5,7 @@ import isSmallScreen from "../utils/isSmallScreen";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { IoPeople } from "react-icons/io5";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
+import { IoIosTimer } from "react-icons/io";
 
 import { TbLogout2 } from "react-icons/tb";
 
@@ -26,6 +27,9 @@ export default function Header({ active }) {
         break;
       case "a":
         setActiveSection(" / Analytics");
+        break;
+      case "p":
+        setActiveSection(" / Past");
         break;
       default:
         setRentCoModule("Co.");
@@ -102,6 +106,14 @@ export default function Header({ active }) {
             }`}
           >
             <TbBrandGoogleAnalytics/>
+          </span>
+          <span
+            onClick={() =>navigate("/pastTenants")}
+            className={`me-2 me-md-4 pb-1 ${
+              active === "p" ? "font-bold rentCoRedFont" : ""
+            }`}
+          >
+            <IoIosTimer/>
           </span>
           <span
             onClick={logOut}

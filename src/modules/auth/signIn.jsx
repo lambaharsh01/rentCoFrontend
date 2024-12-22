@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginSchema } from "../../utils/authSchemas.js";
@@ -16,9 +16,12 @@ export default function SignIn() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  // const [processingRequest]
-
-
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+     navigate("/dashboard", { replace: true });
+    }
+  }, [])
 
   const authenticateUser = () => {
     setDissabled(true);
@@ -49,6 +52,7 @@ export default function SignIn() {
           });
       })
       .catch((err) => {
+        setDissabled(false);
         if (err.errors?.[0] ?? null) {
           toast.error(err.errors?.[0]);
         } else {
@@ -109,7 +113,7 @@ export default function SignIn() {
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >
-                { dissabled ? (<div class="spinner-border text-white"></div>) : (<span>Sign In</span>)} 
+                { dissabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Sign In</span>)} 
               </button>
             </div>
           </div>

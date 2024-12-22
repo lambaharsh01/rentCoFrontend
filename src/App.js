@@ -26,6 +26,8 @@ import ViewTenant from "./modules/tenants/viewTenant.jsx";
 
 import AnalyticsIndex from "./modules/analytics/analyticsIndex.jsx";
 
+import PastTenants from "./modules/past/pastTenants.jsx";
+
 function App() {
   return (
     <div>
@@ -64,6 +66,8 @@ function App() {
           <Route path="/viewTenant/:tenantId" element={<ViewTenant />} />
 
           <Route path="/analyticsIndex" element={<AnalyticsIndex />} />
+
+          <Route path="/pastTenants" element={<PastTenants />} />
         </Routes>
       </BrowserRouter>
     </div>
