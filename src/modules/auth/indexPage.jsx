@@ -21,9 +21,9 @@ export default function IndexPage() {
     }).then((res) => {
       toast.success("Server connection successful");
     }).catch((err) => {
-      toast.error("Server connection could not be eastablished");
+      toast.error("Server connection could not be established");
     });
-  })
+  }, [navigate])
 
   return (
     <div className="flex justify-center w-full h-screen">

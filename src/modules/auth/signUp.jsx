@@ -18,7 +18,7 @@ export default function SignUp() {
   }
 
   const [screen, setScreen] = useState(0);
-  const [dissabled, setDissabled] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -63,7 +63,7 @@ export default function SignUp() {
   };
 
   function sendVerificationCode(validatedObject) {
-    setDissabled(true);
+    setDisabled(true);
 
     axiosInterceptor({
       method: "post",
@@ -73,12 +73,12 @@ export default function SignUp() {
       .then((res) => {
         setScreen((prevCount) => prevCount + 1);
         scrollDivToTop();
-        setDissabled(false);
+        setDisabled(false);
         return toast.success(`OTP has been sent to ${userEmail}`);
       })
       .catch((err) => {
         toast.error(err.message);
-        setDissabled(false);
+        setDisabled(false);
         return navigate("/", { replace: true });
       });
   }
@@ -89,7 +89,7 @@ export default function SignUp() {
     if (!otp.length) return toast.error(`Please enter OTP`);
     if (otp.length < 6) return toast.error(`Incorrect OTP`);
 
-    setDissabled(true);
+    setDisabled(true);
 
     axiosInterceptor({
       method: "post",
@@ -100,12 +100,12 @@ export default function SignUp() {
         if (!res.success) return toast.error(res.message);
         setScreen((prevCount) => prevCount + 1);
         setOtp(res.data.otp);
-        setDissabled(false);
-        return toast.success(`OTP verification successfull`);
+        setDisabled(false);
+        return toast.success(`OTP verification successful`);
       })
       .catch((err) => {
         toast.error(err.message);
-        setDissabled(false);
+        setDisabled(false);
         return navigate("/", { replace: true });
       });
   };
@@ -118,7 +118,7 @@ export default function SignUp() {
     textColor: "text-slate-200",
     first: "bg-slate-200",
     second: "bg-slate-200",
-    thrid: "bg-slate-200",
+    third: "bg-slate-200",
   });
 
   const styles = {
@@ -135,7 +135,7 @@ export default function SignUp() {
       textColor: "bg-text-200",
       first: "bg-slate-200",
       second: "bg-slate-200",
-      thrid: "bg-slate-200",
+      third: "bg-slate-200",
     };
 
     if (!password.length) {
@@ -144,7 +144,7 @@ export default function SignUp() {
         textColor: "bg-text-200",
         first: "bg-slate-200",
         second: "bg-slate-200",
-        thrid: "bg-slate-200",
+        third: "bg-slate-200",
       };
     } else if (weakPasswordRegex.test(password)) {
       newObject = {
@@ -152,7 +152,7 @@ export default function SignUp() {
         textColor: "text-red-500",
         first: "bg-red-500",
         second: "bg-slate-200",
-        thrid: "bg-slate-200",
+        third: "bg-slate-200",
       };
     } else if (strongPasswordRegex.test(password)) {
       newObject = {
@@ -160,7 +160,7 @@ export default function SignUp() {
         textColor: "text-green-500",
         first: "bg-green-500",
         second: "bg-green-500",
-        thrid: "bg-green-500",
+        third: "bg-green-500",
       };
     } else {
       newObject = {
@@ -168,7 +168,7 @@ export default function SignUp() {
         textColor: "text-orange-500",
         first: "bg-orange-500",
         second: "bg-orange-500",
-        thrid: "bg-slate-200",
+        third: "bg-slate-200",
       };
     }
 
@@ -300,11 +300,11 @@ export default function SignUp() {
                 </span>
               </div>
               <button
-                disabled={dissabled}
+                disabled={disabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={validateUserInfo}
               >
-                Send Verification Code
+              { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Send Verification Code</span>)}
               </button>
             </div>
           )}
@@ -322,11 +322,11 @@ export default function SignUp() {
               />
 
               <button
-                disabled={dissabled}
+                disabled={disabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={verifyOtp}
               >
-                Verify OTP
+                 { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Verify OTP</span>)}
               </button>
             </div>
           )}
@@ -334,6 +334,8 @@ export default function SignUp() {
           {screen === 2 && (
             <div className="w-75 m-auto py-md-4 pt-4 pb-3">
               <h2 className="mb-4">Create Password</h2>
+              <p className="mb-4 text-xs -mt-4">Please make sure you create a strong password with a minimum length of 6 upper and lower cased alphanumeric characters, use of special characters(#$@&) </p>
+
 
               <input
                 type="password"
@@ -366,17 +368,17 @@ export default function SignUp() {
                   style={styles.hrWidth}
                 />
                 <span
-                  className={`h-1 rounded-md ${passStColor.thrid}`}
+                  className={`h-1 rounded-md ${passStColor.third}`}
                   style={styles.hrWidth}
                 />
               </div>
 
               <button
-                disabled={dissabled}
+                disabled={disabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={createUser}
               >
-                Verify OTP
+                 { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Add Password</span>)}
               </button>
             </div>
           )}

@@ -12,7 +12,7 @@ export default function SignIn() {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [dissabled, setDissabled] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,10 +21,10 @@ export default function SignIn() {
     if (token) {
      navigate("/dashboard", { replace: true });
     }
-  }, [])
+  }, [navigate])
 
   const authenticateUser = () => {
-    setDissabled(true);
+    setDisabled(true);
     loginSchema
       .validate({ userEmail, password }, { abortEarly: false })
       .then((validUser) => {
@@ -35,7 +35,7 @@ export default function SignIn() {
         })
           .then((res) => {
 
-            setDissabled(false);
+            setDisabled(false);
 
             if (!res.data.token)  toast.error("Something went wrong");
             localStorage.setItem("authToken", res.data.token);
@@ -48,11 +48,11 @@ export default function SignIn() {
             toast.error(err.message);
             setUserEmail("");
             setPassword("");
-            setDissabled(false);
+            setDisabled(false);
           });
       })
       .catch((err) => {
-        setDissabled(false);
+        setDisabled(false);
         if (err.errors?.[0] ?? null) {
           toast.error(err.errors?.[0]);
         } else {
@@ -72,7 +72,6 @@ export default function SignIn() {
         </div>
         <div className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-3xl flex-row overflow-y-auto">
           <div className="w-75 m-auto py-md-4 pt-4 pb-3 h-100 flex flex-col justify-between h-full">
-            {/* <h2 className="mb-4">Create Password</h2> */}
             <div>
               <input
                 type="email"
@@ -109,11 +108,11 @@ export default function SignIn() {
             </div>
             <div className="mb-14">
               <button
-                disabled={dissabled}
+                disabled={disabled}
                 className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >
-                { dissabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Sign In</span>)} 
+                { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Sign In</span>)} 
               </button>
             </div>
           </div>
