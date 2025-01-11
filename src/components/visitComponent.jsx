@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, useRef } from "react"
 import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 
 import SearchableSelect from "./searchableSelect";
@@ -49,16 +49,17 @@ export default function VisitComponent({showButton=true, specificTenant=false, n
         
     }, []);
 
-    
+    const searchValueRef = useRef({searchFrom, searchTo, tenantId})
     const fetchBaseDataCallBack = useCallback(() => {
+        const {searchFrom, searchTo, tenantId} = searchValueRef.current
         fetchData({ fromDate: searchFrom, toDate: searchTo, tenantId });
-    }, [searchFrom, searchTo, tenantId])
+    }, [])
 
     useEffect(() => {
         fetchBaseDataCallBack()
     }, [fetchBaseDataCallBack])
     
-    const handleTenanSelection = (e) => {
+    const handleTenantSelection = (e) => {
         setTenantName(e.label);
         setTenantId(e.tenantId);
     }
@@ -147,7 +148,7 @@ export default function VisitComponent({showButton=true, specificTenant=false, n
                                     inputClass="w-100 p-0.5 rounded-sm bg-slate-100 border-1 mb-2"
                                     options={tenantOptions}
                                     inputPlaceHolder={tenantName}
-                                    onChange={handleTenanSelection}
+                                    onChange={handleTenantSelection}
                                 />
 
                         </div>

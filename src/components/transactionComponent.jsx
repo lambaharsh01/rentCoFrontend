@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import getCurrentMonthBoundaries from "../utils/getCurrentMonthBoundaries";
 
 import SearchableSelect from "./searchableSelect";
@@ -48,15 +48,18 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
     }, []);
 
        
+    const searchValuesRef = useRef({ searchFrom, searchTo, tenantId });
+
     const fetchBaseDataCallBack = useCallback(() => {
+        const { searchFrom, searchTo, tenantId } = searchValuesRef.current;
         fetchData({ fromDate: searchFrom, toDate: searchTo, tenantId });
-    }, [searchFrom, searchTo, tenantId])
+    }, [])
 
     useEffect(() => {
         fetchBaseDataCallBack()
     }, [fetchBaseDataCallBack])
     
-    const handleTenanSelection = (e) => {
+    const handleTenantSelection = (e) => {
         setTenantName(e.label);
         setTenantId(e.tenantId);
     }
@@ -146,7 +149,7 @@ export default function TransactionComponent({showButton=true, specificTenant=fa
                                     inputClass="w-100 p-0.5 rounded-sm bg-slate-100 border-1 mb-2"
                                     options={tenantOptions}
                                     inputPlaceHolder={tenantName}
-                                    onChange={handleTenanSelection}
+                                    onChange={handleTenantSelection}
                                 />
                         </div>
                                                         
