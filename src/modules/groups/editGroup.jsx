@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 //components
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 import Skeleton from "react-loading-skeleton";
 
 //ui
@@ -71,49 +72,52 @@ export default function EditGroup() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header active="g" />
 
-      {loading ? (
-        <div className="pt-5 col-md-10 offset-md-1 ">
-          <Skeleton height={50} className="mb-2" />
-          <Skeleton height={60} className="mb-2" />
-          <Skeleton height={50} className="mb-2" />
-        </div>
-      ) : (
-        <>
-          <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-            <h1 className="rentCoFont mainFont text-4xl ps-2">
-              <span className="outlined-text-thin text-white">Edit Group</span>
-            </h1>
+      <div className="flex-grow">
+        {loading ? (
+          <div className="pt-5 col-md-10 offset-md-1 ">
+            <Skeleton height={50} className="mb-2" />
+            <Skeleton height={60} className="mb-2" />
+            <Skeleton height={50} className="mb-2" />
           </div>
+        ) : (
+          <>
+            <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
+              <h1 className="rentCoFont mainFont text-4xl ps-2">
+                <span className="outlined-text-thin text-white">Edit Group</span>
+              </h1>
+            </div>
 
-          <div className="col-md-10 offset-md-1 bg-white p-2">
-            <input
-              type="text"
-              className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
-              placeholder="Enter Group Name"
-              value={groupName}
-              onChange={(e) => setGroupName(e.currentTarget.value)}
-            />
-            <textarea
-              type="email"
-              className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
-              placeholder="Enter Group Discription (Optional)"
-              value={groupDiscription}
-              onChange={(e) => setGroupDiscription(e.currentTarget.value)}
-              rows={2}
-            ></textarea>
+            <div className="col-md-10 offset-md-1 bg-white p-2">
+              <input
+                type="text"
+                className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+                placeholder="Enter Group Name"
+                value={groupName}
+                onChange={(e) => setGroupName(e.currentTarget.value)}
+              />
+              <textarea
+                type="email"
+                className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+                placeholder="Enter Group Discription (Optional)"
+                value={groupDiscription}
+                onChange={(e) => setGroupDiscription(e.currentTarget.value)}
+                rows={2}
+              ></textarea>
 
-            <button
-              className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
-              onClick={validateGroup}
-            >
-              Edit Group
-            </button>
-          </div>
-        </>
-      )}
+              <button
+                className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+                onClick={validateGroup}
+              >
+                Edit Group
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      <Footer active="g" />
     </div>
   );
 }

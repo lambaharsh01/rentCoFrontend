@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 //components
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 import Skeleton from "react-loading-skeleton";
 
 //icons
@@ -89,116 +90,118 @@ export default function GroupsIndex() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header active="g" />
-
-      <div className="container-fluid">
-        <div className="row px-2 pt-4">
-          <div className="col-12 flex justify-between mb-3 items-center">
-            <h1 className="rentCoFont text-3xl ps-2">
-              {isLoading ? (
-                <span>
-                  <Skeleton width={70} />
-                </span>
-              ) : (
-                groupName
-              )}
-            </h1>
-            <MdGroupAdd
-              className="text-3xl me-2"
-              onClick={() => navigate(`/addTenant/${groupId}`)}
-            />
-          </div>
-
-          {isLoading ? (
-            <div>
-              <h1>
-                <Skeleton count={5} height={70} className="mb-3" />
+      <div className="flex-grow">
+        <div className="container-fluid">
+          <div className="row px-2 pt-4">
+            <div className="col-12 flex justify-between mb-3 items-center">
+              <h1 className="rentCoFont text-3xl ps-2">
+                {isLoading ? (
+                  <span>
+                    <Skeleton width={70} />
+                  </span>
+                ) : (
+                  groupName
+                )}
               </h1>
+              <MdGroupAdd
+                className="text-3xl me-2"
+                onClick={() => navigate(`/addTenant/${groupId}`)}
+              />
             </div>
-          ) : (
-            <div className="w-100">
-              <details className="border-2 rounded-md py-1 mb-4 px-2">
-                <summary className="list-none">
-                  <IoInformationCircleSharp className="text-xl" />
-                </summary>
 
-                <span className="text-sm">
-                  <span className="font-medium">Created At</span>: 
-                  <span className="font-light text-xs">{groupCreatedAt}</span>
-                </span>
-                <br />
-                <span className="text-sm">
-                  <span className="font-medium">Total Tenants</span>: 
-                  <span className="font-light text-xs">{totalTenants}</span>
-                </span>
-                <br />
-                <span className="text-sm">
-                  <span className="font-medium">Discription</span>: 
-                  <span className="font-light text-xs">{groupDiscription}</span>
-                </span>
-              </details>
-              {tenantList.map((element, index) => (
-                <div
-                  key={`Tenant${index}`}
-                  className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${
-                    smallScreen ? "h-16 text-xs" : "h-20"
-                  }`}
-                >
-                  <img
-                    src={element.tenantPicture}
-                    alt="tenantImages"
-                    className="rounded-full h-100 ms-1"
-                    loading="lazy"
-                    onClick={()=>navigateView(element._id)}
-                  />
-                  <span style={{width:"36%"}} onClick={() => navigateView(element._id)}>{element.tenantName}</span>
-                  <a style={{width:"14%"}} href={`tel:${element.tenantPhoneNumber}`}>
-                      <MdCall className="text-2xl"/>
-                  </a>
-                  <span className="text-center">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="none">
-                        <BsThreeDotsVertical className="text-2xl" />
-                      </Dropdown.Toggle>
+            {isLoading ? (
+              <div>
+                <h1>
+                  <Skeleton count={5} height={70} className="mb-3" />
+                </h1>
+              </div>
+            ) : (
+              <div className="w-100">
+                <details className="border-2 rounded-md py-1 mb-4 px-2">
+                  <summary className="list-none">
+                    <IoInformationCircleSharp className="text-xl" />
+                  </summary>
 
-                      <Dropdown.Menu style={{ minWidth: 80 }}>
-                        <div className="w-100 flex justify-center">
-                          <div>
-                            <div
-                              className="flex justify-between"
-                              onClick={() =>
-                                deleteUser(element._id, element.tenantName)
-                              }
-                            >
-                              <span className="font-light text-xs pt-1">
-                                Delete
-                              </span>
-                              <MdDelete className="mb-1 text-red-500 text-xl" />
-                            </div>
+                  <span className="text-sm">
+                    <span className="font-medium">Created At</span>: 
+                    <span className="font-light text-xs">{groupCreatedAt}</span>
+                  </span>
+                  <br />
+                  <span className="text-sm">
+                    <span className="font-medium">Total Tenants</span>: 
+                    <span className="font-light text-xs">{totalTenants}</span>
+                  </span>
+                  <br />
+                  <span className="text-sm">
+                    <span className="font-medium">Discription</span>: 
+                    <span className="font-light text-xs">{groupDiscription}</span>
+                  </span>
+                </details>
+                {tenantList.map((element, index) => (
+                  <div
+                    key={`Tenant${index}`}
+                    className={`font-medium w-100 bg-slate-100 mb-3 p-1 rounded-md flex justify-around items-center ${
+                      smallScreen ? "h-16 text-xs" : "h-20"
+                    }`}
+                  >
+                    <img
+                      src={element.tenantPicture}
+                      alt="tenantImages"
+                      className="rounded-full h-100 ms-1"
+                      loading="lazy"
+                      onClick={()=>navigateView(element._id)}
+                    />
+                    <span style={{width:"36%"}} onClick={() => navigateView(element._id)}>{element.tenantName}</span>
+                    <a style={{width:"14%"}} href={`tel:${element.tenantPhoneNumber}`}>
+                        <MdCall className="text-2xl"/>
+                    </a>
+                    <span className="text-center">
+                      <Dropdown>
+                        <Dropdown.Toggle variant="none">
+                          <BsThreeDotsVertical className="text-2xl" />
+                        </Dropdown.Toggle>
 
-                            <div
-                              className="flex justify-between"
-                              onClick={() =>
-                                navigate(`/editTenant/${element._id}`)
-                              }
-                            >
-                              <span className="font-light text-xs pt-1">
-                                Edit
-                              </span>
-                              <MdEdit className="mt-1 text-blue-500 text-xl" />
+                        <Dropdown.Menu style={{ minWidth: 80 }}>
+                          <div className="w-100 flex justify-center">
+                            <div>
+                              <div
+                                className="flex justify-between"
+                                onClick={() =>
+                                  deleteUser(element._id, element.tenantName)
+                                }
+                              >
+                                <span className="font-light text-xs pt-1">
+                                  Delete
+                                </span>
+                                <MdDelete className="mb-1 text-red-500 text-xl" />
+                              </div>
+
+                              <div
+                                className="flex justify-between"
+                                onClick={() =>
+                                  navigate(`/editTenant/${element._id}`)
+                                }
+                              >
+                                <span className="font-light text-xs pt-1">
+                                  Edit
+                                </span>
+                                <MdEdit className="mt-1 text-blue-500 text-xl" />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      <Footer active="g" />
     </div>
   );
 }

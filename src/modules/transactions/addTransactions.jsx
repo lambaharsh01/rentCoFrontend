@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //components
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 import SearchableSelect from "../../components/searchableSelect";
 
 //ui
@@ -108,116 +109,120 @@ Recived Amount: ${recivedAmount}`);
 
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header active="d" />
 
-      <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-        <h1 className="rentCoFont text-3xl ps-2">
-             Add Transaction
-        </h1>
-      </div>
-
-      <div className="col-md-10 offset-md-1 bg-white p-2">
-
-        <SearchableSelect
-        key="SelectTenant"
-        options={tenantDetails}
-        onChange={handleTenantSelection}
-        inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
-        inputPlaceHolder="Select Tenant"
-        />
-
-          <span className="font-bold ms-2">Transaction Date</span>
-  
-          <input
-            type="date"
-            className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
-            value={transactionDate}
-            onChange={(e) => { setTransactionDate(e.currentTarget.value) }}
-            />
-
-
-        
-
-{selectedTenant && (
-          <div className="p-2 w-100">
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Name</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Property</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Contact</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Select Payemt Method</span>
-              <br />
-              <SearchableSelect
-                key="SelectPaymentMethod"
-                options={paymentMetodArray}
-                onChange={(selectedMethod)=>setPaymentMethod(selectedMethod.label)}
-                inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
-                inputPlaceHolder="Select Payment Method"
-              />
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Select Payemt Type</span>
-              <br />
-              <SearchableSelect
-                key="SelectPaymentType"
-                options={paymentTypeArray}
-                onChange={(selectedType)=>setPaymentType(selectedType.label)}
-                inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
-                inputPlaceHolder="Select Payment Type"
-              />
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Enter Recived Amount</span>
-              <br />
-               <input
-                  type="number"
-                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
-                  placeholder="Enter Recived Amount"
-                  value={recivedAmount}
-                  onChange={handleRecivedAmount}
-                />
-            </div>
-
-            <div className="mb-3">
-              <span className="font-bold text-2xl">Enter Remarks</span>
-              <br />
-            <textarea
-              className="px-3 py-2 mb-3 text-sm  rounded-full w-100 bg-slate-100"
-              placeholder="Enter Remark (Optional)"
-              value={remark}
-              onChange={(e) => setRemark(e.currentTarget.value)}
-              rows={2}
-            ></textarea>
-            </div>
-
-            <button
-              className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
-              onClick={validateSubmit}
-              disabled={disableSubmit}
-            >
+      <div className="flex-grow">
+        <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
+          <h1 className="rentCoFont text-3xl ps-2">
               Add Transaction
-            </button>
-          </div>
-)}  
+          </h1>
+        </div>
+
+        <div className="col-md-10 offset-md-1 bg-white p-2">
+
+          <SearchableSelect
+          key="SelectTenant"
+          options={tenantDetails}
+          onChange={handleTenantSelection}
+          inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+          inputPlaceHolder="Select Tenant"
+          />
+
+            <span className="font-bold ms-2">Transaction Date</span>
+    
+            <input
+              type="date"
+              className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+              value={transactionDate}
+              onChange={(e) => { setTransactionDate(e.currentTarget.value) }}
+              />
+
+
+          
+
+  {selectedTenant && (
+            <div className="p-2 w-100">
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Tenant Name</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Property</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Tenant Contact</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
+              </div>
+
+              <div className="mb-3">
+                <span className="font-bold text-2xl">Select Payemt Method</span>
+                <br />
+                <SearchableSelect
+                  key="SelectPaymentMethod"
+                  options={paymentMetodArray}
+                  onChange={(selectedMethod)=>setPaymentMethod(selectedMethod.label)}
+                  inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+                  inputPlaceHolder="Select Payment Method"
+                />
+              </div>
+
+              <div className="mb-3">
+                <span className="font-bold text-2xl">Select Payemt Type</span>
+                <br />
+                <SearchableSelect
+                  key="SelectPaymentType"
+                  options={paymentTypeArray}
+                  onChange={(selectedType)=>setPaymentType(selectedType.label)}
+                  inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+                  inputPlaceHolder="Select Payment Type"
+                />
+              </div>
+
+              <div className="mb-3">
+                <span className="font-bold text-2xl">Enter Recived Amount</span>
+                <br />
+                <input
+                    type="number"
+                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    placeholder="Enter Recived Amount"
+                    value={recivedAmount}
+                    onChange={handleRecivedAmount}
+                  />
+              </div>
+
+              <div className="mb-3">
+                <span className="font-bold text-2xl">Enter Remarks</span>
+                <br />
+              <textarea
+                className="px-3 py-2 mb-3 text-sm  rounded-full w-100 bg-slate-100"
+                placeholder="Enter Remark (Optional)"
+                value={remark}
+                onChange={(e) => setRemark(e.currentTarget.value)}
+                rows={2}
+              ></textarea>
+              </div>
+
+              <button
+                className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+                onClick={validateSubmit}
+                disabled={disableSubmit}
+              >
+                Add Transaction
+              </button>
+            </div>
+  )}  
+        </div>
       </div>
+
+      <Footer active="d" />
     </div>
   );
 }

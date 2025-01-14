@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 
 import SearchableSelect from "../../components/searchableSelect";
 
@@ -284,210 +285,214 @@ Total Rent(Current + Previous): ${totalRent}`;
 
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header active="d" key="Header"/>
 
-      <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-        <h1 className="rentCoFont text-3xl ps-2">
-             Add Visit
-        </h1>
-      </div>
+      <div className="flex-grow">
+        <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
+          <h1 className="rentCoFont text-3xl ps-2">
+              Add Visit
+          </h1>
+        </div>
 
-      <div className="col-md-10 offset-md-1 bg-white p-2">
-        
-        <span className="font-bold ms-2">Select Tenant Name</span>
-  
-        <SearchableSelect
-        key="SelectTenant"
-        options={tenantDetails}
-        onChange={handleTenantSelection}
-        inputClass="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
-        inputPlaceHolder="Select Tenant"
-        />
-
-
-        
-        <span className="font-bold ms-2">Visit Date</span>
-  
-        <input
-            type="date"
-            className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
-            value={visitDate}
-            onChange={(e) => { setVisitDate(e.currentTarget.value) }}
-            />
-        
-
-          {selectedTenant && (<div className="w-100 mt-2">
-
-              <details className="border-2 rounded-md py-2 mb-4">
-                <summary className="list-none ps-2">
-              <span
-                className="text-base font-semibold flex"
-                onClick={fetchLastVisitData}
-              >
-                <IoCalendar className="text-xl me-2" /> 
-                Search For Past Visits
-              </span>
-              </summary>
-              
-            <div className="ps-9 mt-2">
-              <span className="text-sm font-medium">Last Month's Visit Date: <b>{lastVisitDate}</b></span>
-              <br />
-              <span className="text-sm font-medium">Last month's total: <b>{lastVisitTotal}</b></span>
-              <br />
-              <span className="text-sm font-medium">Last month's meter reading: <b>{lastVisitReading}</b></span>
-              <br />
-              <span className="text-sm font-medium">Recived amount from last visit: <b>{previouslyRecivedAmount}</b></span>
-
-              <div className="w-100 flex justify-end">
-                <MdCallMerge className="text-3xl me-2 text-green-800" onClick={mergePreviousVisitData}/>
-              </div>
-
-              </div>
-
-              </details>
-
-            <div className="p-2 w-100">
-            
-
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Name</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Property</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Tenant Contact</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Rent Amount</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{rentAmount}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Electic Unit Amount</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{electricityAmountPerUnit}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Previous Meter Reading</span>
-              {previousReading === "N/A" ? (
-                <span className="font-medium text-xl text-slate-500 ps-1">
-                  <br />
-                  {previousReading}</span>
-                ) : (<>
-                <input
-                  type="number"
-                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
-                  placeholder="Previous Meter Readings"
-                  value={previousReading}
-                  onChange={handlePreviousReadingInput}
-                />
-              </>
-              )}
-            </div>
-  
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Current Meter Reading</span>
-              {currentReading === "N/A" ? (
-                <span className="font-medium text-xl text-slate-500 ps-1">
-                  <br />
-                  {currentReading}</span>
-              ) : (
-                <input
-                  type="number"
-                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
-                  placeholder="Current Meter Reading"
-                  value={currentReading}
-                  onChange={handleCurrentReadingInput}
-                />
-              )}
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Total Units Consumed</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{totalUnits}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Total Electricity Bill</span>
-              <br />
-              <span className="font-medium text-xl text-slate-500 ps-1">{electricityBill}</span>
-            </div>
-
-            <div className="mb-4">
-              <span className="font-bold text-2xl">Pending Balance ?</span>
-              <br />
-              <span className=""><Switch onChange={(boolian) => setPreviouslyPending(boolian)} checked={previouslyPending} /></span>
-            </div>
-
-            {previouslyPending && (
-              <div className="mb-4">
-                <span className="font-bold text-2xl">Pending Amount</span>
-                <input
-                  type="number"
-                  className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
-                  placeholder="Enter Previously Pending Amount"
-                  value={previouslyPendingAmount}
-                  onChange={handlePreviousPendingAmountInput}
-                />
-              </div>
-            )}
+        <div className="col-md-10 offset-md-1 bg-white p-2">
           
-            <div className="mb-4 pt-2">
-              <span className="font-bold text-2xl">Noticed Any Damages ?</span>
-              <br />
-              <span className=""><Switch onChange={(boolian) => setDamages(boolian)} checked={damages} /></span>
-            </div>
+          <span className="font-bold ms-2">Select Tenant Name</span>
+    
+          <SearchableSelect
+          key="SelectTenant"
+          options={tenantDetails}
+          onChange={handleTenantSelection}
+          inputClass="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+          inputPlaceHolder="Select Tenant"
+          />
 
-            {damages && (
+
+          
+          <span className="font-bold ms-2">Visit Date</span>
+    
+          <input
+              type="date"
+              className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+              value={visitDate}
+              onChange={(e) => { setVisitDate(e.currentTarget.value) }}
+              />
+          
+
+            {selectedTenant && (<div className="w-100 mt-2">
+
+                <details className="border-2 rounded-md py-2 mb-4">
+                  <summary className="list-none ps-2">
+                <span
+                  className="text-base font-semibold flex"
+                  onClick={fetchLastVisitData}
+                >
+                  <IoCalendar className="text-xl me-2" /> 
+                  Search For Past Visits
+                </span>
+                </summary>
+                
+              <div className="ps-9 mt-2">
+                <span className="text-sm font-medium">Last Month's Visit Date: <b>{lastVisitDate}</b></span>
+                <br />
+                <span className="text-sm font-medium">Last month's total: <b>{lastVisitTotal}</b></span>
+                <br />
+                <span className="text-sm font-medium">Last month's meter reading: <b>{lastVisitReading}</b></span>
+                <br />
+                <span className="text-sm font-medium">Recived amount from last visit: <b>{previouslyRecivedAmount}</b></span>
+
+                <div className="w-100 flex justify-end">
+                  <MdCallMerge className="text-3xl me-2 text-green-800" onClick={mergePreviousVisitData}/>
+                </div>
+
+                </div>
+
+                </details>
+
+              <div className="p-2 w-100">
+              
+
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Tenant Name</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{tenantName}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Property</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{propertyName}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Tenant Contact</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{tenantPhoneNumber}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Rent Amount</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{rentAmount}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Electic Unit Amount</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{electricityAmountPerUnit}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Previous Meter Reading</span>
+                {previousReading === "N/A" ? (
+                  <span className="font-medium text-xl text-slate-500 ps-1">
+                    <br />
+                    {previousReading}</span>
+                  ) : (<>
+                  <input
+                    type="number"
+                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    placeholder="Previous Meter Readings"
+                    value={previousReading}
+                    onChange={handlePreviousReadingInput}
+                  />
+                </>
+                )}
+              </div>
+    
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Current Meter Reading</span>
+                {currentReading === "N/A" ? (
+                  <span className="font-medium text-xl text-slate-500 ps-1">
+                    <br />
+                    {currentReading}</span>
+                ) : (
+                  <input
+                    type="number"
+                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    placeholder="Current Meter Reading"
+                    value={currentReading}
+                    onChange={handleCurrentReadingInput}
+                  />
+                )}
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Total Units Consumed</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{totalUnits}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Total Electricity Bill</span>
+                <br />
+                <span className="font-medium text-xl text-slate-500 ps-1">{electricityBill}</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="font-bold text-2xl">Pending Balance ?</span>
+                <br />
+                <span className=""><Switch onChange={(boolian) => setPreviouslyPending(boolian)} checked={previouslyPending} /></span>
+              </div>
+
+              {previouslyPending && (
+                <div className="mb-4">
+                  <span className="font-bold text-2xl">Pending Amount</span>
+                  <input
+                    type="number"
+                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    placeholder="Enter Previously Pending Amount"
+                    value={previouslyPendingAmount}
+                    onChange={handlePreviousPendingAmountInput}
+                  />
+                </div>
+              )}
+            
               <div className="mb-4 pt-2">
-                <span className="font-bold text-2xl">Explaination of the Damage</span>
+                <span className="font-bold text-2xl">Noticed Any Damages ?</span>
+                <br />
+                <span className=""><Switch onChange={(boolian) => setDamages(boolian)} checked={damages} /></span>
+              </div>
+
+              {damages && (
+                <div className="mb-4 pt-2">
+                  <span className="font-bold text-2xl">Explaination of the Damage</span>
+                  <textarea
+                    className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
+                    placeholder="Explain the Damage"
+                    value={damagesExplained}
+                    onChange={(e) => setDamagesExplained(e.currentTarget.value)}
+                    rows={2}
+                  ></textarea>
+                </div>
+              )}
+            
+              <div className="mb-4 ">
+                <span className="font-bold text-2xl">Remarks</span>
                 <textarea
                   className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
-                  placeholder="Explain the Damage"
-                  value={damagesExplained}
-                  onChange={(e) => setDamagesExplained(e.currentTarget.value)}
+                  placeholder="Enter Remarks (optional)"
+                  value={remark}
+                  onChange={(e) => setRemark(e.currentTarget.value)}
                   rows={2}
                 ></textarea>
               </div>
-            )}
           
-            <div className="mb-4 ">
-              <span className="font-bold text-2xl">Remarks</span>
-              <textarea
-                className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
-                placeholder="Enter Remarks (optional)"
-                value={remark}
-                onChange={(e) => setRemark(e.currentTarget.value)}
-                rows={2}
-              ></textarea>
-            </div>
-        
-        <button
-          className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
-            onClick={validateVisit}
-            disabled={createButtonDisabled}>
-          Add Visit
-        </button> 
-            
-            </div>
-          </div>)}
-        
+          <button
+            className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+              onClick={validateVisit}
+              disabled={createButtonDisabled}>
+            Add Visit
+          </button> 
+              
+              </div>
+            </div>)}
+          
+        </div>
       </div>
+
+      <Footer active="d" key="Header"/>
     </div>
   );
 }

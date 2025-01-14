@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //components
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 
 //ui
 import { toast } from "react-toastify";
@@ -37,9 +38,9 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header active="g" />
-
+      <div className="flex-grow">
       <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
         <h1 className="rentCoFont mainFont text-4xl ps-2">
           <span className="outlined-text-thin text-white">Create Group</span>
@@ -69,6 +70,8 @@ export default function CreateGroup() {
           Create Group
         </button>
       </div>
+      </div>
+      <Footer active="g" />
     </div>
   );
 }
