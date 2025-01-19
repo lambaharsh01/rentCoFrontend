@@ -126,7 +126,7 @@ export default function GroupsIndex() {
                       </span>
 
                       <span className="text-center">
-                        <Dropdown>
+                        <Dropdown key={"RefreshSelect"+updationCount}>
                           <Dropdown.Toggle variant="none">
                             <BsThreeDotsVertical className="text-2xl" />
                           </Dropdown.Toggle>

@@ -158,7 +158,7 @@ export default function GroupsIndex() {
                         <MdCall className="text-2xl"/>
                     </a>
                     <span className="text-center">
-                      <Dropdown>
+                      <Dropdown key={"RefreshSelect"+updationCount}>
                         <Dropdown.Toggle variant="none">
                           <BsThreeDotsVertical className="text-2xl" />
                         </Dropdown.Toggle>
