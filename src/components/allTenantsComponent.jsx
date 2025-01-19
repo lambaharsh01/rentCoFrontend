@@ -84,7 +84,7 @@ export default function AllTenantsComponent() {
                         <img
                             src={element.tenantPicture}
                             alt="tenantImages"
-                            className="rounded-full ms-1 w-14"
+                            className="rounded-md TeST ms-1 w-14"
                             loading="lazy"
                         />
                         </span>

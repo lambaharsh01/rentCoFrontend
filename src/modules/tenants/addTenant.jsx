@@ -144,7 +144,7 @@ export default function AddTenant() {
             <div className="col-md-10 offset-md-1 bg-white p-2">
               <input
                 type="text"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Tenant's Name"
                 value={tenantName}
                 onChange={(e) => setTenantName(e.currentTarget.value)}
@@ -152,7 +152,7 @@ export default function AddTenant() {
 
               <input
                 type="email"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Tenant's Email (optional)"
                 value={tenantEmail}
                 onChange={(e) => setTenantEmail(e.currentTarget.value)}
@@ -160,7 +160,7 @@ export default function AddTenant() {
 
               <input
                 type="number"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Tenant's Phone Number"
                 value={tenantPhoneNumber}
                 onChange={(e) => setTenantPhoneNumber(e.currentTarget.value)}
@@ -168,7 +168,7 @@ export default function AddTenant() {
 
               <input
                 type="number"
-                className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Tenant's BackUp Phone Number(optional)"
                 value={tenantBackupPhoneNumber}
                 onChange={(e) =>
@@ -208,7 +208,7 @@ export default function AddTenant() {
               </div>
 
               <select
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 value={tenancyType}
                 onChange={(e) => setTenancyType(e.target.value)}
               >
@@ -223,7 +223,7 @@ export default function AddTenant() {
 
               <input
                 type="number"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Rent(Per Month)"
                 value={rentAmount}
                 onChange={(e) => setRentAmount(e.currentTarget.value)}
@@ -240,7 +240,7 @@ export default function AddTenant() {
                 {electricityBillApplicable && (
                 <input
                 type="number"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Electricity Amount(Per Unit)"
                 value={electricityAmount}
                 onChange={(e) => setElectricityAmount(e.currentTarget.value)}
@@ -251,7 +251,7 @@ export default function AddTenant() {
 
               <input
                 type="text"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Property Name"
                 value={propertyName}
                 onChange={(e) => setPropertyName(e.currentTarget.value)}
@@ -259,7 +259,7 @@ export default function AddTenant() {
 
               <input
                 type="text"
-                className="px-3 py-2 mb-4  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Property Address(optional)"
                 value={propertyAddress}
                 onChange={(e) => setPropertyAddress(e.currentTarget.value)}
@@ -267,7 +267,7 @@ export default function AddTenant() {
 
               <input
                 type="number"
-                className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Tenant's Aadhaar No.(optional)"
                 value={aadhaarNumber}
                 onChange={(e) => setAadhaarNumber(e.currentTarget.value)}
@@ -332,7 +332,7 @@ export default function AddTenant() {
               </div>
 
               <button
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 py-2 w-100"
                 disabled={dissabled}
                 onClick={validateGroup}
               >

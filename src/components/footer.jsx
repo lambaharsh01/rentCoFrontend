@@ -18,7 +18,9 @@ export default function Footer({active}) {
   if(!smallScreen) return (<></>)
 
   return (
-    <div className="sticky bottom-0 bg-white flex justify-around text-3xl py-2 border-t-2">
+    <div className="sticky bottom-0 bg-white flex justify-around py-2 px-3 border-t-2"
+    style={{fontSize:28}}
+    >
 
         <span
             onClick={() =>navigate("/dashboard", { replace: true })}

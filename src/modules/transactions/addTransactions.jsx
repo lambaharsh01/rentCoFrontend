@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 //function
 import axiosInterceptor from "../../utils/axiosInterceptor";
 import { getTenantDetails } from "../../utils/redux/reduxInterceptors";
+import { currentDate } from "../../utils/time";
 
 export default function AddTransaction() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function AddTransaction() {
    }, []);
 
   const [selectedTenant, setSelectedTenant] = useState(false);
-  const [transactionDate, setTransactionDate] = useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }));
+  const [transactionDate, setTransactionDate] = useState(currentDate());
 
 
   const [groupId, setGroupId] = useState("");
@@ -125,7 +126,7 @@ Recived Amount: ${recivedAmount}`);
           key="SelectTenant"
           options={tenantDetails}
           onChange={handleTenantSelection}
-          inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+          inputClass="px-3 py-2 mb-3 rounded-md TeST w-100 bg-slate-100"
           inputPlaceHolder="Select Tenant"
           />
 
@@ -133,7 +134,7 @@ Recived Amount: ${recivedAmount}`);
     
             <input
               type="date"
-              className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+              className="px-3 py-2 mb-4 rounded-md TeST w-100 bg-slate-100 mt-2"
               value={transactionDate}
               onChange={(e) => { setTransactionDate(e.currentTarget.value) }}
               />
@@ -163,13 +164,13 @@ Recived Amount: ${recivedAmount}`);
               </div>
 
               <div className="mb-3">
-                <span className="font-bold text-2xl">Select Payemt Method</span>
+                <span className="font-bold text-2xl">Select Payment Method</span>
                 <br />
                 <SearchableSelect
                   key="SelectPaymentMethod"
                   options={paymentMetodArray}
                   onChange={(selectedMethod)=>setPaymentMethod(selectedMethod.label)}
-                  inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+                  inputClass="px-3 py-2 mb-3 rounded-md TeST w-100 bg-slate-100"
                   inputPlaceHolder="Select Payment Method"
                 />
               </div>
@@ -181,17 +182,17 @@ Recived Amount: ${recivedAmount}`);
                   key="SelectPaymentType"
                   options={paymentTypeArray}
                   onChange={(selectedType)=>setPaymentType(selectedType.label)}
-                  inputClass="px-3 py-2 mb-3 rounded-full w-100 bg-slate-100"
+                  inputClass="px-3 py-2 mb-3 rounded-md TeST w-100 bg-slate-100"
                   inputPlaceHolder="Select Payment Type"
                 />
               </div>
 
               <div className="mb-3">
-                <span className="font-bold text-2xl">Enter Recived Amount</span>
+                <span className="font-bold text-2xl">Enter Received Amount</span>
                 <br />
                 <input
                     type="number"
-                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    className="px-3 py-2 mt-1 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Enter Recived Amount"
                     value={recivedAmount}
                     onChange={handleRecivedAmount}
@@ -202,7 +203,7 @@ Recived Amount: ${recivedAmount}`);
                 <span className="font-bold text-2xl">Enter Remarks</span>
                 <br />
               <textarea
-                className="px-3 py-2 mb-3 text-sm  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-3 text-sm  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Remark (Optional)"
                 value={remark}
                 onChange={(e) => setRemark(e.currentTarget.value)}
@@ -211,7 +212,7 @@ Recived Amount: ${recivedAmount}`);
               </div>
 
               <button
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 py-2 w-100"
                 onClick={validateSubmit}
                 disabled={disableSubmit}
               >

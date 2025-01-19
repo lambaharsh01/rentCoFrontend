@@ -93,14 +93,14 @@ export default function EditGroup() {
             <div className="col-md-10 offset-md-1 bg-white p-2">
               <input
                 type="text"
-                className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-3  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Group Name"
                 value={groupName}
                 onChange={(e) => setGroupName(e.currentTarget.value)}
               />
               <textarea
                 type="email"
-                className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+                className="px-3 py-2 mb-3  rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Group Discription (Optional)"
                 value={groupDiscription}
                 onChange={(e) => setGroupDiscription(e.currentTarget.value)}
@@ -108,7 +108,7 @@ export default function EditGroup() {
               ></textarea>
 
               <button
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 py-2 w-100"
                 onClick={validateGroup}
               >
                 Edit Group

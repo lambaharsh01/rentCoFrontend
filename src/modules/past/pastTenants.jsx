@@ -29,12 +29,10 @@ export default function PastTenants() {
     const [isLoading, setIsLoading] = useState(true);
     const [tenantList, setTenantList] = useState([]);
 
-    const navigateView = (tenantId) => {
-        navigate("/viewTenant/" + tenantId);
+    const navigateDetails = (tenantId, element) => {
+        navigate("/pastTenantDetails/" + tenantId, {state:element});
     }
-
   
-    
     const fetchTenantList = useCallback(() => { 
         setIsLoading(true);
         axiosInterceptor({
@@ -86,28 +84,30 @@ export default function PastTenants() {
                           <img
                               src={element.tenantPicture}
                               alt="tenantImages"
-                              className="rounded-full h-8 w-8 ms-1"
+                              className="rounded-md TeST h-8 w-8 ms-1"
                               loading="lazy"
-                              onClick={()=>navigateView(element.tenantId)}
+                              onClick={()=>navigateDetails(element.tenantId, element)}
                           />
                             <span
                                 className="mt-1.5 ms-0.5"
-                                onClick={() => navigateView(element.tenantId)}
+                                onClick={() => navigateDetails(element.tenantId, element)}
                             >{element.tenantName}</span>
                       </span>
-                    
-                    <a href={`tel:${element.tenantPhoneNumber}`}>
-                        <MdCall className="text-2xl"/>
-                    </a>
-                    <span className="text-center">
-                    {element.inactivatedAt || "-"}
-                    </span>
-                        <span className={`${element.dueBalance > 0 && "text-red-600"} px-2`}>
-                          {element.dueBalance || "-"}  
-                    </span>
+
                     <span className="text-center">
                     {element.propertyName}
                     </span>
+
+                    <span 
+                    onClick={() => navigateDetails(element.tenantId, element)}
+                    className={`${element.dueBalance > 0 ? "text-red-600" :"text-green-600"} px-2`}>
+                      {element.dueBalance?.toString()?.replaceAll("-", "") || "-"}  
+                    </span>
+
+                    <a href={`tel:${element.tenantPhoneNumber}`}>
+                        <MdCall className="text-2xl"/>
+                    </a>
+                    
                   </div>
                 ))}
               </div>

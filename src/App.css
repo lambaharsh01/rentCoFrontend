@@ -2,6 +2,11 @@ body {
   font-family: Tahoma, sans-serif;
 }
 
+
+.cursorPointer {
+  cursor: pointer;
+} 
+
 /* rentCoFont */
 
 .rentCoFontBold {

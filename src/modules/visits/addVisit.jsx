@@ -303,7 +303,7 @@ Total Rent(Current + Previous): ${totalRent}`;
           key="SelectTenant"
           options={tenantDetails}
           onChange={handleTenantSelection}
-          inputClass="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+          inputClass="px-3 py-2 mb-4 rounded-md TeST w-100 bg-slate-100 mt-2"
           inputPlaceHolder="Select Tenant"
           />
 
@@ -313,7 +313,7 @@ Total Rent(Current + Previous): ${totalRent}`;
     
           <input
               type="date"
-              className="px-3 py-2 mb-4 rounded-full w-100 bg-slate-100 mt-2"
+              className="px-3 py-2 mb-4 rounded-md TeST w-100 bg-slate-100 mt-2"
               value={visitDate}
               onChange={(e) => { setVisitDate(e.currentTarget.value) }}
               />
@@ -392,7 +392,7 @@ Total Rent(Current + Previous): ${totalRent}`;
                   ) : (<>
                   <input
                     type="number"
-                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    className="px-3 py-2 mt-1 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Previous Meter Readings"
                     value={previousReading}
                     onChange={handlePreviousReadingInput}
@@ -410,7 +410,7 @@ Total Rent(Current + Previous): ${totalRent}`;
                 ) : (
                   <input
                     type="number"
-                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    className="px-3 py-2 mt-1 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Current Meter Reading"
                     value={currentReading}
                     onChange={handleCurrentReadingInput}
@@ -441,7 +441,7 @@ Total Rent(Current + Previous): ${totalRent}`;
                   <span className="font-bold text-2xl">Pending Amount</span>
                   <input
                     type="number"
-                    className="px-3 py-2 mt-1 rounded-full w-100 bg-slate-100"
+                    className="px-3 py-2 mt-1 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Enter Previously Pending Amount"
                     value={previouslyPendingAmount}
                     onChange={handlePreviousPendingAmountInput}
@@ -459,7 +459,7 @@ Total Rent(Current + Previous): ${totalRent}`;
                 <div className="mb-4 pt-2">
                   <span className="font-bold text-2xl">Explaination of the Damage</span>
                   <textarea
-                    className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
+                    className="px-3 py-2 mt-1 text-sm rounded-md TeST w-100 bg-slate-100"
                     placeholder="Explain the Damage"
                     value={damagesExplained}
                     onChange={(e) => setDamagesExplained(e.currentTarget.value)}
@@ -471,7 +471,7 @@ Total Rent(Current + Previous): ${totalRent}`;
               <div className="mb-4 ">
                 <span className="font-bold text-2xl">Remarks</span>
                 <textarea
-                  className="px-3 py-2 mt-1 text-sm rounded-full w-100 bg-slate-100"
+                  className="px-3 py-2 mt-1 text-sm rounded-md TeST w-100 bg-slate-100"
                   placeholder="Enter Remarks (optional)"
                   value={remark}
                   onChange={(e) => setRemark(e.currentTarget.value)}
@@ -480,7 +480,7 @@ Total Rent(Current + Previous): ${totalRent}`;
               </div>
           
           <button
-            className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+            className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 py-2 w-100"
               onClick={validateVisit}
               disabled={createButtonDisabled}>
             Add Visit

@@ -41,6 +41,11 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
 
         let newArray = [{tenantId:"", label:"None"}, ...tenants];
         setTenantOptions(newArray);
+
+        // if(id){
+        //     fetchData({ fromDate: "", toDate: "", tenantId:id});
+        // }
+
     }, []);
     
     const handleTenanSelection = (e) => {
@@ -171,6 +176,7 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                         </div>
                         
                         <div className="flex justify-around mt-2">
+                        {!id && (
                         <div className="w-2/5">
                         <span className="text-sm font-light">Tenant</span>
                                 <br />
@@ -182,8 +188,9 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                                 />
 
                         </div>
+                        )}
                                                         
-                        <div className="w-2/5 pt-4">
+                        <div className={`${!id ? "w-2/5":"w-11/12"} pt-4`}>
                                 <button
                                     className="p-0.5 text-white rounded-sm bg-black btn-sm w-100 mb-2"
                                     onClick={searchTenants}
@@ -212,7 +219,7 @@ export default function ConsolidatedTransactions({ nameLabel="Select Tenant", id
                     </div>
                 </div>
 
-                <div className="w-100 scrolMaxHeight3000 px-1 ">
+                <div className="w-100 scrolMaxHeight3000 px-1 flex justify-center">
                     <div className="table-responsive py-3">
                         <table className={` ${searched ? "d-block" : "d-none"}`}>
                             <thead>

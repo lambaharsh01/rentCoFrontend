@@ -101,8 +101,8 @@ export default function ViewVisit() {
 
       <div className="flex-grow">
         <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-          <h1 className="rentCoFont mainFont text-4xl ps-2">
-            <span className="outlined-text-thin text-white">Visit Details</span>
+          <h1 className="rentCoFont text-3xl ps-2">
+            Visit Details
           </h1>
         </div>
 

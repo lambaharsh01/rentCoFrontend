@@ -210,7 +210,7 @@ export default function SignUp() {
           </h1>
         </div>
         <div
-          className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-3xl flex-row overflow-y-auto"
+          className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-xl TeST flex-row overflow-y-auto"
           ref={scrollableDivRef}
         >
           {screen === 0 && (
@@ -218,14 +218,14 @@ export default function SignUp() {
               <h2 className="mb-4">User Details</h2>
               <input
                 type="text"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Full Name"
                 value={userName}
                 onChange={(e) => setUserName(e.currentTarget.value)}
               />
               <input
                 type="text"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Email"
                 autocapitalize="off"
                 autocomplete="off"
@@ -235,7 +235,7 @@ export default function SignUp() {
               />
               <input
                 type="number"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Phone No."
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.currentTarget.value)}
@@ -244,7 +244,7 @@ export default function SignUp() {
                 <div className="w-25 pe-1">
                   <input
                     type="number"
-                    className="ps-2 ps-md-4 py-3 rounded-full w-100 bg-slate-100"
+                    className="ps-2 ps-md-4 py-3 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Day"
                     value={day}
                     onChange={(e) => setDay(e.currentTarget.value)}
@@ -253,7 +253,7 @@ export default function SignUp() {
                 <div className="w-25 px-1">
                   <input
                     type="number"
-                    className="ps-2 ps-md-4 py-3 rounded-full w-100 bg-slate-100"
+                    className="ps-2 ps-md-4 py-3 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Month"
                     value={month}
                     onChange={(e) => setMonth(e.currentTarget.value)}
@@ -262,7 +262,7 @@ export default function SignUp() {
                 <div className="w-50 ps-1">
                   <input
                     type="number"
-                    className="ps-2 ps-md-4 py-3 rounded-full w-100 bg-slate-100"
+                    className="ps-2 ps-md-4 py-3 rounded-md TeST w-100 bg-slate-100"
                     placeholder="Birth Year"
                     value={year}
                     onChange={(e) => setYear(e.currentTarget.value)}
@@ -301,7 +301,7 @@ export default function SignUp() {
               </div>
               <button
                 disabled={disabled}
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={validateUserInfo}
               >
               { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Send Verification Code</span>)}
@@ -315,7 +315,7 @@ export default function SignUp() {
 
               <input
                 type="number"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter OTP"
                 value={otp}
                 onChange={(e) => setOtp(e.currentTarget.value)}
@@ -323,7 +323,7 @@ export default function SignUp() {
 
               <button
                 disabled={disabled}
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={verifyOtp}
               >
                  { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Verify OTP</span>)}
@@ -339,7 +339,7 @@ export default function SignUp() {
 
               <input
                 type="password"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.currentTarget.value)}
@@ -347,7 +347,7 @@ export default function SignUp() {
 
               <input
                 type="password"
-                className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.currentTarget.value)}
@@ -375,7 +375,7 @@ export default function SignUp() {
 
               <button
                 disabled={disabled}
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={createUser}
               >
                  { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Add Password</span>)}

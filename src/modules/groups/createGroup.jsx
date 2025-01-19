@@ -42,21 +42,21 @@ export default function CreateGroup() {
       <Header active="g" />
       <div className="flex-grow">
       <div className="col-md-10 offset-md-1 text-center ps-3 mt-4 mb-4">
-        <h1 className="rentCoFont mainFont text-4xl ps-2">
-          <span className="outlined-text-thin text-white">Create Group</span>
+        <h1 className="rentCoFont text-3xl ps-2">
+        Create Group
         </h1>
       </div>
 
       <div className="col-md-10 offset-md-1 bg-white p-2">
         <input
           type="text"
-          className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+          className="px-3 py-2 mb-3  rounded-md TeST w-100 bg-slate-100"
           placeholder="Enter Group Name"
           value={groupName}
           onChange={(e) => setGroupName(e.currentTarget.value)}
         />
         <textarea
-          className="px-3 py-2 mb-3  rounded-full w-100 bg-slate-100"
+          className="px-3 py-2 mb-3  rounded-md TeST w-100 bg-slate-100"
           placeholder="Enter Group Discription (Optional)"
           value={groupDiscription}
           onChange={(e) => setGroupDiscription(e.currentTarget.value)}
@@ -64,7 +64,7 @@ export default function CreateGroup() {
         ></textarea>
 
         <button
-          className="bg-slate-950 rounded-full text-white text-lg px-md-12 py-2 w-100"
+          className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 py-2 w-100"
           onClick={validateGroup}
         >
           Create Group

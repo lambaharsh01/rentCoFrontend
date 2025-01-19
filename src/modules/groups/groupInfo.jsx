@@ -149,7 +149,7 @@ export default function GroupsIndex() {
                     <img
                       src={element.tenantPicture}
                       alt="tenantImages"
-                      className="rounded-full h-100 ms-1"
+                      className="rounded-md TeST h-100 ms-1"
                       loading="lazy"
                       onClick={()=>navigateView(element._id)}
                     />

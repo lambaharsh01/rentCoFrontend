@@ -70,7 +70,7 @@ export default function SignIn() {
             <span className="outlined-text-medium-thin rentCoRedFont">In</span>
           </h1>
         </div>
-        <div className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-3xl flex-row overflow-y-auto">
+        <div className="bg-white col-lg-8 col-12 offset-0 offset-lg-2 h-5/6 rounded-t-xl TeST flex-row overflow-y-auto">
           <div className="w-75 m-auto py-md-4 pt-4 pb-3 h-100 flex flex-col justify-between h-full">
             <div>
               <input
@@ -78,7 +78,7 @@ export default function SignIn() {
                 autocomplete="off"
                 autofill="off"
                 autocapitalize="off"
-                className="px-8 py-3 mb-4 mt-5 rounded-full w-100 bg-slate-100"
+                className="px-8 py-3 mb-4 mt-5 rounded-md TeST w-100 bg-slate-100"
                 placeholder="Enter Email"
                 value={userEmail}
                 onChange={(e) => setUserEmail(e.currentTarget.value)}
@@ -89,7 +89,7 @@ export default function SignIn() {
                   type={ showPassword ? "text":"password"}
                   autocomplete="off"
                   autofill="off"
-                  className="px-8 py-3 mb-4 rounded-full w-100 bg-slate-100 pr-10" // Add padding-right for icon space
+                  className="px-8 py-3 mb-4 rounded-md TeST w-100 bg-slate-100 pr-10" // Add padding-right for icon space
                   placeholder="Enter Password"
                   value={password}
                   onChange={(e) => setPassword(e.currentTarget.value)}
@@ -109,7 +109,7 @@ export default function SignIn() {
             <div className="mb-14">
               <button
                 disabled={disabled}
-                className="bg-slate-950 rounded-full text-white text-lg px-md-12 px-8 py-3 w-100"
+                className="bg-slate-950 rounded-md TeST text-white text-lg px-md-12 px-8 py-3 w-100"
                 onClick={authenticateUser}
               >
                 { disabled ? (<div class="spinner-border spinner-border-sm text-white"></div>) : (<span>Sign In</span>)} 
