@@ -30,9 +30,9 @@ export default async function axiosInterceptor({ method, url, query, data }) {
 
     let apiMethod = method.toLowerCase().trim();
 
-    let apiUrl = "https://rentco-backend.lambaharsh01.in";
+    // let apiUrl = "https://rentco-backend.lambaharsh01.in";
     // let apiUrl = "http://localhost:3021";
-    // let apiUrl = "http://192.168.34.92:3021";
+    let apiUrl = "http://192.168.70.92:3021";
 
     apiUrl += url.trim() + convertQueryString(query);
 
