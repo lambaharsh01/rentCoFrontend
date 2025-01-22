@@ -121,7 +121,7 @@ export default function AnalyticsGraph({graphHeading=""}){
         <div className="w-100 border-1 rounded-md">
 
                 <div className="rentCoRed rounded-t-md text-center py-1 font-bold">
-                    Analytical Trend 
+                    Analytical Trends
                 </div>
 
       

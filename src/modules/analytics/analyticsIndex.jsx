@@ -3,6 +3,7 @@ import Footer from "../../components/footer";
 
 import ConsolidatedTransactions from "../../components/consolidatedTransactions";
 import AnalyticsGraph from "../../components/graphs/analyticsGraph";
+import ElectricityConsumptionGraph from "../../components/graphs/electricityConsumptionGraph";
 
 export default function AnalyticsIndex() {
   
@@ -13,6 +14,7 @@ export default function AnalyticsIndex() {
       <div className="flex-grow">
         <AnalyticsGraph/>
         <ConsolidatedTransactions/>
+        <ElectricityConsumptionGraph/>
       </div>   
 
       <Footer active="a" />
