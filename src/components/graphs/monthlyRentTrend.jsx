@@ -67,7 +67,7 @@ export default function MonthlyRentTrends(){
             <ResponsiveContainer width="100%" height={250}>
                 <LineChart
                 data={totalGraph}
-                margin={{ top: 10, right: 20, left: 4, bottom: 28 }}
+                margin={{ top: 10, right: 20, left: -6, bottom: 28 }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="label" />
