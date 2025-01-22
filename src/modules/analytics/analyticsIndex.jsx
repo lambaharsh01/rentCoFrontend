@@ -13,8 +13,8 @@ export default function AnalyticsIndex() {
 
       <div className="flex-grow">
         <AnalyticsGraph/>
-        <ConsolidatedTransactions/>
         <ElectricityConsumptionGraph/>
+        <ConsolidatedTransactions/>
       </div>   
 
       <Footer active="a" />

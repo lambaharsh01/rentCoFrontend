@@ -100,7 +100,7 @@ export default function AnalyticsGraph({graphHeading=""}){
             setTimeout(() => {
                 setActiveGroupTabIndex(0)
                 fetchGroupGraph(0, groups[0]?.groupId)
-            }, 1000)
+            }, 800)
         })
         .catch((error) => toast.error(error.message));
         
@@ -194,7 +194,7 @@ export default function AnalyticsGraph({graphHeading=""}){
                 <XAxis dataKey="label" />
                 <YAxis />
                 <Tooltip 
-                trigger="click"
+                // trigger="click"
                 formatter={(value, name) => [
                     value,
                     formatLabel(name),
@@ -245,7 +245,7 @@ export default function AnalyticsGraph({graphHeading=""}){
                 <XAxis dataKey="label" />
                 <YAxis />
                 <Tooltip 
-                trigger="click"
+                // trigger="click"
                 formatter={(value, name) => [
                     value,
                     formatLabel(name),
