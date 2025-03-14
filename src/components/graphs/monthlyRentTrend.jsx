@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
@@ -19,9 +19,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export default function MonthlyRentTrends(){
-
-
+export default function MonthlyRentTrends() {
+    
     const formatLabel = (str)=>{
         switch(str){
             case "totalRent" :
@@ -32,8 +31,12 @@ export default function MonthlyRentTrends(){
                 return str
         }
     }
+
+    const [count] = useState(0)
+
     const [totalGraph, setTotalGraph] = useState([])
-    const fetchBaseGraph = () => {
+
+    const fetchBaseGraph = useCallback(() => {
         const { fromDate, toDate } = currentMinusNMonth(6)
         axiosInterceptor({
             url: "/api/analytics/getAnalyticsGraphicalDatasets",
@@ -44,14 +47,14 @@ export default function MonthlyRentTrends(){
         }).catch(err => {
             toast.error(err.message);
         })
-    }
+    }, [])
 
     useEffect(()=>{
         fetchBaseGraph()
-    }, [])
+    }, [fetchBaseGraph, count])
 
     return <>
-        {totalGraph.length && (
+        {totalGraph.length ? (
             <div className="w-100 p-2 mb-2">
             
             <div className="w-100 border-1 rounded-md">
@@ -86,7 +89,7 @@ export default function MonthlyRentTrends(){
 
         </div>   
         </div> 
-    )}
+    ): ""}
     </>    
 
 }

@@ -214,10 +214,10 @@ export default function AnalyticsGraph({graphHeading=""}){
         {groupTabs.map((tab, index) => (
           <div
             key={index}
-            className={`px-2.5 pt-1 pb-2 rounded-t-lg text-sm font-medium min-w-max ${
+            className={`cursorPointer px-2.5 pt-1 pb-2 text-sm font-medium min-w-max ${
                 activeGroupTabIndex === index
                 ? "bg-white border-t-2 border-x-2"
-                : "bg-slate-100 border-2"
+                : "rentCoRed border-2"
             }`}
             onClick={() => {
                 setActiveGroupTabIndex(index)
