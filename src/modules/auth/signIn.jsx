@@ -66,7 +66,7 @@ export default function SignIn() {
       <div className="w-100">
         <div className="rentCoRed col-lg-8 col-12 offset-0 offset-lg-2 h-1/6 flex items-end">
           <h1 className="rentCoFont mainFont text-7xl ps-2">
-            <span className="text-white me-1">Sign</span>
+            <span className="text-white me-1">Sigggn</span>
             <span className="outlined-text-medium-thin rentCoRedFont">In</span>
           </h1>
         </div>
